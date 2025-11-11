@@ -275,10 +275,7 @@
 
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center py-2">
-                <div class="d-flex align-items-center gap-3">
-                    <h5 class="mb-0"><i class="fas fa-paint-brush me-2"></i> Visual Page Builder</h5>
-                    <div class="panel__devices btn-group btn-group-sm"></div>
-                </div>
+                <h5 class="mb-0"><i class="fas fa-paint-brush me-2"></i> Visual Page Builder</h5>
                 <div class="btn-group btn-group-sm">
                     <button onclick="saveBuilderContent()" class="btn btn-success" id="saveBuilderBtn">
                         <i class="fas fa-save me-1"></i> Save Design
@@ -289,81 +286,42 @@
                 </div>
             </div>
             <div class="card-body p-0">
-                <!-- GrapesJS Editor with Panels -->
-                <div class="editor-row" style="display: flex; height: 75vh;">
-                    <!-- Left Panel: Blocks -->
-                    <div class="editor-column" style="flex: 0 0 250px; overflow-y: auto; border-right: 1px solid #dee2e6; background: #f8f9fa;">
-                        <div style="padding: 15px 10px; background: #fff; border-bottom: 2px solid #bd2828;">
-                            <h6 class="mb-0" style="font-weight: 600; color: #bd2828;">
-                                <i class="fas fa-th-large me-2"></i>Block Library
-                            </h6>
-                            <small class="text-muted">Drag blocks onto canvas</small>
-                        </div>
-                        <div class="blocks-container" style="padding: 10px;"></div>
-                    </div>
+                <!-- Simple 2-Panel GrapesJS Editor -->
+                <div style="display: flex; height: 75vh;">
+                    <!-- Left: Blocks -->
+                    <div class="blocks-container" style="flex: 0 0 250px; overflow-y: auto; border-right: 1px solid #dee2e6; background: #f8f9fa; padding: 10px;"></div>
 
                     <!-- Center: Canvas -->
-                    <div class="editor-column" style="flex: 1; display: flex; flex-direction: column;">
-                        <div class="panel__switcher" style="padding: 10px; background: #fff; border-bottom: 1px solid #dee2e6; display: flex; gap: 5px;"></div>
-                        <div id="gjs" style="flex: 1; overflow: hidden;"></div>
-                    </div>
+                    <div id="gjs" style="flex: 1;"></div>
 
-                    <!-- Right Panel: Layers, Styles, Traits -->
-                    <div class="panel__right editor-column" style="flex: 0 0 300px; display: flex; flex-direction: column; border-left: 1px solid #dee2e6; background: #fff;">
-                        <!-- Panel Tabs -->
-                        <div style="padding: 10px; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
-                            <ul class="nav nav-pills nav-fill" role="tablist" style="font-size: 13px;">
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link active" id="layers-tab" data-bs-toggle="pill" data-bs-target="#layers-panel" type="button" role="tab">
-                                        <i class="fas fa-bars"></i> Layers
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="styles-tab" data-bs-toggle="pill" data-bs-target="#styles-panel" type="button" role="tab">
-                                        <i class="fas fa-paint-brush"></i> Styles
-                                    </button>
-                                </li>
-                                <li class="nav-item" role="presentation">
-                                    <button class="nav-link" id="traits-tab" data-bs-toggle="pill" data-bs-target="#traits-panel" type="button" role="tab">
-                                        <i class="fas fa-cog"></i> Settings
-                                    </button>
-                                </li>
-                            </ul>
-                        </div>
-
-                        <!-- Tab Content -->
+                    <!-- Right: Layers/Styles/Traits in Bootstrap tabs -->
+                    <div style="flex: 0 0 300px; border-left: 1px solid #dee2e6; background: #fff; display: flex; flex-direction: column;">
+                        <ul class="nav nav-pills nav-fill p-2" role="tablist" style="font-size: 13px;">
+                            <li class="nav-item">
+                                <button class="nav-link active" data-bs-toggle="pill" data-bs-target="#layers-panel" type="button">
+                                    <i class="fas fa-bars"></i> Layers
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#styles-panel" type="button">
+                                    <i class="fas fa-paint-brush"></i> Styles
+                                </button>
+                            </li>
+                            <li class="nav-item">
+                                <button class="nav-link" data-bs-toggle="pill" data-bs-target="#traits-panel" type="button">
+                                    <i class="fas fa-cog"></i> Settings
+                                </button>
+                            </li>
+                        </ul>
                         <div class="tab-content" style="flex: 1; overflow-y: auto;">
-                            <!-- Layers Panel -->
-                            <div class="tab-pane fade show active" id="layers-panel" role="tabpanel">
-                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
-                                    <h6 class="mb-0" style="font-weight: 600;">
-                                        <i class="fas fa-layer-group me-2"></i>Element Layers
-                                    </h6>
-                                    <small class="text-muted">Click to select, drag to reorder</small>
-                                </div>
-                                <div class="layers-container" style="padding: 5px;"></div>
+                            <div class="tab-pane fade show active p-2" id="layers-panel">
+                                <div class="layers-container"></div>
                             </div>
-
-                            <!-- Styles Panel -->
-                            <div class="tab-pane fade" id="styles-panel" role="tabpanel">
-                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
-                                    <h6 class="mb-0" style="font-weight: 600;">
-                                        <i class="fas fa-palette me-2"></i>Style Properties
-                                    </h6>
-                                    <small class="text-muted">Customize appearance</small>
-                                </div>
+                            <div class="tab-pane fade p-2" id="styles-panel">
                                 <div class="styles-container"></div>
                             </div>
-
-                            <!-- Traits Panel -->
-                            <div class="tab-pane fade" id="traits-panel" role="tabpanel">
-                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
-                                    <h6 class="mb-0" style="font-weight: 600;">
-                                        <i class="fas fa-sliders-h me-2"></i>Element Settings
-                                    </h6>
-                                    <small class="text-muted">Configure attributes</small>
-                                </div>
-                                <div class="traits-container" style="padding: 10px;"></div>
+                            <div class="tab-pane fade p-2" id="traits-panel">
+                                <div class="traits-container"></div>
                             </div>
                         </div>
                     </div>
@@ -648,8 +606,6 @@
             storageManager: false,
             fromElement: false,
 
-            // No external plugins - using custom blocks instead
-
             // Canvas configuration
             canvas: {
                 styles: [
@@ -665,77 +621,6 @@
             // Layer Manager
             layerManager: {
                 appendTo: '.layers-container',
-                sortable: true,
-                hidable: true,
-            },
-
-            // Panels configuration
-            panels: {
-                defaults: [
-                    {
-                        id: 'layers',
-                        el: '.panel__right',
-                        resizable: {
-                            maxDim: 350,
-                            minDim: 200,
-                            tc: 0,
-                            cl: 1,
-                            cr: 0,
-                            bc: 0,
-                            keyWidth: 'flex-basis',
-                        },
-                    },
-                    {
-                        id: 'panel-switcher',
-                        el: '.panel__switcher',
-                        buttons: [{
-                            id: 'show-layers',
-                            active: true,
-                            label: '<i class="fa fa-bars"></i>',
-                            command: 'show-layers',
-                            togglable: false,
-                            attributes: { title: 'Show Layers' }
-                        }, {
-                            id: 'show-style',
-                            active: true,
-                            label: '<i class="fa fa-paint-brush"></i>',
-                            command: 'show-styles',
-                            togglable: false,
-                            attributes: { title: 'Show Styles' }
-                        }, {
-                            id: 'show-traits',
-                            active: true,
-                            label: '<i class="fa fa-cog"></i>',
-                            command: 'show-traits',
-                            togglable: false,
-                            attributes: { title: 'Show Settings' }
-                        }],
-                    },
-                    {
-                        id: 'panel-devices',
-                        el: '.panel__devices',
-                        buttons: [{
-                            id: 'device-desktop',
-                            label: '<i class="fa fa-desktop"></i>',
-                            command: 'set-device-desktop',
-                            active: true,
-                            togglable: false,
-                            attributes: { title: 'Desktop' }
-                        }, {
-                            id: 'device-tablet',
-                            label: '<i class="fa fa-tablet"></i>',
-                            command: 'set-device-tablet',
-                            togglable: false,
-                            attributes: { title: 'Tablet' }
-                        }, {
-                            id: 'device-mobile',
-                            label: '<i class="fa fa-mobile"></i>',
-                            command: 'set-device-mobile',
-                            togglable: false,
-                            attributes: { title: 'Mobile' }
-                        }],
-                    },
-                ]
             },
 
             // Trait Manager
@@ -754,23 +639,19 @@
                 sectors: [{
                     name: 'General',
                     open: true,
-                    buildProps: ['display', 'position', 'top', 'right', 'left', 'bottom', 'float', 'clear']
+                    buildProps: ['display', 'position', 'float', 'clear']
                 }, {
                     name: 'Dimension',
                     open: false,
-                    buildProps: ['width', 'height', 'max-width', 'max-height', 'min-width', 'min-height', 'margin', 'padding']
+                    buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding']
                 }, {
                     name: 'Typography',
                     open: false,
-                    buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow', 'text-transform']
+                    buildProps: ['font-family', 'font-size', 'font-weight', 'color', 'line-height', 'text-align']
                 }, {
                     name: 'Decorations',
                     open: false,
-                    buildProps: ['background-color', 'background', 'border-radius', 'border', 'box-shadow', 'opacity']
-                }, {
-                    name: 'Extra',
-                    open: false,
-                    buildProps: ['transition', 'perspective', 'transform', 'cursor', 'overflow', 'z-index']
+                    buildProps: ['background-color', 'border-radius', 'border', 'box-shadow']
                 }]
             },
 
@@ -782,31 +663,15 @@
                 }, {
                     name: 'Tablet',
                     width: '768px',
-                    widthMedia: '992px',
                 }, {
                     name: 'Mobile',
                     width: '320px',
-                    widthMedia: '480px',
                 }]
             },
 
             // Block Manager
             blockManager: {
                 appendTo: '.blocks-container',
-            },
-
-            // Rich Text Editor
-            richTextEditor: {
-                actions: ['bold', 'italic', 'underline', 'strikethrough', '|', 'link', '|', 'h1', 'h2', 'h3', 'p', '|', 'ul', 'ol', '|', 'align-left', 'align-center', 'align-right', 'align-justify'],
-            },
-
-            // Asset Manager
-            assetManager: {
-                assets: [],
-                upload: false,
-                uploadText: 'Drop files here or click to upload',
-                addBtnText: 'Add Image',
-                customFetch: () => { return [] },
             },
         });
 
@@ -832,65 +697,6 @@
                 </div>
             `);
         @endif
-
-        // Add custom commands
-        const commands = editor.Commands;
-
-        // Layer panel commands
-        commands.add('show-layers', {
-            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
-            getLayersEl(row) { return row.querySelector('.layers-container') },
-
-            run(editor, sender) {
-                const lmEl = this.getLayersEl(this.getRowEl(editor));
-                lmEl.style.display = '';
-            },
-            stop(editor, sender) {
-                const lmEl = this.getLayersEl(this.getRowEl(editor));
-                lmEl.style.display = 'none';
-            },
-        });
-
-        // Styles panel commands
-        commands.add('show-styles', {
-            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
-            getStyleEl(row) { return row.querySelector('.styles-container') },
-
-            run(editor, sender) {
-                const smEl = this.getStyleEl(this.getRowEl(editor));
-                smEl.style.display = '';
-            },
-            stop(editor, sender) {
-                const smEl = this.getStyleEl(this.getRowEl(editor));
-                smEl.style.display = 'none';
-            },
-        });
-
-        // Traits panel commands
-        commands.add('show-traits', {
-            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
-            getTraitsEl(row) { return row.querySelector('.traits-container') },
-
-            run(editor, sender) {
-                const tmEl = this.getTraitsEl(this.getRowEl(editor));
-                tmEl.style.display = '';
-            },
-            stop(editor, sender) {
-                const tmEl = this.getTraitsEl(this.getRowEl(editor));
-                tmEl.style.display = 'none';
-            },
-        });
-
-        // Device commands
-        commands.add('set-device-desktop', {
-            run: editor => editor.setDevice('Desktop')
-        });
-        commands.add('set-device-tablet', {
-            run: editor => editor.setDevice('Tablet')
-        });
-        commands.add('set-device-mobile', {
-            run: editor => editor.setDevice('Mobile')
-        });
 
         // Add custom blocks
         addCustomBlocks(editor);
