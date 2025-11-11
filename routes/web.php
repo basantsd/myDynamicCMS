@@ -13,15 +13,6 @@ use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
-| Frontend Routes
-|--------------------------------------------------------------------------
-*/
-
-Route::get('/', [FrontendController::class, 'home'])->name('home');
-Route::get('/{slug}', [FrontendController::class, 'showPage'])->name('page.show');
-
-/*
-|--------------------------------------------------------------------------
 | Admin Authentication Routes
 |--------------------------------------------------------------------------
 */
@@ -80,3 +71,12 @@ Route::prefix('admin')->group(function () {
         });
     });
 });
+
+/*
+|--------------------------------------------------------------------------
+| Frontend Routes (MUST BE LAST - catch-all)
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [FrontendController::class, 'home'])->name('home');
+Route::get('/{slug}', [FrontendController::class, 'showPage'])->name('page.show');
