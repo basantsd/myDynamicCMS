@@ -18,7 +18,7 @@ class PageController extends Controller
     public function create()
     {
         $pages = Page::whereNull('parent_id')->get();
-        $templates = ['default', 'home', 'contact', 'about', 'team'];
+        $templates = ['default', 'treasury', 'home', 'contact', 'about', 'team'];
         return view('admin.pages.create', compact('pages', 'templates'));
     }
 
@@ -50,7 +50,7 @@ class PageController extends Controller
     {
         $page = Page::with('sections')->findOrFail($id);
         $pages = Page::where('id', '!=', $id)->whereNull('parent_id')->get();
-        $templates = ['default', 'home', 'contact', 'about', 'team'];
+        $templates = ['default', 'treasury', 'home', 'contact', 'about', 'team'];
         $sectionTypes = PageSection::getSectionTypes();
 
         return view('admin.pages.edit-with-tabs', compact('page', 'pages', 'templates', 'sectionTypes'));
