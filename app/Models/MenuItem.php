@@ -12,16 +12,18 @@ class MenuItem extends Model
     protected $fillable = [
         'menu_id',
         'parent_id',
-        'title',
+        'label',
         'url',
         'page_id',
-        'target',
+        'type',
+        'target_blank',
         'order',
         'is_active',
     ];
 
     protected $casts = [
         'is_active' => 'boolean',
+        'target_blank' => 'boolean',
     ];
 
     public function menu()
