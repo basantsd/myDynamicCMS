@@ -1,4 +1,4 @@
-@extends('layouts.frontend')
+@extends('frontend.layouts.treasury')
 
 @section('title', $page->title)
 @section('meta_description', $page->meta_description)
