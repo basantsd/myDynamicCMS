@@ -302,22 +302,327 @@
 @endpush
 
 @push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 <script>
+    // Initialize Sortable for drag-and-drop
+    document.addEventListener('DOMContentLoaded', function() {
+        const sectionsList = document.getElementById('sections-list');
+        if (sectionsList) {
+            new Sortable(sectionsList, {
+                animation: 150,
+                handle: '.fa-grip-vertical',
+                onEnd: function(evt) {
+                    updateSectionOrder();
+                }
+            });
+        }
+    });
+
+    function updateSectionOrder() {
+        const sections = document.querySelectorAll('.section-item');
+        const sectionIds = Array.from(sections).map(section => section.dataset.sectionId);
+
+        fetch('{{ route("admin.sections.reorder") }}', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: JSON.stringify({ sections: sectionIds })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Section order updated successfully');
+            }
+        })
+        .catch(error => console.error('Error updating section order:', error));
+    }
+
     function selectSectionType(type) {
-        alert('Section type selected: ' + type + '\n\nSection builder functionality will be implemented with dynamic forms for each section type.');
-        // TODO: Implement section builder with dynamic forms
+        const modal = bootstrap.Modal.getInstance(document.getElementById('addSectionModal'));
+        modal.hide();
+
+        // Show section form modal based on type
+        showSectionForm(type);
+    }
+
+    function showSectionForm(type, sectionId = null) {
+        const formModalHtml = getSectionFormModal(type, sectionId);
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('sectionFormModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Add new modal to body
+        document.body.insertAdjacentHTML('beforeend', formModalHtml);
+
+        // Show modal
+        const formModal = new bootstrap.Modal(document.getElementById('sectionFormModal'));
+        formModal.show();
+
+        // Load section data if editing
+        if (sectionId) {
+            loadSectionData(sectionId);
+        }
+    }
+
+    function getSectionFormModal(type, sectionId = null) {
+        const isEdit = sectionId !== null;
+        const title = isEdit ? 'Edit Section' : 'Add Section';
+        const formFields = getSectionFormFields(type);
+
+        return `
+            <div class="modal fade" id="sectionFormModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">${title} - ${type.replace(/_/g, ' ').toUpperCase()}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="sectionForm" enctype="multipart/form-data">
+                                <input type="hidden" name="section_type" value="${type}">
+                                <input type="hidden" name="page_id" value="{{ $page->id }}">
+                                ${isEdit ? `<input type="hidden" name="section_id" value="${sectionId}">` : ''}
+                                ${formFields}
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+                                    <label class="form-check-label" for="is_active">Active</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="submitSectionForm()">
+                                ${isEdit ? 'Update' : 'Add'} Section
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function getSectionFormFields(type) {
+        const fields = {
+            'hero_banner': `
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="content[title]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subtitle</label>
+                    <input type="text" class="form-control" name="content[subtitle]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="content[description]" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Button Text</label>
+                    <input type="text" class="form-control" name="content[button_text]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Button Link</label>
+                    <input type="text" class="form-control" name="content[button_link]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Background Image</label>
+                    <input type="file" class="form-control" name="background_image" accept="image/*">
+                </div>
+            `,
+            'rich_content': `
+                <div class="mb-3">
+                    <label class="form-label">Content</label>
+                    <textarea class="form-control" name="content[content]" rows="10" required></textarea>
+                    <small class="text-muted">You can use HTML</small>
+                </div>
+            `,
+            'breadcrumb': `
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    <input type="text" class="form-control" name="content[title]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Background Image</label>
+                    <input type="file" class="form-control" name="background_image" accept="image/*">
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="content[show_breadcrumb]" id="show_breadcrumb" value="1" checked>
+                        <label class="form-check-label" for="show_breadcrumb">Show Breadcrumb Navigation</label>
+                    </div>
+                </div>
+            `,
+            'services_grid': `
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Services (JSON)</label>
+                    <textarea class="form-control" name="content[services]" rows="8" placeholder='[{"title": "Service 1", "description": "Description", "icon": "fa-icon"}]'></textarea>
+                    <small class="text-muted">Enter services in JSON format</small>
+                </div>
+            `,
+            'statistics': `
+                <div class="mb-3">
+                    <label class="form-label">Statistics (JSON)</label>
+                    <textarea class="form-control" name="content[stats]" rows="8" placeholder='[{"number": "100+", "label": "Projects", "suffix": ""}]' required></textarea>
+                    <small class="text-muted">Enter statistics in JSON format</small>
+                </div>
+            `,
+            'faq': `
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">FAQs (JSON)</label>
+                    <textarea class="form-control" name="content[faqs]" rows="8" placeholder='[{"question": "Question?", "answer": "Answer"}]' required></textarea>
+                    <small class="text-muted">Enter FAQs in JSON format</small>
+                </div>
+            `,
+            'contact_form': `
+                <div class="mb-3">
+                    <label class="form-label">Form Title</label>
+                    <input type="text" class="form-control" name="content[title]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="content[description]" rows="3"></textarea>
+                </div>
+            `
+        };
+
+        return fields[type] || '<p class="text-muted">No specific fields for this section type.</p>';
+    }
+
+    function submitSectionForm() {
+        const form = document.getElementById('sectionForm');
+        const formData = new FormData(form);
+        const sectionId = formData.get('section_id');
+        const isEdit = sectionId !== null;
+
+        // Convert form data to proper structure
+        const contentData = {};
+        const files = {};
+
+        for (let [key, value] of formData.entries()) {
+            if (key.startsWith('content[')) {
+                const fieldName = key.match(/content\[(.*?)\]/)[1];
+                // Try to parse JSON fields
+                if (fieldName === 'services' || fieldName === 'faqs' || fieldName === 'stats') {
+                    try {
+                        contentData[fieldName] = JSON.parse(value);
+                    } catch (e) {
+                        contentData[fieldName] = value;
+                    }
+                } else {
+                    contentData[fieldName] = value;
+                }
+            } else if (['background_image', 'image', 'images'].includes(key)) {
+                files[key] = value;
+            }
+        }
+
+        // Prepare request data
+        const requestData = new FormData();
+        requestData.append('page_id', formData.get('page_id'));
+        requestData.append('section_type', formData.get('section_type'));
+        requestData.append('content', JSON.stringify(contentData));
+        requestData.append('is_active', formData.get('is_active') ? '1' : '0');
+
+        // Append files
+        for (let [key, value] of Object.entries(files)) {
+            requestData.append(key, value);
+        }
+
+        const url = isEdit
+            ? `{{ url('admin/page-sections') }}/${sectionId}`
+            : '{{ route("admin.sections.store") }}';
+
+        const method = isEdit ? 'PUT' : 'POST';
+
+        // For PUT requests, we need to add _method field
+        if (isEdit) {
+            requestData.append('_method', 'PUT');
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: requestData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('sectionFormModal'));
+                modal.hide();
+
+                // Reload page to show updated sections
+                window.location.reload();
+            } else {
+                alert('Error saving section. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving section. Please try again.');
+        });
     }
 
     function editSection(sectionId) {
-        alert('Edit section: ' + sectionId + '\n\nThis will open a modal with section-specific fields.');
-        // TODO: Implement edit section modal
+        // Get section type from the page
+        const sectionItem = document.querySelector(`[data-section-id="${sectionId}"]`);
+        const sectionType = sectionItem.querySelector('.badge').textContent.toLowerCase().replace(/\s+/g, '_');
+
+        showSectionForm(sectionType, sectionId);
+    }
+
+    function loadSectionData(sectionId) {
+        // This would load section data via AJAX and populate the form
+        // For now, we'll implement a simple version
+        console.log('Loading section data for:', sectionId);
     }
 
     function deleteSection(sectionId) {
-        if (confirm('Are you sure you want to delete this section?')) {
-            // TODO: Implement delete section
-            console.log('Delete section:', sectionId);
+        if (!confirm('Are you sure you want to delete this section?')) {
+            return;
         }
+
+        fetch(`{{ url('admin/page-sections') }}/${sectionId}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Remove section from UI
+                const sectionItem = document.querySelector(`[data-section-id="${sectionId}"]`);
+                sectionItem.remove();
+
+                // Reload page if no sections left
+                if (document.querySelectorAll('.section-item').length === 0) {
+                    window.location.reload();
+                }
+            } else {
+                alert('Error deleting section. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting section. Please try again.');
+        });
     }
 </script>
 @endpush
