@@ -53,7 +53,19 @@ foreach ($bladeFiles as $bladeName => $outputName) {
         // Extract everything after @section('content')
         preg_match('/@section\(\'content\'\)(.*?)@endsection/s', $content, $matches);
         if (!empty($matches[1])) {
-            $extracted = trim($matches[1]);
+            $sectionContent = $matches[1];
+
+            // Remove HTML comments
+            $sectionContent = preg_replace('/<!--.*?-->/s', '', $sectionContent);
+
+            // Clean up blade directives - handle asset() calls
+            $sectionContent = preg_replace('/\{\{\s*asset\([\'"]assets\/([^\'"]+)[\'"]\)\s*\}\}/', '/assets/$1', $sectionContent);
+            $sectionContent = preg_replace('/\{\{\s*asset\([\'"]([^\'"]+)[\'"]\)\s*\}\}/', '/$1', $sectionContent);
+
+            // Remove excessive whitespace
+            $sectionContent = preg_replace('/\n\s*\n\s*\n/', "\n\n", $sectionContent);
+
+            $extracted = trim($sectionContent);
         } else {
             $extracted = "<!-- Content extraction failed for {$bladeName} -->";
         }
@@ -101,8 +113,17 @@ foreach ($bladeFiles as $bladeName => $outputName) {
             // Remove all script tags
             $bodyContent = preg_replace('/<script[^>]*>.*?<\/script>/is', '', $bodyContent);
 
-            // Clean up blade directives - convert asset() calls to static paths
-            $bodyContent = preg_replace('/\{\{\s*asset\([\'"]([^\'"]+)[\'"]\)\s*\}\}/', '/assets/$1', $bodyContent);
+            // Remove all HTML comments
+            $bodyContent = preg_replace('/<!--.*?-->/s', '', $bodyContent);
+
+            // Clean up blade directives - handle asset() calls properly
+            // First handle asset('assets/...') to avoid double /assets/assets/
+            $bodyContent = preg_replace('/\{\{\s*asset\([\'"]assets\/([^\'"]+)[\'"]\)\s*\}\}/', '/assets/$1', $bodyContent);
+            // Then handle asset('...') for other paths
+            $bodyContent = preg_replace('/\{\{\s*asset\([\'"]([^\'"]+)[\'"]\)\s*\}\}/', '/$1', $bodyContent);
+
+            // Remove excessive whitespace while preserving structure
+            $bodyContent = preg_replace('/\n\s*\n\s*\n/', "\n\n", $bodyContent);
 
             $extracted = trim($bodyContent);
         } else {
