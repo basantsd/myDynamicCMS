@@ -13,6 +13,9 @@
     <!-- Bootstrap Icons for blocks -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
 
+    <!-- Font Awesome for icons in blocks -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
     <style>
         body, html {
             margin: 0;
@@ -111,6 +114,41 @@
         .gjs-four-color-h:hover {
             color: #3b82f6;
         }
+
+        /* Custom block styles */
+        .gjs-block-label {
+            text-align: center;
+            padding: 10px 5px;
+            font-size: 11px;
+        }
+
+        .gjs-block-label i {
+            font-size: 24px;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        /* Treasury blocks category */
+        .gjs-block-category[data-title="Treasury Sections"] {
+            background: #e3f2fd;
+        }
+
+        /* Trait button styling */
+        .gjs-trt-trait__wrp button[type="button"] {
+            width: 100%;
+            margin: 5px 0;
+            padding: 8px 12px;
+            background: #3b82f6;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+        }
+
+        .gjs-trt-trait__wrp button[type="button"]:hover {
+            background: #2563eb;
+        }
     </style>
 </head>
 <body>
@@ -141,8 +179,8 @@
     <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 
     <script>
-        // Initialize GrapesJS
-        const editor = grapesjs.init({
+        // Initialize GrapesJS and expose globally for treasury-blocks.js
+        window.editor = grapesjs.init({
             container: '#gjs',
             height: 'calc(100vh - 60px)',
             width: '100%',
@@ -224,6 +262,9 @@
                 }]
             }
         });
+
+        // Keep local reference to editor for rest of script
+        const editor = window.editor;
 
         // Load existing content if available
         @if($page->builder_data)
@@ -454,5 +495,8 @@
             }
         });
     </script>
+
+    <!-- Load Treasury Custom Blocks -->
+    <script src="{{ asset('assets/js/treasury-blocks.js') }}"></script>
 </body>
 </html>
