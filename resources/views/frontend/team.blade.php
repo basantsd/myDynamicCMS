@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -262,65 +262,125 @@
          </div>
       </header>
   <!-- main section start -->
- <section class="budget-container">
+  <!-- ===== Divisions & Units Section ===== -->
+<section class="team-container">
     <div class="container">
-         <h1 class="div-title">Audited Financial Statements</h1>
-    <p class="budget-intro div-subtitle">
-     Annual financial statements audited by an independent body.
-    </p>
+        <h1>Management Team</h1>
+    <p class="subtitle">Meet the dedicated professionals leading the Accountant General's Department</p>
 
-    <!-- Budget Overview -->
-    <div class="budget-box">
-      <h2>Statement of Financial Position</h2>
-      <p class="mb-0">
-        The Statement of Financial Position provides a snapshot of the Government's assets, liabilities, and equity at the end of each fiscal year.
+    <div class="row">
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+           <div class="profile-card-unique">
+               <div class="icon-wrapper">
+                  <div class="icon-circle">
+                     <i class="fas fa-user"></i>
+                  </div>
+               </div>
+               <h3>Mr. Levi Bradshaw</h3>
+               <p class="title">Accountant General</p>
+               <hr>
+               <div class="contact-info">
+                  <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+                  <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+               </div>
+          </div>
+        </div>
+    </div>
+
+    <div class="leadership-section">
+      <div class="leadership-icon">
+         <i class="far fa-user"></i>
+      </div>
+      <h2 class="leadership-title">Our Leadership</h2>
+      <p class="leadership-text">
+        Our management team brings together decades of experience in financial administration,
+        accounting, and public service. Together, they ensure the efficient operation of Government
+        financial systems and the delivery of excellent service to the people of St. Kitts and Nevis.
       </p>
-      
     </div>
-    <div class="budget-box">
-      <h2>Auditor's Opinion</h2>
-      <p class="mb-0">
-       Independent audit opinions are provided by certified public accountants in accordance with international auditing standards.
-      </p>
-      
     </div>
 
-    <!-- Download Budget Section -->
-    <div class="download-section">
-      <h2>Download Financial Statements</h2>
-
-      <div class="download-item">
-        <div class="download-info d-flex align-items-center"><i class="fas fa-download"></i> 
-        <div class="audit-finan">
-            <h5>Audited Statements 2024</h5>
-            <p>Published</p>
-        </div>
-        </div>
-        <button class="download-btn">Download PDF</button>
-      </div>
-       <div class="download-item">
-        <div class="download-info d-flex align-items-center"><i class="fas fa-download"></i> 
-        <div class="audit-finan">
-            <h5>Audited Statements 2024</h5>
-            <p>Published</p>
-        </div>
-        </div>
-        <button class="download-btn">Download PDF</button>
-      </div>
-       <div class="download-item">
-        <div class="download-info d-flex align-items-center"><i class="fas fa-download"></i> 
-        <div class="audit-finan">
-            <h5>Audited Statements 2024</h5>
-            <p>Published</p>
-        </div>
-        </div>
-        <button class="download-btn">Download PDF</button>
-      </div>
-
-     
-    </div>
-    </div>
- </section>
+  </section>
   <!-- main section end -->
 
   <!-- ========== FOOTER SECTION ========== -->
@@ -382,31 +442,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

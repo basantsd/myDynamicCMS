@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -264,47 +264,44 @@
   <!-- main section start -->
  <section class="budget-container">
     <div class="container">
-         <h1 class="div-title">Treasury Circulars & Notices
-</h1>
+         <h1 class="div-title">Annual National Budget</h1>
     <p class="budget-intro div-subtitle">
-     Official circulars and notices issued by the Treasury Department regarding financial procedures, guidelines, and important updates.
+      The Treasury Department, under the Ministry of Finance, prepares the annual budget in accordance with the Public Finance Management Act. 
+      The budget outlines the expected revenue, expenditure priorities, investments, and fiscal responsibilities of the Government.
     </p>
 
-   
+    <!-- Budget Overview -->
+    <div class="budget-box">
+      <h2>Budget Overview</h2>
+      <p>
+        The national budget sets out the Government's spending plan and priorities for the fiscal year.
+      </p>
+      <h3 style="font-size:1rem; font-weight:600; margin-bottom:10px;">Key Budget Themes</h3>
+      <ul>
+        <li>Supporting economic growth</li>
+        <li>Public infrastructure development</li>
+        <li>Fiscal responsibility and transparency</li>
+      </ul>
+    </div>
 
     <!-- Download Budget Section -->
     <div class="download-section">
-      <h2>Recent Circulars</h2>
+      <h2>Download Budget Documents</h2>
 
       <div class="download-item">
-        <div class="download-info "><i class="fas fa-file-alt f-25"></i> 
-        <div class="audit-finan">
-            <h5>Circular 01/2025 — Revised Payment Schedule</h5>
-            <p>January 15, 2025</p>
-        </div>
-        </div>
-        <button class="download-btn">View</button>
-      </div>
-       <div class="download-item">
-        <div class="download-info  "><i class="fas fa-file-alt f-25"></i> 
-        <div class="audit-finan">
-            <h5>Circular 05/2024 — Year-end Close Instructions</h5>
-            <p>December 1, 2024</p>
-        </div>
-        </div>
-        <button class="download-btn">View</button>
-      </div>
-       <div class="download-item">
-        <div class="download-info  "><i class="fas fa-file-alt f-25"></i> 
-        <div class="audit-finan">
-            <h5>Circular 04/2024 — Procurement Guidelines Update</h5>
-            <p>December 1, 2024</p>
-        </div>
-        </div>
-        <button class="download-btn">View</button>
+        <div class="download-info"><i class="fas fa-download"></i> Budget 2025</div>
+        <button class="download-btn">Download PDF</button>
       </div>
 
-     
+      <div class="download-item">
+        <div class="download-info"><i class="fas fa-download"></i> Budget 2024</div>
+        <button class="download-btn">Download PDF</button>
+      </div>
+
+      <div class="download-item">
+        <div class="download-info"><i class="fas fa-download"></i> Budget 2023</div>
+        <button class="download-btn">Download PDF</button>
+      </div>
     </div>
     </div>
  </section>
@@ -369,31 +366,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -263,98 +263,61 @@
       </header>
       <!-- main section start -->
       <!-- ===== Divisions & Units Section ===== -->
-      <section class="div-section cash-wrapp">
+      <section class="div-section">
          <div class="container">
-            <h1 class="div-title">Domestic & External Debt Reports</h1>
-            <p class="div-subtitle">Detailed breakdown of domestic and external debt obligations including interest rates and maturity dates.</p>
-            <div class="dcentre-filter-box">
-                <div class="dcentre-filter-header-1">
-                 Debt Portfolio
-                </div>
-
-               
-
-               
-
-                <div class="table-responsive">
-                    <table class="table dcentre-table align-middle">
-                    <thead>
-                        <tr>
-                        <th>Type of Debt</th>
-                        <th>Amount</th>
-                        <th>Interest Rate</th>
-                        <th>Maturity</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        <tr>
-                            <td>Treasury Bonds</td>
-                            <td>$234M</td>
-                            <td>3.5%</td>
-                            <td>2035</td>  
-                          
-                        </tr>
-                        
-                    </tbody>
-                    </table>
-                </div>
+            <h1 class="div-title">Investment Instruments</h1>
+            <p class="div-subtitle">Secure investment options for citizens of St. Kitts and Nevis</p>
+            <div class="calculator-box">
+               <h2><i class="fas fa-university"></i> Government Savings Bank (GSB)</h2>
+               <p>A secure savings account with competitive interest rates</p>
+               <div class="calc-results">
+                  <h6>Current Interest Rate</h6>
+                  <p>4% per annum</p>
+               </div>
+               <div class="eligibility invest-eli">
+                  <h5>Requirements to Open Account:</h5>
+                  <ul>
+                     <li>Two (2) Valid forms of Identification (Passport, Driver's License, National ID)</li>
+                     <li>Proof of Address (Utility Bill, Bank Statement - not older than 3 months)</li>
+                     <li>Minimum deposit of $50.00 to open account</li>
+                  </ul>
+               </div>
+               <div>
+                  <button class="pay-btn invest-eli-pay">Download Application Form</button>
+               </div>
+            </div>
+            <div class="calculator-box">
+               <h2><i class="fas fa-calculator"></i> Treasury Bills</h2>
+               <p>Short-term investment instruments issued by the Government</p>
+               <div class="calc-results-pay">
+                  <div class="calc-pay-c">
+                     <p>91 Days</p>
+                     <h5>1.50%</h5>
+                     <p>Interest Rate</p>
+                  </div>
+                  <div class="calc-pay-c">
+                     <p>181 Days</p>
+                     <h5>2.00%</h5>
+                     <p>Interest Rate</p>
+                  </div>
+                  <div class="calc-pay-c">
+                     <p>365 Days</p>
+                     <h5>2.50%</h5>
+                     <p>Interest Rate</p>
+                  </div>
+               </div>
+               <div class="eligibility invest-eli">
+                  <h5>Key Features:</h5>
+                  <ul>
+                     <li>Minimum investment of $1,000.00</li>
+                     <li>Secure government-backed investment</li>
+                     <li>Flexible maturity periods</li>
+                     <li>Interest paid at maturity</li>
+                  </ul>
+               </div>
+               <div>
+                  <button class="pay-btn invest-eli-pay">Download T-Bill Information</button>
+               </div>
             </div>
          </div>
       </section>
@@ -417,31 +380,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

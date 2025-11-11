@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -261,111 +261,169 @@
             </div>
          </div>
       </header>
-      <!-- main section start -->
-      <!-- ===== Divisions & Units Section ===== -->
-      <section class="div-section cash-wrapp">
-         <div class="container">
-            <h1 class="div-title">Estimates of Revenue & Expenditure</h1>
-            <p class="div-subtitle">Provides details of all expected government revenues and all spending by ministries and departments.</p>
-            <div class="dcentre-filter-box">
-                <div class="dcentre-filter-header-1">
-                   Budget Allocations by Ministry
-                </div>
-
-               
-
-               
-
-                <div class="table-responsive">
-                    <table class="table dcentre-table align-middle">
-                    <thead>
-                        <tr>
-                        <th>Ministry / Department</th>
-                        <th>Estimated Allocation</th>
-                        <th>Category</th>
-                        
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Ministry of Education</td>
-                            <td>$54,200,000</td>
-                            <td><span class="dcentre-badge">Capital</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ministry of Education</td>
-                            <td>$54,200,000</td>
-                            <td><span class="dcentre-badge">Capital</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ministry of Education</td>
-                            <td>$54,200,000</td>
-                            <td><span class="dcentre-badge-recurrent">Recurrent</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ministry of Education</td>
-                            <td>$54,200,000</td>
-                            <td><span class="dcentre-badge">Capital</span></td>
-                        </tr>
-                        <tr>
-                            <td>Ministry of Education</td>
-                            <td>$54,200,000</td>
-                            <td><span class="dcentre-badge-recurrent">Recurrent</span></td>
-                        </tr>
-                    </tbody>
-                    </table>
-                </div>
+      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+         <!-- Dots -->
+         <div class="carousel-indicators">
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+         </div>
+         <!-- Slides -->
+         <div class="carousel-inner">
+            <div class="carousel-item active" style="background-image: url('https://newsite.skntreasury.com/assets/treasury-building-C1xEqomN.png');">
+               <div class="carousel-caption">
+                  <h1>Accountant General's Department</h1>
+                  <h5>Treasury Chambers - St. Kitts and Nevis</h5>
+                  <p>Serving the people with transparency, professionalism, and confidentiality.</p>
+                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
+                  <a href="#" class="btn btn-outline-light">Learn More</a>
+               </div>
+            </div>
+            <!-- Add more slides if needed -->
+            <div class="carousel-item" style="background-image: url('https://newsite.skntreasury.com/assets/carousel-office-C8mLw0SY.jpg');">
+              <div class="carousel-caption">
+                  <h1>Professional Expertise</h1>
+                  <h5>Experience Excellence in Financial Management</h5>
+                  <p>Dedicated to efficient and effective management of Government financial operations.</p>
+                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
+                  <a href="#" class="btn btn-outline-light">Learn More</a>
+               </div>
+            </div>
+            <div class="carousel-item" style="background-image: url('https://newsite.skntreasury.com/assets/carousel-documents-Tu6FVx0e.jpg');">
+              <div class="carousel-caption">
+                  <h1>Financial Transparency</h1>
+                  <h5>Accountability and Trust</h5>
+                  <p>Access reports, budgets, and financial statements with complete transparency.</p>
+                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
+                  <a href="#" class="btn btn-outline-light">Learn More</a>
+               </div>
             </div>
          </div>
-      </section>
-      <!-- main section end -->
-      <!-- ========== FOOTER SECTION ========== -->
-      <footer class="footer-section">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-3 mb-4 cont-fot">
-                  <h6>Contact Us</h6>
-                  <p class="d-flex">
-                     <span><i class="fas fa-phone-alt"></i></span>
-                     <span> Treasury Chambers<br>
-                     Ministry of Finance<br>
-                     Basseterre, St. Kitts<br></span>
-                  </p>
-                  <p>
-                     <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
-                     <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
-                  </p>
-               </div>
-               <div class="col-md-3 mb-4">
-                  <h6>Quick Links</h6>
-                  <a href="#">Mission & Vision</a>
-                  <a href="#">Management Team</a>
-                  <a href="#">Services</a>
-                  <a href="#">Download Centre</a>
-                  <a href="#">Contact</a>
-               </div>
-               <div class="col-md-3 mb-4">
-                  <h6>Legal</h6>
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Terms & Conditions</a>
-                  <a href="#">Accessibility</a>
-                  <a href="#">Disclaimer</a>
-                  <a href="#">Site Map</a>
-               </div>
-               <div class="col-md-3 mb-4 cont-link">
-                  <h6>Related Links</h6>
-                  <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
-               </div>
-            </div>
-            <div class="footer-bottom">
-               © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
-            </div>
-         </div>
-      </footer>
+         <!-- Controls -->
+         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
+         <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+         </button>
+         <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
+         <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+         </button>
+      </div>
+      <!-- ========== CORE VALUES SECTION ========== -->
+  <section class="core-values-section">
+    <div class="container">
+      <h2 class="section-title">Our Core Values</h2>
+      <p class="section-subtitle">Guiding principles that define how we serve the people of St. Kitts and Nevis</p>
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+          <div class="core-card">
+            <i class="fas fa-shield-alt"></i>
+            <h5>Transparency</h5>
+            <p>Open and clear communication in all financial operations and reporting</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="core-card">
+            <i class="fas fa-user-tie"></i>
+            <h5>Professionalism</h5>
+            <p>Delivering services with expertise, integrity, and the highest standards</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="core-card">
+            <i class="fas fa-user-shield"></i>
+            <h5>Confidentiality</h5>
+            <p>Protecting sensitive information with strict security and privacy measures</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== QUICK ACCESS SECTION ========== -->
+  <section class="quick-access-section">
+    <div class="container">
+      <h2 class="section-title">Quick Access</h2>
+      <p class="section-subtitle">Access our key services and resources</p>
+      <div class="row justify-content-center">
+        <div class="col-md-4 mb-4">
+          <div class="quick-card">
+            <h6>Pension Administration</h6>
+            <p>Access pension services, pay dates, and life certificates</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="quick-card">
+            <h6>Government Savings Bank</h6>
+            <p>2% interest rate per annum on your savings</p>
+          </div>
+        </div>
+        <div class="col-md-4 mb-4">
+          <div class="quick-card">
+            <h6>Treasury Bills</h6>
+            <p>Short term investment opportunities with competitive returns</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== MISSION SECTION ========== -->
+  <section class="mission-section">
+    <div class="container text-center">
+      <h2 class="section-title">Our Mission</h2>
+      <p class="mission-text">
+        To ensure efficient and effective managing and reporting of Government’s financial operations, in order to support and foster the achievements of the Government’s goals and objectives with the highest level of proficiency, confidentiality and professionalism with the support of a well-trained and highly motivated staff.
+      </p>
+    </div>
+  </section>
+
+  <!-- ========== FOOTER SECTION ========== -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-4 cont-fot">
+          <h6>Contact Us</h6>
+          <p class="d-flex">
+            <span><i class="fas fa-phone-alt"></i></span>
+            <span> Treasury Chambers<br>
+            Ministry of Finance<br>
+            Basseterre, St. Kitts<br></span>
+            </p>
+            <p>
+            <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
+            <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
+          </p>
+        </div>
+        <div class="col-md-3 mb-4">
+          <h6>Quick Links</h6>
+          <a href="#">Mission & Vision</a>
+          <a href="#">Management Team</a>
+          <a href="#">Services</a>
+          <a href="#">Download Centre</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="col-md-3 mb-4">
+          <h6>Legal</h6>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Disclaimer</a>
+          <a href="#">Site Map</a>
+        </div>
+        <div class="col-md-3 mb-4 cont-link">
+          <h6>Related Links</h6>
+          <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
+      </div>
+    </div>
+  </footer>
+   
       <!-- Scroll To Top -->
       <a href="#" class="scrollToTop scroll-btn"
          ><i class="far fa-arrow-up"></i
@@ -377,31 +435,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

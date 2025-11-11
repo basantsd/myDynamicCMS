@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -188,12 +188,12 @@
             </div>
          </div>
          <!-- Main Menu Area -->
-          <div class="sticky-wrapper">
+         <div class="sticky-wrapper">
             <div class="sticky-active">
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -261,96 +261,151 @@
             </div>
          </div>
       </header>
-  <!-- main section start -->
- <section class="budget-container">
-    <div class="container">
-        <h1 class="div-title">Debt Overview</h1>
-        <p class=" div-subtitle">The Debt Management Unit is responsible for managing public debt to ensure sustainability and minimize borrowing cost.</p>
-         <div class="debt-wrapp-container">
-    <div class="debt-wrapp">
-      <div class="debt-header">
-        <h3>Total Public Debt</h3>
-        <div class="debt-icon"><i class="fas fa-dollar-sign"></i></div>
-      </div>
-      <div class="debt-value">$1.24B</div>
-      <div class="debt-subtext">As of Q4 2024</div>
-    </div>
+      <!-- main section start -->
+      <!-- ===== Divisions & Units Section ===== -->
+      <section class="div-section cash-wrapp">
+         <div class="container">
+            <h1 class="div-title">Domestic & External Debt Reports</h1>
+            <p class="div-subtitle">Detailed breakdown of domestic and external debt obligations including interest rates and maturity dates.</p>
+            <div class="dcentre-filter-box">
+                <div class="dcentre-filter-header-1">
+                 Debt Portfolio
+                </div>
 
-    <div class="debt-wrapp">
-      <div class="debt-header">
-        <h3>External Debt</h3>
-        <div class="debt-icon"><i class="fas fa-wave-square"></i></div>
-      </div>
-      <div class="debt-value">62%</div>
-      <div class="debt-subtext">$769M external portion</div>
-    </div>
+               
 
-    <div class="debt-wrapp">
-      <div class="debt-header">
-        <h3>Domestic Debt</h3>
-        <div class="debt-icon"><i class="far fa-clock"></i></div>
-      </div>
-      <div class="debt-value">38%</div>
-      <div class="debt-subtext">$471M domestic portion</div>
-    </div>
-  </div>
+               
 
-  <div class="analysis-section">
-    <h2>Debt-to-GDP Ratio Analysis</h2>
-    <div class="chart-box"></div>
-  </div>
-    </div>
- </section>
-  <!-- main section end -->
-
-  <!-- ========== FOOTER SECTION ========== -->
-  <footer class="footer-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 mb-4 cont-fot">
-          <h6>Contact Us</h6>
-          <p class="d-flex">
-            <span><i class="fas fa-phone-alt"></i></span>
-            <span> Treasury Chambers<br>
-            Ministry of Finance<br>
-            Basseterre, St. Kitts<br></span>
-            </p>
-            <p>
-            <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
-            <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
-          </p>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h6>Quick Links</h6>
-          <a href="#">Mission & Vision</a>
-          <a href="#">Management Team</a>
-          <a href="#">Services</a>
-          <a href="#">Download Centre</a>
-          <a href="#">Contact</a>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h6>Legal</h6>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Accessibility</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Site Map</a>
-        </div>
-        <div class="col-md-3 mb-4 cont-link">
-          <h6>Related Links</h6>
-          <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
-        </div>
-      </div>
-      <div class="footer-bottom">
-        © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
-      </div>
-    </div>
-  </footer>
-   
+                <div class="table-responsive">
+                    <table class="table dcentre-table align-middle">
+                    <thead>
+                        <tr>
+                        <th>Type of Debt</th>
+                        <th>Amount</th>
+                        <th>Interest Rate</th>
+                        <th>Maturity</th>
+                        
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        <tr>
+                            <td>Treasury Bonds</td>
+                            <td>$234M</td>
+                            <td>3.5%</td>
+                            <td>2035</td>  
+                          
+                        </tr>
+                        
+                    </tbody>
+                    </table>
+                </div>
+            </div>
+         </div>
+      </section>
+      <!-- main section end -->
+      <!-- ========== FOOTER SECTION ========== -->
+      <footer class="footer-section">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-3 mb-4 cont-fot">
+                  <h6>Contact Us</h6>
+                  <p class="d-flex">
+                     <span><i class="fas fa-phone-alt"></i></span>
+                     <span> Treasury Chambers<br>
+                     Ministry of Finance<br>
+                     Basseterre, St. Kitts<br></span>
+                  </p>
+                  <p>
+                     <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
+                     <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
+                  </p>
+               </div>
+               <div class="col-md-3 mb-4">
+                  <h6>Quick Links</h6>
+                  <a href="#">Mission & Vision</a>
+                  <a href="#">Management Team</a>
+                  <a href="#">Services</a>
+                  <a href="#">Download Centre</a>
+                  <a href="#">Contact</a>
+               </div>
+               <div class="col-md-3 mb-4">
+                  <h6>Legal</h6>
+                  <a href="#">Privacy Policy</a>
+                  <a href="#">Terms & Conditions</a>
+                  <a href="#">Accessibility</a>
+                  <a href="#">Disclaimer</a>
+                  <a href="#">Site Map</a>
+               </div>
+               <div class="col-md-3 mb-4 cont-link">
+                  <h6>Related Links</h6>
+                  <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
+               </div>
+            </div>
+            <div class="footer-bottom">
+               © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
+            </div>
+         </div>
+      </footer>
       <!-- Scroll To Top -->
       <a href="#" class="scrollToTop scroll-btn"
          ><i class="far fa-arrow-up"></i
@@ -362,31 +417,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

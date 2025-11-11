@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -188,12 +188,12 @@
             </div>
          </div>
          <!-- Main Menu Area -->
-         <div class="sticky-wrapper">
+          <div class="sticky-wrapper">
             <div class="sticky-active">
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -261,120 +261,77 @@
             </div>
          </div>
       </header>
-      <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
-         <!-- Dots -->
-         <div class="carousel-indicators">
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
-         </div>
-         <!-- Slides -->
-         <div class="carousel-inner">
-            <div class="carousel-item active" style="background-image: url('https://newsite.skntreasury.com/assets/treasury-building-C1xEqomN.png');">
-               <div class="carousel-caption">
-                  <h1>Accountant General's Department</h1>
-                  <h5>Treasury Chambers - St. Kitts and Nevis</h5>
-                  <p>Serving the people with transparency, professionalism, and confidentiality.</p>
-                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
-                  <a href="#" class="btn btn-outline-light">Learn More</a>
-               </div>
-            </div>
-            <!-- Add more slides if needed -->
-            <div class="carousel-item" style="background-image: url('https://newsite.skntreasury.com/assets/carousel-office-C8mLw0SY.jpg');">
-              <div class="carousel-caption">
-                  <h1>Professional Expertise</h1>
-                  <h5>Experience Excellence in Financial Management</h5>
-                  <p>Dedicated to efficient and effective management of Government financial operations.</p>
-                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
-                  <a href="#" class="btn btn-outline-light">Learn More</a>
-               </div>
-            </div>
-            <div class="carousel-item" style="background-image: url('https://newsite.skntreasury.com/assets/carousel-documents-Tu6FVx0e.jpg');">
-              <div class="carousel-caption">
-                  <h1>Financial Transparency</h1>
-                  <h5>Accountability and Trust</h5>
-                  <p>Access reports, budgets, and financial statements with complete transparency.</p>
-                  <a href="#" class="btn btn-red">Our Services <i class="fas fa-arrow-right ms-2"></i></a>
-                  <a href="#" class="btn btn-outline-light">Learn More</a>
-               </div>
-            </div>
-         </div>
-         <!-- Controls -->
-         <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-         <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
-         </button>
-         <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-         <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
-         </button>
-      </div>
-      <!-- ========== CORE VALUES SECTION ========== -->
-  <section class="core-values-section">
+  <!-- main section start -->
+   <!-- ========== MISSION & VISION SECTION ========== -->
+  <section class="mv-section">
     <div class="container">
-      <h2 class="section-title">Our Core Values</h2>
-      <p class="section-subtitle">Guiding principles that define how we serve the people of St. Kitts and Nevis</p>
-      <div class="row justify-content-center">
+      <h2 class="mv-title">Our Mission & Vision</h2>
+      <p class="mv-subtitle">Learn about our mission, vision, values, and mandate</p>
+
+      <div class="row justify-content-center align-items-stretch">
+        <!-- Mission -->
         <div class="col-md-4 mb-4">
-          <div class="core-card">
-            <i class="fas fa-shield-alt"></i>
-            <h5>Transparency</h5>
-            <p>Open and clear communication in all financial operations and reporting</p>
+          <div class="mv-card h-100">
+            <i class="fas fa-bullseye"></i>
+            <h5>Our Mission</h5>
+            <p>
+              To ensure efficient and effective managing and reporting of Government’s financial operations,
+              in order to support and foster the achievements of the Government’s goals and objectives
+              with the highest level of proficiency, confidentiality and professionalism.
+            </p>
           </div>
         </div>
+
+        <!-- Vision -->
         <div class="col-md-4 mb-4">
-          <div class="core-card">
-            <i class="fas fa-user-tie"></i>
-            <h5>Professionalism</h5>
-            <p>Delivering services with expertise, integrity, and the highest standards</p>
+          <div class="mv-card h-100">
+            <i class="fas fa-book-open"></i>
+            <h5>Our Vision</h5>
+            <p>
+              "Collecting all Government Revenues due, and ensuring they are spent only on Public Services"
+            </p>
           </div>
         </div>
+
+        <!-- Values -->
         <div class="col-md-4 mb-4">
-          <div class="core-card">
-            <i class="fas fa-user-shield"></i>
-            <h5>Confidentiality</h5>
-            <p>Protecting sensitive information with strict security and privacy measures</p>
+          <div class="mv-card h-100">
+            <i class="fas fa-heart"></i>
+            <h5>Our Values</h5>
+            <ul class="mv-values-list">
+              <li><i class="fas fa-circle"></i> Transparency</li>
+              <li><i class="fas fa-circle"></i> Professionalism</li>
+              <li><i class="fas fa-circle"></i> Confidentiality</li>
+            </ul>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- ========== QUICK ACCESS SECTION ========== -->
-  <section class="quick-access-section">
+  <!-- ========== MANDATE SECTION ========== -->
+  <section class="mandate-section">
     <div class="container">
-      <h2 class="section-title">Quick Access</h2>
-      <p class="section-subtitle">Access our key services and resources</p>
-      <div class="row justify-content-center">
-        <div class="col-md-4 mb-4">
-          <div class="quick-card">
-            <h6>Pension Administration</h6>
-            <p>Access pension services, pay dates, and life certificates</p>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="quick-card">
-            <h6>Government Savings Bank</h6>
-            <p>2% interest rate per annum on your savings</p>
-          </div>
-        </div>
-        <div class="col-md-4 mb-4">
-          <div class="quick-card">
-            <h6>Treasury Bills</h6>
-            <p>Short term investment opportunities with competitive returns</p>
-          </div>
-        </div>
+      <h3 class="mandate-title">Our Mandate</h3>
+      <div class="mandate-box">
+        <p>
+          The Accountant General's Department is administered under the Finance Administration Act, 2007.
+          In accordance with the directions of the Financial Secretary, the Accountant General is responsible for:
+        </p>
+        <ul class="mandate-list">
+          <li><span class="mandate-number">1</span> Maintaining central accounts of the Government showing the current state of the Consolidated Fund</li>
+          <li><span class="mandate-number">2</span> Receiving, banking and overseeing disbursement of public money</li>
+          <li><span class="mandate-number">3</span> Preparing Public Accounts and financial statements</li>
+          <li><span class="mandate-number">4</span> Maintaining a system for examination of payments</li>
+          <li><span class="mandate-number">5</span> Ensuring proper system of accounts in every ministry and department</li>
+          <li><span class="mandate-number">6</span> Evaluating accounting and financial management systems throughout Government</li>
+          <li><span class="mandate-number">7</span> Reporting defects in control of revenue, expenditure or cash</li>
+          <li><span class="mandate-number">8</span> Exercising supervision over revenue receipt and collection</li>
+        </ul>
       </div>
     </div>
   </section>
-
-  <!-- ========== MISSION SECTION ========== -->
-  <section class="mission-section">
-    <div class="container text-center">
-      <h2 class="section-title">Our Mission</h2>
-      <p class="mission-text">
-        To ensure efficient and effective managing and reporting of Government’s financial operations, in order to support and foster the achievements of the Government’s goals and objectives with the highest level of proficiency, confidentiality and professionalism with the support of a well-trained and highly motivated staff.
-      </p>
-    </div>
-  </section>
+  <!-- main section end -->
 
   <!-- ========== FOOTER SECTION ========== -->
   <footer class="footer-section">
@@ -435,31 +392,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -188,12 +188,12 @@
             </div>
          </div>
          <!-- Main Menu Area -->
-         <div class="sticky-wrapper">
+          <div class="sticky-wrapper">
             <div class="sticky-active">
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -232,6 +232,7 @@
                                     <li><a href="pension-services.html">Pension Services</a></li>
                                     <li><a href="investment-services.html">Investment Services</a></li>
                                     <li><a href="cash-collection.html">Revenue/Cash Collection</a></li>
+                                    
                                     <li><a href="government-payroll-services.html">Government Payroll Services</a></li>
                                  </ul>
                               </li>
@@ -261,113 +262,133 @@
             </div>
          </div>
       </header>
-      <!-- main section start -->
-      <!-- ===== Divisions & Units Section ===== -->
-      <section class="div-section cash-wrapp">
-         <div class="container">
-            <h1 class="div-title">Contact Us</h1>
-            <p class="div-subtitle">Get in touch with the Accountant General's Department</p>
-            <div class="row g-4">
-              <!-- Left Column -->
-              <div class="col-lg-6">
-                <div class="contactpg-card">
-                  <h5><i class="fas fa-map-marker-alt"></i> Location</h5>
-                  <p>Treasury Chambers</p>
-                  <p>Ministry of Finance</p>
-                  <p>Basseterre, St. Kitts</p>
-                  <p>St. Kitts and Nevis</p>
-                </div>
+  <!-- main section start -->
+  <!-- ===== Divisions & Units Section ===== -->
+  <section class="div-section">
+    <div class="container">
+    <h1 class="div-title">Pension Services</h1>
+    <p class="div-subtitle">The Treasury processes pension payments for retired public servants and administers the Social Security pension program.</p>
 
-                <div class="contactpg-card">
-                  <h5><i class="fas fa-phone-alt"></i> Phone</h5>
-                  <p>Main Office: <span class="contactpg-highlight">+1 (869) 467-1925</span></p>
-                  <p>For Treasury Bills enquiries, contact Mrs. Ghislyn Browne at 467-1925</p>
-                </div>
+    <div class="calculator-box">
+      <h2><i class="fas fa-calculator"></i> Pension Calculator</h2>
+      <p>Calculate your estimated government pension and gratuity based on years of service and final salary</p>
 
-                <div class="contactpg-card">
-                  <h5><i class="fas fa-envelope"></i> Email</h5>
-                  <p><a href="mailto:info@skntreasury.gov.kn">info@skntreasury.gov.kn</a></p>
-                </div>
+      <div class="eligibility">
+        <h5>Eligibility Requirements:</h5>
+        <ul>
+            <li>Minimum 10 years (120 months) of service for gratuity</li>
+            <li>Minimum 15 years (180 months) of service for pension eligibility</li>
+            <li>Maximum pensionable service 33⅓ years (400 months)</li>
+            <li>3% contribution rate for contributory pension plan</li>
+        </ul>
+      
+      </div>
 
-                <div class="contactpg-card">
-                  <h5><i class="far fa-clock"></i> Office Hours</h5>
-                  <p>Monday - Friday: 8:00 AM - 4:00 PM</p>
-                  <p>Saturday - Sunday: Closed</p>
-                  <p>Public holidays: Closed</p>
-                </div>
-              </div>
+      <div class="row">
+        <div class="col-md-6">
+            <label>Years of Service</label>
+            <input type="number" placeholder="Enter years">
+        </div>
+        <div class="col-md-6">
+            <label>Additional Months</label>
+            <input type="number" placeholder="0-11 months">
+        </div>
+        <div class="col-md-12">
+            <label>Final Annual Salary (XCD)</label>
+            <input type="text" placeholder="Enter your final annual salary">
+            <small>Your annual salary at the time of retirement</small>
+        </div>
+      </div>
 
-              <!-- Right Column -->
-              <div class="col-lg-6">
-                <div class="contactpg-card side-cont">
-                  <h5><i class="fas fa-user-check"></i> In-Person Services</h5>
-                  <h6>Government Savings Bank</h6>
-                  <p>
-                  New applications must be made in person at the Cashiers Counter of the Customer Service Unit. Bring two valid pieces of identification and a minimum deposit of EC$25.00.</p>
-                  <h6>Pension Confirmation Letters</h6>
-                  <p>
-                  Letters must be collected in person from the Treasury. Allow up to 5 business days for processing.</p>
+      
 
-                  <h6>Treasury Bills Applications</h6>
-                  <p>Submit completed application forms at the Accountant General Department. Listen for radio announcements regarding Issue Dates.</p>
-                </div>
+      
 
-                <div class="contactpg-card">
-                  <h5><i class="fas fa-exclamation-circle"></i> Important Notice</h5>
-                  <p>For urgent matters or specific departmental inquiries, please call our main office during business hours. Our staff will direct you to the appropriate division or officer who can assist with your needs.</p>
-                </div>
-              </div>
-            </div>
-         </div>
-      </section>
-      <!-- main section end -->
-      <!-- ========== FOOTER SECTION ========== -->
-      <footer class="footer-section">
-         <div class="container">
-            <div class="row">
-               <div class="col-md-3 mb-4 cont-fot">
-                  <h6>Contact Us</h6>
-                  <p class="d-flex">
-                     <span><i class="fas fa-phone-alt"></i></span>
-                     <span> Treasury Chambers<br>
-                     Ministry of Finance<br>
-                     Basseterre, St. Kitts<br></span>
-                  </p>
-                  <p>
-                     <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
-                     <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
-                  </p>
-               </div>
-               <div class="col-md-3 mb-4">
-                  <h6>Quick Links</h6>
-                  <a href="#">Mission & Vision</a>
-                  <a href="#">Management Team</a>
-                  <a href="#">Services</a>
-                  <a href="#">Download Centre</a>
-                  <a href="#">Contact</a>
-               </div>
-               <div class="col-md-3 mb-4">
-                  <h6>Legal</h6>
-                  <a href="#">Privacy Policy</a>
-                  <a href="#">Terms & Conditions</a>
-                  <a href="#">Accessibility</a>
-                  <a href="#">Disclaimer</a>
-                  <a href="#">Site Map</a>
-               </div>
-               <div class="col-md-3 mb-4 cont-link">
-                  <h6>Related Links</h6>
-                  <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-                  <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
-               </div>
-            </div>
-            <div class="footer-bottom">
-               © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
-            </div>
-         </div>
-      </footer>
+      <div style="margin-top:15px;">
+        <button class="pay-btn">Calculate Pension</button>
+        <button class="pay-btn pay-reset-but">Reset</button>
+      </div>
+
+      <div class="calc-results">
+        <h5>How It's Calculated:</h5>
+        <ul>
+            <li><b>Annual Pension: </b> (Service in months ÷ 600) × Final Annual Salary</li>
+            <li><b>Monthly Pension: </b>Annual Pension ÷ 12</li>
+            <li><b>Gratuity: </b>(Annual Pension × 4) + 12.5</li>
+        </ul>
+      
+        <small>Maximum pensionable service is capped at 400 months (33⅓ years).</small>
+      </div>
+    </div>
+
+    <div class="quick-links">
+      <h3><i class="fa fa-download" aria-hidden="true"></i> Quick Links</h3>
+      <a href="#"><i class="fas fa-file-alt"></i>Download Pension Application Form (PDF)</a>
+      <a href="#"><i class="fas fa-file-alt"></i>Payment Schedule (PDF)</a>
+      <a href="#"><i class="fas fa-file-alt"></i>Life Certificate Form (PDF)</a>
+    </div>
+
+    <div class="payment-info">
+      <h3>Pension Payment Information</h3>
+      <p><strong>Payment Schedule:</strong><br>
+        Pension payments are processed on the last business day of each month.</p>
+      <p><strong>Life Certificates:</strong><br>
+        Pensioners are required to submit life certificates annually to continue receiving payments.</p>
+        <p><strong>Contact for Pension Inquiries:</strong><br>
+        For pension-related questions, please visit our office or call (869) 467-1034/1522</p>
+    </div>
+  </div>
+  </section>
+  <!-- main section end -->
+
+  <!-- ========== FOOTER SECTION ========== -->
+  <footer class="footer-section">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-3 mb-4 cont-fot">
+          <h6>Contact Us</h6>
+          <p class="d-flex">
+            <span><i class="fas fa-phone-alt"></i></span>
+            <span> Treasury Chambers<br>
+            Ministry of Finance<br>
+            Basseterre, St. Kitts<br></span>
+            </p>
+            <p>
+            <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
+            <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
+          </p>
+        </div>
+        <div class="col-md-3 mb-4">
+          <h6>Quick Links</h6>
+          <a href="#">Mission & Vision</a>
+          <a href="#">Management Team</a>
+          <a href="#">Services</a>
+          <a href="#">Download Centre</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="col-md-3 mb-4">
+          <h6>Legal</h6>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms & Conditions</a>
+          <a href="#">Accessibility</a>
+          <a href="#">Disclaimer</a>
+          <a href="#">Site Map</a>
+        </div>
+        <div class="col-md-3 mb-4 cont-link">
+          <h6>Related Links</h6>
+          <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+          <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
+      </div>
+    </div>
+  </footer>
+   
       <!-- Scroll To Top -->
       <a href="#" class="scrollToTop scroll-btn"
          ><i class="far fa-arrow-up"></i
@@ -379,31 +400,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

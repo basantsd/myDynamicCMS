@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -265,65 +265,81 @@
       <!-- ===== Divisions & Units Section ===== -->
       <section class="div-section cash-wrapp">
          <div class="container">
-            <h1 class="div-title">Public Notices</h1>
-            <p class="div-subtitle">Important notices and announcements for the public from the Treasury Department.</p>
-            <!-- Notice 1 -->
-            <div class="pnotice-card">
-               <div class="pnotice-left">
-                  <i class="fas fa-exclamation-circle pnotice-icon"></i>
-                  <div class="pnotice-content">
-                     <h6>Office Closure Notice</h6>
-                     <p>
-                        Government offices will be closed on Friday, December 20 for fiscal year-end closing.
-                        All services will resume on Monday, December 23.
-                     </p>
-                  </div>
+            <h1 class="div-title">Treasury News</h1>
+            <p class="div-subtitle">Latest news and updates from the Accountant General's Department and Treasury operations.</p>
+              <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
                </div>
-               <div class="pnotice-date">December 20, 2024</div>
-            </div>
-            <!-- Notice 2 -->
-            <div class="pnotice-card">
-               <div class="pnotice-left">
-                  <i class="fas fa-exclamation-circle pnotice-icon"></i>
-                  <div class="pnotice-content">
-                     <h6>Vendor Payment Cut-off</h6>
-                     <p>
-                        The final vendor payment processing date for 2024 is December 17.
-                        All invoices must be submitted by this date for year-end payment.
-                     </p>
-                  </div>
+               <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
                </div>
-               <div class="pnotice-date">December 17, 2024</div>
-            </div>
-            <!-- Notice 3 -->
-            <div class="pnotice-card">
-               <div class="pnotice-left">
-                  <i class="fas fa-exclamation-circle pnotice-icon"></i>
-                  <div class="pnotice-content">
-                     <h6>Pension Life Certificate Reminder</h6>
-                     <p>
-                        All pensioners are reminded to submit their annual life certificates by the end of January 2025
-                        to avoid interruption of pension payments.
-                     </p>
-                  </div>
+               <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
                </div>
-               <div class="pnotice-date">Ongoing</div>
-            </div>
-            <!-- Notice 4 -->
-            <div class="pnotice-card">
-               <div class="pnotice-left">
-                  <i class="fas fa-exclamation-circle pnotice-icon"></i>
-                  <div class="pnotice-content">
-                     <h6>Treasury Bills Issue Schedule</h6>
-                     <p>
-                        Treasury Bills are issued on the first Wednesday of each month.
-                        Contact the Treasury for more information on investment opportunities.
-                     </p>
-                  </div>
+               <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
                </div>
-               <div class="pnotice-date">Monthly</div>
-            </div>
-         </div>
+               <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
+               </div>
+               <div class="tnews-card">
+                    <div class="tnews-date">
+                        <i class="far fa-calendar-alt"></i> December 2024
+                        <span class="tnews-tag">Budget</span>
+                    </div>
+                    <h5>National Budget 2025 Presented to Parliament</h5>
+                    <p>
+                        The Minister of Finance presented the National Budget for fiscal year 2025,
+                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
+                    </p>
+                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
+               </div>
+        </div>
       </section>
       <!-- main section end -->
       <!-- ========== FOOTER SECTION ========== -->
@@ -384,31 +400,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

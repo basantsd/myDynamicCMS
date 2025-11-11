@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -265,81 +265,76 @@
       <!-- ===== Divisions & Units Section ===== -->
       <section class="div-section cash-wrapp">
          <div class="container">
-            <h1 class="div-title">Treasury News</h1>
-            <p class="div-subtitle">Latest news and updates from the Accountant General's Department and Treasury operations.</p>
-              <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
-               <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
-               <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
-               <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
-               <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
-               <div class="tnews-card">
-                    <div class="tnews-date">
-                        <i class="far fa-calendar-alt"></i> December 2024
-                        <span class="tnews-tag">Budget</span>
-                    </div>
-                    <h5>National Budget 2025 Presented to Parliament</h5>
-                    <p>
-                        The Minister of Finance presented the National Budget for fiscal year 2025,
-                        outlining key priorities including infrastructure development, education enhancement, and healthcare improvements.
-                    </p>
-                    <a href="#" class="tnews-readmore">Read more <i class="fas fa-arrow-right"></i></a>
-               </div>
+            <h1 class="div-title">Revenue/Cash Collection</h1>
+            <p class="div-subtitle">Secure investment options for citizens of St. Kitts and Nevis</p>
+            <!-- Customer Service Unit -->
+    <div class="card">
+      <div class="cash-box">
+        <h2><i class="fas fa-wallet"></i> Customer Service Unit</h2>
+      </div>
+      <p>Central Revenue Collection Agency for Government Services</p>
+      <p>The Customer Service Unit serves as the central revenue collection agency for various government ministries and departments. We facilitate efficient and secure payment processing for a wide range of government services.</p>
+
+      <div class="section-title mt-2"><i class="far fa-list-alt"></i> Services We Collect For:</div>
+      <ul class="services-list">
+        <li>Business licenses and permits</li>
+        <li>Government fees and charges</li>
+        <li>Trade licenses</li>
+        <li>Property taxes</li>
+        <li>Motor vehicle registrations</li>
+        <li>Court fines and fees</li>
+      </ul>
+
+      <div class="section-title"><i class="fas fa-money-check"></i> Accepted Payment Methods:</div>
+      <div class="payment-methods">
+        <div>Cash</div>
+        <div>Debit Card</div>
+        <div>Credit Card</div>
+        <div>Bank Draft</div>
+        <div>Certified Check</div>
+        <div>Wire Transfer</div>
+      </div>
+    </div>
+
+    <!-- Contact Info -->
+    <div class="card">
+      <div class="section-title"> Visit Our Customer Service Unit</div>
+
+      <div class="contact-info">
+        <div class="info-item">
+          <i class="fas fa-map-marker-alt"></i>
+          <div>
+            <strong style="font-weight: 500;">Location</strong><br>
+            Treasury Building<br>
+            Church Street<br>
+            Basseterre, St. Kitts
+          </div>
         </div>
+
+        <div class="info-item">
+         <i class="fas fa-phone"></i>
+          <div>
+            <strong style="font-weight: 500;">Phone</strong><br>
+            (869) 467-1152 / 1153
+          </div>
+        </div>
+
+        <div class="info-item">
+        <i class="fas fa-envelope"></i>
+          <div>
+            <strong style="font-weight: 500;">Email</strong><br>
+            customerservice@treasury.gov.kn
+          </div>
+        </div>
+      </div>
+
+      <div class="office-hours">
+        <strong style="font-weight: 500;">Office Hours</strong>
+        <p>Monday - Friday: 8:00 AM - 4:00 PM</p>
+        <p>Closed on Public Holidays</p>
+      </div>
+    </div>
+         </div>
       </section>
       <!-- main section end -->
       <!-- ========== FOOTER SECTION ========== -->
@@ -400,31 +395,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

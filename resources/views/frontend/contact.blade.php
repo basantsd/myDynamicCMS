@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -193,7 +193,7 @@
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -265,61 +265,59 @@
       <!-- ===== Divisions & Units Section ===== -->
       <section class="div-section cash-wrapp">
          <div class="container">
-            <h1 class="div-title">Government Payroll Services</h1>
-            <p class="div-subtitle">Treasury manages payroll for all Government ministries and agencies.</p>
-              <div class="row g-3">
-      <!-- Payroll Schedule -->
-      <div class="col-md-6">
-        <div class="card-box-govt">
-          <h5><i class="far fa-calendar-alt"></i> Payroll Schedule</h5>
-          <h4>Regular Payroll</h4>
-          <p>Processed on the last business day of each month</p>
+            <h1 class="div-title">Contact Us</h1>
+            <p class="div-subtitle">Get in touch with the Accountant General's Department</p>
+            <div class="row g-4">
+              <!-- Left Column -->
+              <div class="col-lg-6">
+                <div class="contactpg-card">
+                  <h5><i class="fas fa-map-marker-alt"></i> Location</h5>
+                  <p>Treasury Chambers</p>
+                  <p>Ministry of Finance</p>
+                  <p>Basseterre, St. Kitts</p>
+                  <p>St. Kitts and Nevis</p>
+                </div>
 
-          <h4 class="mt-2">Mid-Month Advances</h4>
-         <p>Available on the 15th of each month (subject to approval)</p>
-        </div>
-      </div>
+                <div class="contactpg-card">
+                  <h5><i class="fas fa-phone-alt"></i> Phone</h5>
+                  <p>Main Office: <span class="contactpg-highlight">+1 (869) 467-1925</span></p>
+                  <p>For Treasury Bills enquiries, contact Mrs. Ghislyn Browne at 467-1925</p>
+                </div>
 
-      <!-- Coverage -->
-      <div class="col-md-6">
-        <div class="card-box-govt">
-          <h5><i class="fas fa-user-friends"></i> Coverage</h5>
-          <ul>
-            <li>All Government Ministries</li>
-            <li>Statutory Bodies</li>
-            <li>Public Agencies</li>
-            <li>Educational Institutions</li>
-          </ul>
-        </div>
-      </div>
+                <div class="contactpg-card">
+                  <h5><i class="fas fa-envelope"></i> Email</h5>
+                  <p><a href="mailto:info@skntreasury.gov.kn">info@skntreasury.gov.kn</a></p>
+                </div>
 
-      <!-- Payroll Information -->
-      <div class="col-12 mt-lg-4">
-        <div class="card-box-govt">
-          <h5><i class="fas fa-info-circle"></i> Payroll Information</h5>
-          <div class="row">
-            <div class="col-md-6">
-              <h4>For Employees</h4>
-              <ul>
-                <li>Salary statements available online</li>
-                <li>Tax certificates issued annually</li>
-                <li>Direct deposit to local banks</li>
-                <li>Deduction details accessible</li>
-              </ul>
+                <div class="contactpg-card">
+                  <h5><i class="far fa-clock"></i> Office Hours</h5>
+                  <p>Monday - Friday: 8:00 AM - 4:00 PM</p>
+                  <p>Saturday - Sunday: Closed</p>
+                  <p>Public holidays: Closed</p>
+                </div>
+              </div>
+
+              <!-- Right Column -->
+              <div class="col-lg-6">
+                <div class="contactpg-card side-cont">
+                  <h5><i class="fas fa-user-check"></i> In-Person Services</h5>
+                  <h6>Government Savings Bank</h6>
+                  <p>
+                  New applications must be made in person at the Cashiers Counter of the Customer Service Unit. Bring two valid pieces of identification and a minimum deposit of EC$25.00.</p>
+                  <h6>Pension Confirmation Letters</h6>
+                  <p>
+                  Letters must be collected in person from the Treasury. Allow up to 5 business days for processing.</p>
+
+                  <h6>Treasury Bills Applications</h6>
+                  <p>Submit completed application forms at the Accountant General Department. Listen for radio announcements regarding Issue Dates.</p>
+                </div>
+
+                <div class="contactpg-card">
+                  <h5><i class="fas fa-exclamation-circle"></i> Important Notice</h5>
+                  <p>For urgent matters or specific departmental inquiries, please call our main office during business hours. Our staff will direct you to the appropriate division or officer who can assist with your needs.</p>
+                </div>
+              </div>
             </div>
-            <div class="col-md-6">
-              <h4>For Ministries</h4>
-              <ul>
-                <li>Monthly payroll reports</li>
-                <li>Budget variance analysis</li>
-                <li>Employee count tracking</li>
-                <li>Overtime and allowances management</li>
-              </ul>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
          </div>
       </section>
       <!-- main section end -->
@@ -381,31 +379,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(

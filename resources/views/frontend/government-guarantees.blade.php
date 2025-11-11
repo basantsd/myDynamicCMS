@@ -13,7 +13,7 @@
          content="width=device-width, initi  al-scale=1, shrink-to-fit=no"
          />
       <link
-         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css"
+         href="https://use.fontawesome.com/releases/v5.15.4/css/all.css') }}"
          rel="stylesheet"
          />
       <link
@@ -21,7 +21,7 @@
          rel="stylesheet"
          type="text/css"
          />
-      <link rel="icon" href="./assets/img/fav.jpg" />
+      <link rel="icon" href="./assets/img/fav.jpg') }}" />
       <!--==============================
          Google Fonts
          ============================== -->
@@ -35,18 +35,18 @@
          All CSS File
          ============================== -->
       <!-- Bootstrap -->
-      <!-- <link rel="stylesheet" href="assets/css/app.min.css"> -->
-      <link rel="stylesheet" href="assets/css/bootstrap.min.css" />
+      <!-- <link rel="stylesheet" href="{{ asset('assets/css/app.min.css') }}"> -->
+      <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />
       <!-- Fontawesome Icon -->
-      <link rel="stylesheet" href="assets/css/fontawesome.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/fontawesome.min.css') }}" />
       <!-- Layerslider -->
-      <link rel="stylesheet" href="assets/css/layerslider.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/layerslider.min.css') }}" />
       <!-- Magnific Popup -->
-      <link rel="stylesheet" href="assets/css/magnific-popup.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/magnific-popup.min.css') }}" />
       <!-- Slick Slider -->
-      <link rel="stylesheet" href="assets/css/slick.min.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/slick.min.css') }}" />
       <!-- Theme Custom CSS -->
-      <link rel="stylesheet" href="assets/css/style.css" />
+      <link rel="stylesheet" href="{{ asset('assets/css/style.css') }}" />
    </head>
    <body>
       <!--==============================
@@ -57,7 +57,7 @@
             <button class="vs-menu-toggle"><i class="fal fa-times"></i></button>
             <div class="mobile-logo">
                <a href="index.html"
-                  ><img src="assets/img/logo/logo.png" alt="Logo" class="logo"
+                  ><img src="{{ asset('assets/img/logo/logo.png') }}" alt="Logo" class="logo"
                   /></a>
             </div>
             <div class="vs-mobile-menu">
@@ -128,7 +128,7 @@
                      <div class="col">
                         <div class="header-logo">
                            <a href="index.html"
-                              ><img src="assets/img/logo1.png" alt="Logo" class="logo"
+                              ><img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo"
                               /></a>
                            <br />
                         </div>
@@ -188,12 +188,12 @@
             </div>
          </div>
          <!-- Main Menu Area -->
-          <div class="sticky-wrapper">
+         <div class="sticky-wrapper">
             <div class="sticky-active">
                <div class="container">
                   <div class="row custom-bdr  align-items-center justify-content-between">
                      <div class="col-7 d-inline-block d-lg-none">
-                        <img src="assets/img/logo1.png" alt="Logo" class="logo" />
+                        <img src="{{ asset('assets/img/logo1.png') }}" alt="Logo" class="logo" />
                      </div>
                      <div class="col-lg-12 col-3">
                         <nav class="main-menu new-menu menu-style1 d-none d-lg-block">
@@ -261,126 +261,97 @@
             </div>
          </div>
       </header>
-  <!-- main section start -->
-   <!-- ========== MISSION & VISION SECTION ========== -->
-  <section class="mv-section">
-    <div class="container">
-      <h2 class="mv-title">Our Mission & Vision</h2>
-      <p class="mv-subtitle">Learn about our mission, vision, values, and mandate</p>
-
-      <div class="row justify-content-center align-items-stretch">
-        <!-- Mission -->
-        <div class="col-md-4 mb-4">
-          <div class="mv-card h-100">
-            <i class="fas fa-bullseye"></i>
-            <h5>Our Mission</h5>
-            <p>
-              To ensure efficient and effective managing and reporting of Government’s financial operations,
-              in order to support and foster the achievements of the Government’s goals and objectives
-              with the highest level of proficiency, confidentiality and professionalism.
-            </p>
-          </div>
-        </div>
-
-        <!-- Vision -->
-        <div class="col-md-4 mb-4">
-          <div class="mv-card h-100">
-            <i class="fas fa-book-open"></i>
-            <h5>Our Vision</h5>
-            <p>
-              "Collecting all Government Revenues due, and ensuring they are spent only on Public Services"
-            </p>
-          </div>
-        </div>
-
-        <!-- Values -->
-        <div class="col-md-4 mb-4">
-          <div class="mv-card h-100">
-            <i class="fas fa-heart"></i>
-            <h5>Our Values</h5>
-            <ul class="mv-values-list">
-              <li><i class="fas fa-circle"></i> Transparency</li>
-              <li><i class="fas fa-circle"></i> Professionalism</li>
-              <li><i class="fas fa-circle"></i> Confidentiality</li>
-            </ul>
-          </div>
-        </div>
+      <!-- main section start -->
+      <!-- ===== Divisions & Units Section ===== -->
+      <section class="div-section cash-wrapp">
+         <div class="container">
+            <h1 class="div-title">Government Guarantees</h1>
+            <p class="div-subtitle">Government guarantees are provided for strategic projects that support national development.</p>
+            <div class="guarantee-card">
+    <div class="left-guarant">
+      <div class="title-row-guarant">
+        <div class="icon-guarant"></div>
+        <div class="project-title">National Housing Development Initiative</div>
       </div>
+      <div class="issued">Issued: 2024</div>
+      <div class="beneficiary"><strong>Beneficiary:</strong> Housing Development Corporation</div>
     </div>
-  </section>
+    <div class="amount">$45M</div>
+  </div>
 
-  <!-- ========== MANDATE SECTION ========== -->
-  <section class="mandate-section">
-    <div class="container">
-      <h3 class="mandate-title">Our Mandate</h3>
-      <div class="mandate-box">
-        <p>
-          The Accountant General's Department is administered under the Finance Administration Act, 2007.
-          In accordance with the directions of the Financial Secretary, the Accountant General is responsible for:
-        </p>
-        <ul class="mandate-list">
-          <li><span class="mandate-number">1</span> Maintaining central accounts of the Government showing the current state of the Consolidated Fund</li>
-          <li><span class="mandate-number">2</span> Receiving, banking and overseeing disbursement of public money</li>
-          <li><span class="mandate-number">3</span> Preparing Public Accounts and financial statements</li>
-          <li><span class="mandate-number">4</span> Maintaining a system for examination of payments</li>
-          <li><span class="mandate-number">5</span> Ensuring proper system of accounts in every ministry and department</li>
-          <li><span class="mandate-number">6</span> Evaluating accounting and financial management systems throughout Government</li>
-          <li><span class="mandate-number">7</span> Reporting defects in control of revenue, expenditure or cash</li>
-          <li><span class="mandate-number">8</span> Exercising supervision over revenue receipt and collection</li>
-        </ul>
+  <div class="guarantee-card">
+    <div class="left-guarant">
+      <div class="title-row-guarant">
+        <div class="icon-guarant"></div>
+        <div class="project-title">Energy Infrastructure Modernization</div>
       </div>
+      <div class="issued">Issued: 2023</div>
+      <div class="beneficiary"><strong>Beneficiary:</strong> St. Kitts Electricity Company</div>
     </div>
-  </section>
-  <!-- main section end -->
+    <div class="amount">$32M</div>
+  </div>
 
-  <!-- ========== FOOTER SECTION ========== -->
-  <footer class="footer-section">
-    <div class="container">
-      <div class="row">
-        <div class="col-md-3 mb-4 cont-fot">
-          <h6>Contact Us</h6>
-          <p class="d-flex">
-            <span><i class="fas fa-phone-alt"></i></span>
-            <span> Treasury Chambers<br>
-            Ministry of Finance<br>
-            Basseterre, St. Kitts<br></span>
-            </p>
-            <p>
-            <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
-            <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
-          </p>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h6>Quick Links</h6>
-          <a href="#">Mission & Vision</a>
-          <a href="#">Management Team</a>
-          <a href="#">Services</a>
-          <a href="#">Download Centre</a>
-          <a href="#">Contact</a>
-        </div>
-        <div class="col-md-3 mb-4">
-          <h6>Legal</h6>
-          <a href="#">Privacy Policy</a>
-          <a href="#">Terms & Conditions</a>
-          <a href="#">Accessibility</a>
-          <a href="#">Disclaimer</a>
-          <a href="#">Site Map</a>
-        </div>
-        <div class="col-md-3 mb-4 cont-link">
-          <h6>Related Links</h6>
-          <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
-          <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
-        </div>
+  <div class="guarantee-card">
+    <div class="left-guarant">
+      <div class="title-row-guarant">
+        <div class="icon-guarant"></div>
+        <div class="project-title">Port Expansion Project</div>
       </div>
-      <div class="footer-bottom">
-        © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
-      </div>
+      <div class="issued">Issued: 2023</div>
+      <div class="beneficiary"><strong>Beneficiary:</strong> Port Authority</div>
     </div>
-  </footer>
-   
+    <div class="amount">$28M</div>
+  </div>
+         </div>
+      </section>
+      <!-- main section end -->
+      <!-- ========== FOOTER SECTION ========== -->
+      <footer class="footer-section">
+         <div class="container">
+            <div class="row">
+               <div class="col-md-3 mb-4 cont-fot">
+                  <h6>Contact Us</h6>
+                  <p class="d-flex">
+                     <span><i class="fas fa-phone-alt"></i></span>
+                     <span> Treasury Chambers<br>
+                     Ministry of Finance<br>
+                     Basseterre, St. Kitts<br></span>
+                  </p>
+                  <p>
+                     <i class="fas fa-phone-alt"></i> +1 (869) 467-1293<br>
+                     <i class="fas fa-envelope"></i> info@skntreasury.gov.kn
+                  </p>
+               </div>
+               <div class="col-md-3 mb-4">
+                  <h6>Quick Links</h6>
+                  <a href="#">Mission & Vision</a>
+                  <a href="#">Management Team</a>
+                  <a href="#">Services</a>
+                  <a href="#">Download Centre</a>
+                  <a href="#">Contact</a>
+               </div>
+               <div class="col-md-3 mb-4">
+                  <h6>Legal</h6>
+                  <a href="#">Privacy Policy</a>
+                  <a href="#">Terms & Conditions</a>
+                  <a href="#">Accessibility</a>
+                  <a href="#">Disclaimer</a>
+                  <a href="#">Site Map</a>
+               </div>
+               <div class="col-md-3 mb-4 cont-link">
+                  <h6>Related Links</h6>
+                  <a href="#">Government of St. Kitts & Nevis<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Ministry of Finance<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Customs & Excise Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Inland Revenue Department<i class="fa fa-external-link" aria-hidden="true"></i></a>
+                  <a href="#">Eastern Caribbean Central Bank<i class="fa fa-external-link" aria-hidden="true"></i></a>
+               </div>
+            </div>
+            <div class="footer-bottom">
+               © 2025 Government of St. Kitts and Nevis - Accountant General’s Department. All rights reserved.
+            </div>
+         </div>
+      </footer>
       <!-- Scroll To Top -->
       <a href="#" class="scrollToTop scroll-btn"
          ><i class="far fa-arrow-up"></i
@@ -392,31 +363,31 @@
          All Js File
          ============================== -->
       <!-- Jquery -->
-      <script src="assets/js/vendor/jquery-3.6.0.min.js"></script>
+      <script src="{{ asset('assets/js/vendor/jquery-3.6.0.min.js') }}"></script>
       <!-- Slick Slider -->
-      <script src="assets/js/app.min.js"></script>
-      <script src="assets/js/slick.min.js"></script>
+      <script src="{{ asset('assets/js/app.min.js') }}"></script>
+      <script src="{{ asset('assets/js/slick.min.js') }}"></script>
       <!-- Layerslider -->
-      <script src="assets/js/layerslider.utils.js"></script>
-      <script src="assets/js/layerslider.transitions.js"></script>
-      <script src="assets/js/layerslider.kreaturamedia.jquery.js"></script>
+      <script src="{{ asset('assets/js/layerslider.utils.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.transitions.js') }}"></script>
+      <script src="{{ asset('assets/js/layerslider.kreaturamedia.jquery.js') }}"></script>
       <!-- Bootstrap -->
-      <script src="assets/js/bootstrap.min.js"></script>
+      <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
       <!-- WOW.js Animation -->
-      <script src="assets/js/wow.min.js"></script>
+      <script src="{{ asset('assets/js/wow.min.js') }}"></script>
       <!-- Magnific Popup -->
-      <script src="assets/js/jquery.magnific-popup.min.js"></script>
+      <script src="{{ asset('assets/js/jquery.magnific-popup.min.js') }}"></script>
       <!-- Isotope Filter -->
-      <script src="assets/js/imagesloaded.pkgd.min.js"></script>
-      <script src="assets/js/isotope.pkgd.min.js"></script>
+      <script src="{{ asset('assets/js/imagesloaded.pkgd.min.js') }}"></script>
+      <script src="{{ asset('assets/js/isotope.pkgd.min.js') }}"></script>
       <!-- Main Js File -->
-      <script src="assets/js/main.js"></script>
+      <script src="{{ asset('assets/js/main.js') }}"></script>
       <link
          href="https://fonts.googleapis.com/css2?family=Archivo:wght@500&display=swap"
          rel="stylesheet"
          />
       <!-- <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script> -->
-      <!-- <script  src="./js/script_ii.js"></script> -->
+      <!-- <script  src="./js/script_ii.js') }}"></script> -->
       <script>
          jQuery.fn.liScroll = function (settings) {
            settings = jQuery.extend(
