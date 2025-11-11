@@ -53,7 +53,7 @@ class PageController extends Controller
         $templates = ['default', 'home', 'contact', 'about', 'team'];
         $sectionTypes = PageSection::getSectionTypes();
 
-        return view('admin.pages.edit', compact('page', 'pages', 'templates', 'sectionTypes'));
+        return view('admin.pages.edit-with-tabs', compact('page', 'pages', 'templates', 'sectionTypes'));
     }
 
     public function update(Request $request, $id)
