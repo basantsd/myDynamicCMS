@@ -40,7 +40,7 @@ class PageController extends Controller
             'show_in_menu' => $request->has('show_in_menu'),
             'menu_order' => $request->menu_order ?? 0,
             'parent_id' => $request->parent_id,
-            'created_by' => session('user_id'),
+            'created_by' => auth()->id(),
         ]);
 
         return redirect('/admin/pages/' . $page->id . '/edit')->with('success', 'Page created successfully!');

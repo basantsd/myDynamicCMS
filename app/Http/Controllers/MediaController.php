@@ -45,7 +45,7 @@ class MediaController extends Controller
                 'file_size' => $file->getSize(),
                 'type' => $type,
                 'alt_text' => '',
-                'uploaded_by' => session('user_id') ?? auth()->id(),
+                'uploaded_by' => auth()->id(),
             ]);
 
             $uploadedFiles[] = $media;

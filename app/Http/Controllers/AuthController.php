@@ -4,14 +4,15 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class AuthController extends Controller
 {
     public function showLogin()
     {
-        if (session('user_id')) {
-            return redirect('/admin/dashboard');
+        if (Auth::check()) {
+            return redirect()->route('admin.dashboard');
         }
         return view('admin.auth.login');
     }
@@ -25,17 +26,29 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if ($user && Hash::check($request->password, $user->password) && $user->is_active) {
-            session(['user_id' => $user->id, 'user_name' => $user->name, 'user_role' => $user->role]);
-            return redirect('/admin/dashboard');
+        if ($user && Hash::check($request->password, $user->password)) {
+            if (!$user->is_active) {
+                return back()->withErrors(['email' => 'Your account is inactive. Please contact administrator.']);
+            }
+
+            // Use Laravel's Auth system
+            Auth::login($user, $request->filled('remember'));
+
+            $request->session()->regenerate();
+
+            return redirect()->intended(route('admin.dashboard'));
         }
 
-        return back()->withErrors(['email' => 'Invalid credentials or account is inactive.']);
+        return back()->withErrors(['email' => 'Invalid credentials.']);
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        session()->flush();
-        return redirect('/admin/login');
+        Auth::logout();
+
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+
+        return redirect()->route('admin.login');
     }
 }

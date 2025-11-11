@@ -89,7 +89,7 @@ class UserController extends Controller
     {
         $user = User::findOrFail($id);
 
-        if ($user->id == session('user_id')) {
+        if ($user->id == auth()->id()) {
             return back()->withErrors(['error' => 'You cannot delete your own account.']);
         }
 
