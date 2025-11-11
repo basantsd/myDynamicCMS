@@ -12,6 +12,9 @@ class TreasurySectionsSeeder extends Seeder
      */
     public function run(): void
     {
+        // Clear existing template sections (where page_id is null)
+        PageSection::whereNull('page_id')->delete();
+
         // Add new treasury-specific section type constants to PageSection model
         $treasurySections = [
             [

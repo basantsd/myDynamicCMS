@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('page_sections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('page_id')->constrained()->onDelete('cascade');
+            $table->foreignId('page_id')->nullable()->constrained()->onDelete('cascade');
             $table->string('section_type'); // hero_banner, rich_content, data_table, image_gallery, services_grid, contact_form, faq, team, testimonials, statistics, breadcrumb
             $table->integer('order')->default(0);
             $table->json('content'); // Flexible JSON storage for section data

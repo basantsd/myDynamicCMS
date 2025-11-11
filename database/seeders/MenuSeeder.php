@@ -11,6 +11,10 @@ class MenuSeeder extends Seeder
 {
     public function run(): void
     {
+        // Clear existing menus and menu items
+        MenuItem::query()->delete();
+        Menu::query()->delete();
+
         // Create Menus
         $headerMenu = Menu::create([
             'name' => 'Header Menu',
