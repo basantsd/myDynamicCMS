@@ -29,19 +29,19 @@ class SettingSeeder extends Seeder
             ],
             [
                 'key' => 'site_logo',
-                'value' => './assets/img/logo1.png',
+                'value' => '',
                 'type' => 'image',
                 'group' => 'general',
                 'label' => 'Site Logo',
-                'description' => 'Upload your site logo',
+                'description' => 'Upload your site logo (will use default Logo1.png if not uploaded)',
             ],
             [
                 'key' => 'site_favicon',
-                'value' => './assets/img/fav.jpg',
+                'value' => '',
                 'type' => 'image',
                 'group' => 'general',
                 'label' => 'Site Favicon',
-                'description' => 'Upload your site favicon',
+                'description' => 'Upload your site favicon (will use default favicon.jpg if not uploaded)',
             ],
 
             // Contact Settings
@@ -96,6 +96,48 @@ class SettingSeeder extends Seeder
                 'group' => 'general',
                 'label' => 'Footer Copyright',
                 'description' => 'Copyright text in footer',
+            ],
+
+            // Social Media Settings
+            [
+                'key' => 'social_facebook',
+                'value' => '',
+                'type' => 'text',
+                'group' => 'social',
+                'label' => 'Facebook URL',
+                'description' => 'Your Facebook page URL',
+            ],
+            [
+                'key' => 'social_twitter',
+                'value' => '',
+                'type' => 'text',
+                'group' => 'social',
+                'label' => 'Twitter URL',
+                'description' => 'Your Twitter profile URL',
+            ],
+            [
+                'key' => 'social_instagram',
+                'value' => '',
+                'type' => 'text',
+                'group' => 'social',
+                'label' => 'Instagram URL',
+                'description' => 'Your Instagram profile URL',
+            ],
+            [
+                'key' => 'social_linkedin',
+                'value' => '',
+                'type' => 'text',
+                'group' => 'social',
+                'label' => 'LinkedIn URL',
+                'description' => 'Your LinkedIn profile URL',
+            ],
+            [
+                'key' => 'google_analytics',
+                'value' => '',
+                'type' => 'text',
+                'group' => 'seo',
+                'label' => 'Google Analytics ID',
+                'description' => 'Your Google Analytics tracking ID',
             ],
         ];
 
