@@ -163,6 +163,20 @@
 
     <!-- Tab 2: Section Builder -->
     <div class="tab-pane fade" id="sections" role="tabpanel">
+        <!-- Help Section -->
+        <div class="alert alert-primary alert-dismissible fade show" role="alert">
+            <h5 class="alert-heading"><i class="fas fa-info-circle me-2"></i>How to Use Section Builder</h5>
+            <p class="mb-2"><strong>Section Builder</strong> lets you build pages using pre-designed content blocks. Perfect for structured content!</p>
+            <ul class="mb-2">
+                <li><strong>Add Section:</strong> Click "Add Section" → Choose section type → Fill in the form</li>
+                <li><strong>Reorder:</strong> Drag sections by the grip handle <i class="fas fa-grip-vertical"></i> to rearrange</li>
+                <li><strong>Edit:</strong> Click <i class="fas fa-edit"></i> button to modify section content</li>
+                <li><strong>Delete:</strong> Click <i class="fas fa-trash"></i> button to remove a section</li>
+            </ul>
+            <p class="mb-0"><strong>Tip:</strong> Use sections for consistent, structured layouts. For custom designs, use the Visual Builder tab!</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5><i class="fas fa-layer-group me-2"></i> Page Sections</h5>
@@ -235,6 +249,21 @@
 
     <!-- Tab 3: Visual Builder (GrapesJS) -->
     <div class="tab-pane fade" id="visual-builder" role="tabpanel">
+        <!-- Help Section -->
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            <h5 class="alert-heading"><i class="fas fa-magic me-2"></i>How to Use Visual Builder</h5>
+            <p class="mb-2"><strong>Visual Builder</strong> gives you complete design freedom with drag-and-drop editing. Build anything you can imagine!</p>
+            <ul class="mb-2">
+                <li><strong>Left Panel:</strong> Drag blocks (text, images, buttons, etc.) onto the canvas</li>
+                <li><strong>Click to Edit:</strong> Click any element on the canvas to edit text or change styles</li>
+                <li><strong>Right Panel:</strong> Customize colors, fonts, spacing, and more</li>
+                <li><strong>Device Preview:</strong> Use the device icons at top to preview on desktop, tablet, and mobile</li>
+                <li><strong>Save Your Work:</strong> Click "Save Design" button when you're done</li>
+            </ul>
+            <p class="mb-0"><strong>Tip:</strong> Start with pre-built blocks from "Custom Sections" category, then customize them to your needs!</p>
+            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+        </div>
+
         <div class="card">
             <div class="card-header d-flex justify-content-between align-items-center">
                 <h5><i class="fas fa-paint-brush me-2"></i> Visual Page Builder</h5>
@@ -553,12 +582,336 @@
     }
 
     function showSectionForm(type, sectionId = null) {
-        // Implementation same as before...
-        alert('Section form for: ' + type + '\n\nThis will show a modal with section-specific fields.');
+        const formModalHtml = getSectionFormModal(type, sectionId);
+
+        // Remove existing modal if any
+        const existingModal = document.getElementById('sectionFormModal');
+        if (existingModal) {
+            existingModal.remove();
+        }
+
+        // Add new modal to body
+        document.body.insertAdjacentHTML('beforeend', formModalHtml);
+
+        // Show modal
+        const formModal = new bootstrap.Modal(document.getElementById('sectionFormModal'));
+        formModal.show();
+
+        // Load section data if editing
+        if (sectionId) {
+            loadSectionData(sectionId);
+        }
+    }
+
+    function getSectionFormModal(type, sectionId = null) {
+        const isEdit = sectionId !== null;
+        const title = isEdit ? 'Edit Section' : 'Add Section';
+        const formFields = getSectionFormFields(type);
+
+        return `
+            <div class="modal fade" id="sectionFormModal" tabindex="-1">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">${title} - ${type.replace(/_/g, ' ').toUpperCase()}</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form id="sectionForm" enctype="multipart/form-data">
+                                <input type="hidden" name="section_type" value="${type}">
+                                <input type="hidden" name="page_id" value="{{ $page->id }}">
+                                ${isEdit ? `<input type="hidden" name="section_id" value="${sectionId}">` : ''}
+                                ${formFields}
+                                <div class="form-check form-switch mb-3">
+                                    <input class="form-check-input" type="checkbox" id="is_active" name="is_active" checked>
+                                    <label class="form-check-label" for="is_active">Active</label>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" onclick="submitSectionForm()">
+                                ${isEdit ? 'Update' : 'Add'} Section
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function getSectionFormFields(type) {
+        const fields = {
+            'hero_banner': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Hero Banner:</strong> Full-width hero section with background image, title, subtitle, and call-to-action button.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Title <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="content[title]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Subtitle</label>
+                    <input type="text" class="form-control" name="content[subtitle]">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="content[description]" rows="3"></textarea>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Button Text</label>
+                    <input type="text" class="form-control" name="content[button_text]" placeholder="e.g., Learn More">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Button Link</label>
+                    <input type="text" class="form-control" name="content[button_link]" placeholder="e.g., /about">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Background Image</label>
+                    <input type="file" class="form-control" name="background_image" accept="image/*">
+                    <small class="text-muted">Recommended size: 1920x1080px</small>
+                </div>
+            `,
+            'rich_content': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Rich Content:</strong> Add HTML content, text, images, and formatting.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Content <span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="content[content]" rows="10" required></textarea>
+                    <small class="text-muted">You can use HTML tags for formatting</small>
+                </div>
+            `,
+            'breadcrumb': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Breadcrumb:</strong> Page header with title and navigation breadcrumbs.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Page Title <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" name="content[title]" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Background Image</label>
+                    <input type="file" class="form-control" name="background_image" accept="image/*">
+                    <small class="text-muted">Optional background image for page header</small>
+                </div>
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" name="content[show_breadcrumb]" id="show_breadcrumb" value="1" checked>
+                        <label class="form-check-label" for="show_breadcrumb">Show Breadcrumb Navigation</label>
+                    </div>
+                </div>
+            `,
+            'services_grid': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Services Grid:</strong> Display services in a grid layout with icons, titles, and descriptions.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Our Services">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Services (JSON Format)</label>
+                    <textarea class="form-control" name="content[services]" rows="8" placeholder='[{"title": "Service Name", "description": "Service description", "icon": "fas fa-chart-line"}]'></textarea>
+                    <small class="text-muted">Enter services in JSON format. Each service needs: title, description, icon</small>
+                </div>
+            `,
+            'statistics': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Statistics:</strong> Display numbers/stats with labels (e.g., "100+ Projects", "50 Clients").
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Statistics (JSON Format) <span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="content[stats]" rows="8" placeholder='[{"number": "100+", "label": "Projects", "suffix": ""}, {"number": "50", "label": "Clients", "suffix": "+"}]' required></textarea>
+                    <small class="text-muted">Each stat needs: number, label. Optional: suffix</small>
+                </div>
+            `,
+            'faq': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>FAQ Section:</strong> Frequently Asked Questions with collapsible answers.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Frequently Asked Questions">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">FAQs (JSON Format) <span class="text-danger">*</span></label>
+                    <textarea class="form-control" name="content[faqs]" rows="8" placeholder='[{"question": "What is your question?", "answer": "This is the answer."}]' required></textarea>
+                    <small class="text-muted">Each FAQ needs: question, answer</small>
+                </div>
+            `,
+            'contact_form': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Contact Form:</strong> Contact form section with title and description.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Form Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Get In Touch">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    <textarea class="form-control" name="content[description]" rows="3" placeholder="Have a question? We'd love to hear from you."></textarea>
+                </div>
+            `,
+            'team': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Team Section:</strong> Display team members with photos and details.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Our Team">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Team Members (JSON Format)</label>
+                    <textarea class="form-control" name="content[members]" rows="8" placeholder='[{"name": "John Doe", "position": "Manager", "photo": "path/to/photo.jpg"}]'></textarea>
+                    <small class="text-muted">Each member needs: name, position. Optional: photo, bio</small>
+                </div>
+            `,
+            'testimonials': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Testimonials:</strong> Customer reviews and testimonials.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Section Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., What Our Clients Say">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Testimonials (JSON Format)</label>
+                    <textarea class="form-control" name="content[testimonials]" rows="8" placeholder='[{"name": "Client Name", "position": "CEO, Company", "content": "Great service!", "rating": 5}]'></textarea>
+                    <small class="text-muted">Each testimonial needs: name, content. Optional: position, rating, photo</small>
+                </div>
+            `,
+            'image_gallery': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Image Gallery:</strong> Photo gallery with lightbox viewing.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Gallery Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Our Gallery">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Images (JSON Format)</label>
+                    <textarea class="form-control" name="content[images]" rows="8" placeholder='[{"url": "path/to/image.jpg", "caption": "Image caption"}]'></textarea>
+                    <small class="text-muted">Each image needs: url. Optional: caption, alt</small>
+                </div>
+            `,
+            'data_table': `
+                <div class="alert alert-info">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <strong>Data Table:</strong> Display data in table format.
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Table Title</label>
+                    <input type="text" class="form-control" name="content[title]" placeholder="e.g., Pricing Table">
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Table Data (JSON Format)</label>
+                    <textarea class="form-control" name="content[data]" rows="8" placeholder='{"headers": ["Column 1", "Column 2"], "rows": [["Data 1", "Data 2"]]}'></textarea>
+                    <small class="text-muted">Format: {"headers": [...], "rows": [[...]...]}</small>
+                </div>
+            `
+        };
+
+        return fields[type] || '<p class="text-muted">No specific fields for this section type.</p>';
+    }
+
+    function submitSectionForm() {
+        const form = document.getElementById('sectionForm');
+        const formData = new FormData(form);
+        const sectionId = formData.get('section_id');
+        const isEdit = sectionId !== null;
+
+        // Convert form data to proper structure
+        const contentData = {};
+        const files = {};
+
+        for (let [key, value] of formData.entries()) {
+            if (key.startsWith('content[')) {
+                const fieldName = key.match(/content\[(.*?)\]/)[1];
+                // Try to parse JSON fields
+                if (['services', 'faqs', 'stats', 'members', 'testimonials', 'images', 'data'].includes(fieldName)) {
+                    try {
+                        contentData[fieldName] = JSON.parse(value);
+                    } catch (e) {
+                        contentData[fieldName] = value;
+                    }
+                } else {
+                    contentData[fieldName] = value;
+                }
+            } else if (['background_image', 'image', 'images'].includes(key)) {
+                files[key] = value;
+            }
+        }
+
+        // Prepare request data
+        const requestData = new FormData();
+        requestData.append('page_id', formData.get('page_id'));
+        requestData.append('section_type', formData.get('section_type'));
+        requestData.append('content', JSON.stringify(contentData));
+        requestData.append('is_active', formData.get('is_active') ? '1' : '0');
+
+        // Append files
+        for (let [key, value] of Object.entries(files)) {
+            requestData.append(key, value);
+        }
+
+        const url = isEdit
+            ? `{{ url('admin/page-sections') }}/${sectionId}`
+            : '{{ route("admin.sections.store") }}';
+
+        // For PUT requests, we need to add _method field
+        if (isEdit) {
+            requestData.append('_method', 'PUT');
+        }
+
+        fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            },
+            body: requestData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                // Close modal
+                const modal = bootstrap.Modal.getInstance(document.getElementById('sectionFormModal'));
+                modal.hide();
+
+                // Reload page to show updated sections
+                window.location.reload();
+            } else {
+                alert('Error saving section. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error saving section. Please try again.');
+        });
     }
 
     function editSection(sectionId) {
-        alert('Edit section: ' + sectionId);
+        // Get section type from the page
+        const sectionItem = document.querySelector(`[data-section-id="${sectionId}"]`);
+        const sectionType = sectionItem.querySelector('.badge').textContent.toLowerCase().replace(/\s+/g, '_');
+
+        showSectionForm(sectionType, sectionId);
+    }
+
+    function loadSectionData(sectionId) {
+        // This would load section data via AJAX and populate the form
+        console.log('Loading section data for:', sectionId);
+        // TODO: Implement section data loading
     }
 
     function deleteSection(sectionId) {
@@ -578,7 +931,13 @@
                 if (document.querySelectorAll('.section-item').length === 0) {
                     window.location.reload();
                 }
+            } else {
+                alert('Error deleting section. Please try again.');
             }
+        })
+        .catch(error => {
+            console.error('Error:', error);
+            alert('Error deleting section. Please try again.');
         });
     }
 </script>
