@@ -51,60 +51,60 @@ class MenuSeeder extends Seeder
 
         // Header and Mobile Menu Items (same structure)
         $mainMenuItems = [
-            ['title' => 'Home', 'page' => 'home', 'order' => 1],
+            ['label' => 'Home', 'page' => 'home', 'order' => 1],
             [
-                'title' => 'About Us',
+                'label' => 'About Us',
                 'page' => 'about',
                 'order' => 2,
                 'children' => [
-                    ['title' => 'Mission & Vision', 'page' => 'mission-vision', 'order' => 1],
-                    ['title' => 'Core Values', 'page' => 'core-values', 'order' => 2],
-                    ['title' => 'Our Mandate', 'page' => 'our-mandate', 'order' => 3],
+                    ['label' => 'Mission & Vision', 'page' => 'mission-vision', 'order' => 1],
+                    ['label' => 'Core Values', 'page' => 'core-values', 'order' => 2],
+                    ['label' => 'Our Mandate', 'page' => 'our-mandate', 'order' => 3],
                 ],
             ],
             [
-                'title' => 'Financial Reports',
+                'label' => 'Financial Reports',
                 'page' => 'financial-reports',
                 'order' => 3,
                 'children' => [
-                    ['title' => 'Annual Budget', 'page' => 'annual-budget', 'order' => 1],
-                    ['title' => 'Audited Financial Statements', 'page' => 'audited-financial-statements', 'order' => 2],
-                    ['title' => 'Quarterly Reports', 'page' => 'quarterly-reports', 'order' => 3],
-                    ['title' => 'Estimates', 'page' => 'estimates', 'order' => 4],
+                    ['label' => 'Annual Budget', 'page' => 'annual-budget', 'order' => 1],
+                    ['label' => 'Audited Financial Statements', 'page' => 'audited-financial-statements', 'order' => 2],
+                    ['label' => 'Quarterly Reports', 'page' => 'quarterly-reports', 'order' => 3],
+                    ['label' => 'Estimates', 'page' => 'estimates', 'order' => 4],
                 ],
             ],
             [
-                'title' => 'Debt Management',
+                'label' => 'Debt Management',
                 'page' => 'debt-management',
                 'order' => 4,
                 'children' => [
-                    ['title' => 'Debt Overview', 'page' => 'debt-overview', 'order' => 1],
-                    ['title' => 'Domestic & External Debt', 'page' => 'domestic-external-debt-reports', 'order' => 2],
-                    ['title' => 'Government Guarantees', 'page' => 'government-guarantees', 'order' => 3],
+                    ['label' => 'Debt Overview', 'page' => 'debt-overview', 'order' => 1],
+                    ['label' => 'Domestic & External Debt', 'page' => 'domestic-external-debt-reports', 'order' => 2],
+                    ['label' => 'Government Guarantees', 'page' => 'government-guarantees', 'order' => 3],
                 ],
             ],
             [
-                'title' => 'Treasury Services',
+                'label' => 'Treasury Services',
                 'page' => 'treasury-services',
                 'order' => 5,
                 'children' => [
-                    ['title' => 'Government Payroll Services', 'page' => 'government-payroll-services', 'order' => 1],
-                    ['title' => 'Pension Services', 'page' => 'pension-services', 'order' => 2],
-                    ['title' => 'Cash Collection', 'page' => 'cash-collection', 'order' => 3],
-                    ['title' => 'Investment Services', 'page' => 'investment-services', 'order' => 4],
+                    ['label' => 'Government Payroll Services', 'page' => 'government-payroll-services', 'order' => 1],
+                    ['label' => 'Pension Services', 'page' => 'pension-services', 'order' => 2],
+                    ['label' => 'Cash Collection', 'page' => 'cash-collection', 'order' => 3],
+                    ['label' => 'Investment Services', 'page' => 'investment-services', 'order' => 4],
                 ],
             ],
             [
-                'title' => 'News & Notices',
+                'label' => 'News & Notices',
                 'page' => 'news',
                 'order' => 6,
                 'children' => [
-                    ['title' => 'Treasury News', 'page' => 'treasury-news', 'order' => 1],
-                    ['title' => 'Public Notices', 'page' => 'public-notices', 'order' => 2],
+                    ['label' => 'Treasury News', 'page' => 'treasury-news', 'order' => 1],
+                    ['label' => 'Public Notices', 'page' => 'public-notices', 'order' => 2],
                 ],
             ],
-            ['title' => 'Download Centre', 'page' => 'download', 'order' => 7],
-            ['title' => 'Contact', 'page' => 'contact', 'order' => 8],
+            ['label' => 'Download Centre', 'page' => 'download', 'order' => 7],
+            ['label' => 'Contact', 'page' => 'contact', 'order' => 8],
         ];
 
         // Create header menu items
@@ -113,7 +113,7 @@ class MenuSeeder extends Seeder
 
             $item = MenuItem::create([
                 'menu_id' => $headerMenu->id,
-                'title' => $itemData['title'],
+                'label' => $itemData['label'],
                 'page_id' => $page ? $page->id : null,
                 'url' => isset($itemData['url']) ? $itemData['url'] : null,
                 'order' => $itemData['order'],
@@ -128,7 +128,7 @@ class MenuSeeder extends Seeder
                     MenuItem::create([
                         'menu_id' => $headerMenu->id,
                         'parent_id' => $item->id,
-                        'title' => $childData['title'],
+                        'label' => $childData['label'],
                         'page_id' => $childPage ? $childPage->id : null,
                         'url' => isset($childData['url']) ? $childData['url'] : null,
                         'order' => $childData['order'],
@@ -144,7 +144,7 @@ class MenuSeeder extends Seeder
 
             $item = MenuItem::create([
                 'menu_id' => $mobileMenu->id,
-                'title' => $itemData['title'],
+                'label' => $itemData['label'],
                 'page_id' => $page ? $page->id : null,
                 'url' => isset($itemData['url']) ? $itemData['url'] : null,
                 'order' => $itemData['order'],
@@ -159,7 +159,7 @@ class MenuSeeder extends Seeder
                     MenuItem::create([
                         'menu_id' => $mobileMenu->id,
                         'parent_id' => $item->id,
-                        'title' => $childData['title'],
+                        'label' => $childData['label'],
                         'page_id' => $childPage ? $childPage->id : null,
                         'url' => isset($childData['url']) ? $childData['url'] : null,
                         'order' => $childData['order'],
@@ -171,11 +171,11 @@ class MenuSeeder extends Seeder
 
         // Footer Quick Links Menu
         $quickLinksItems = [
-            ['title' => 'About Us', 'page' => 'about', 'order' => 1],
-            ['title' => 'Financial Reports', 'page' => 'financial-reports', 'order' => 2],
-            ['title' => 'Treasury Services', 'page' => 'treasury-services', 'order' => 3],
-            ['title' => 'Download Centre', 'page' => 'download', 'order' => 4],
-            ['title' => 'Contact Us', 'page' => 'contact', 'order' => 5],
+            ['label' => 'About Us', 'page' => 'about', 'order' => 1],
+            ['label' => 'Financial Reports', 'page' => 'financial-reports', 'order' => 2],
+            ['label' => 'Treasury Services', 'page' => 'treasury-services', 'order' => 3],
+            ['label' => 'Download Centre', 'page' => 'download', 'order' => 4],
+            ['label' => 'Contact Us', 'page' => 'contact', 'order' => 5],
         ];
 
         foreach ($quickLinksItems as $itemData) {
@@ -183,7 +183,7 @@ class MenuSeeder extends Seeder
 
             MenuItem::create([
                 'menu_id' => $footerQuickLinksMenu->id,
-                'title' => $itemData['title'],
+                'label' => $itemData['label'],
                 'page_id' => $page ? $page->id : null,
                 'order' => $itemData['order'],
                 'is_active' => true,
@@ -192,11 +192,11 @@ class MenuSeeder extends Seeder
 
         // Footer Legal Menu
         $legalItems = [
-            ['title' => 'Privacy Policy', 'page' => 'privacy-policy', 'order' => 1],
-            ['title' => 'Terms & Conditions', 'page' => 'terms-conditions', 'order' => 2],
-            ['title' => 'Disclaimer', 'page' => 'disclaimer', 'order' => 3],
-            ['title' => 'Accessibility', 'page' => 'accessibility', 'order' => 4],
-            ['title' => 'Site Map', 'page' => 'sitemap', 'order' => 5],
+            ['label' => 'Privacy Policy', 'page' => 'privacy-policy', 'order' => 1],
+            ['label' => 'Terms & Conditions', 'page' => 'terms-conditions', 'order' => 2],
+            ['label' => 'Disclaimer', 'page' => 'disclaimer', 'order' => 3],
+            ['label' => 'Accessibility', 'page' => 'accessibility', 'order' => 4],
+            ['label' => 'Site Map', 'page' => 'sitemap', 'order' => 5],
         ];
 
         foreach ($legalItems as $itemData) {
@@ -204,7 +204,7 @@ class MenuSeeder extends Seeder
 
             MenuItem::create([
                 'menu_id' => $footerLegalMenu->id,
-                'title' => $itemData['title'],
+                'label' => $itemData['label'],
                 'page_id' => $page ? $page->id : null,
                 'order' => $itemData['order'],
                 'is_active' => true,
@@ -213,19 +213,19 @@ class MenuSeeder extends Seeder
 
         // Footer Related Links Menu (External Links)
         $relatedLinksItems = [
-            ['title' => 'Government of St. Kitts & Nevis', 'url' => 'https://www.gov.kn', 'order' => 1],
-            ['title' => 'Ministry of Finance', 'url' => 'https://www.finance.gov.kn', 'order' => 2],
-            ['title' => 'Inland Revenue Department', 'url' => 'https://www.ird.gov.kn', 'order' => 3],
-            ['title' => 'Customs & Excise Department', 'url' => 'https://www.customs.gov.kn', 'order' => 4],
-            ['title' => 'National Insurance', 'url' => 'https://www.nis.gov.kn', 'order' => 5],
+            ['label' => 'Government of St. Kitts & Nevis', 'url' => 'https://www.gov.kn', 'order' => 1],
+            ['label' => 'Ministry of Finance', 'url' => 'https://www.finance.gov.kn', 'order' => 2],
+            ['label' => 'Inland Revenue Department', 'url' => 'https://www.ird.gov.kn', 'order' => 3],
+            ['label' => 'Customs & Excise Department', 'url' => 'https://www.customs.gov.kn', 'order' => 4],
+            ['label' => 'National Insurance', 'url' => 'https://www.nis.gov.kn', 'order' => 5],
         ];
 
         foreach ($relatedLinksItems as $itemData) {
             MenuItem::create([
                 'menu_id' => $footerRelatedLinksMenu->id,
-                'title' => $itemData['title'],
+                'label' => $itemData['label'],
                 'url' => $itemData['url'],
-                'target' => '_blank',
+                'target_blank' => true,
                 'order' => $itemData['order'],
                 'is_active' => true,
             ]);
