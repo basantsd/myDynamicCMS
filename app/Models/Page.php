@@ -16,6 +16,10 @@ class Page extends Model
         'meta_description',
         'meta_keywords',
         'template',
+        'use_builder',
+        'builder_html',
+        'builder_css',
+        'builder_data',
         'is_published',
         'show_in_menu',
         'menu_order',
@@ -26,6 +30,8 @@ class Page extends Model
     protected $casts = [
         'is_published' => 'boolean',
         'show_in_menu' => 'boolean',
+        'use_builder' => 'boolean',
+        'builder_data' => 'array',
     ];
 
     public function sections()

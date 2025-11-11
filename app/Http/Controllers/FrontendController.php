@@ -37,6 +37,12 @@ class FrontendController extends Controller
             abort(404);
         }
 
+        // Check if page uses visual builder
+        if ($page->use_builder && $page->builder_html) {
+            return view('frontend.builder', array_merge($this->getCommonData(), compact('page')));
+        }
+
+        // Otherwise use section-based rendering
         $sections = $page->sections()->where('is_active', true)->orderBy('order')->get();
         $data = array_merge($this->getCommonData(), compact('page', 'sections'));
 

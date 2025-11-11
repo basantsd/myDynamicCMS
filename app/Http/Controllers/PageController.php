@@ -88,4 +88,24 @@ class PageController extends Controller
 
         return redirect('/admin/pages')->with('success', 'Page deleted successfully!');
     }
+
+    public function builder($id)
+    {
+        $page = Page::findOrFail($id);
+        return view('admin.pages.builder', compact('page'));
+    }
+
+    public function builderSave(Request $request, $id)
+    {
+        $page = Page::findOrFail($id);
+
+        $page->update([
+            'use_builder' => $request->use_builder ?? true,
+            'builder_html' => $request->builder_html,
+            'builder_css' => $request->builder_css,
+            'builder_data' => $request->builder_data,
+        ]);
+
+        return response()->json(['success' => true, 'message' => 'Page saved successfully!']);
+    }
 }

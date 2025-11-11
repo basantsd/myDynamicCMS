@@ -36,6 +36,10 @@ Route::prefix('admin')->group(function () {
         Route::put('/pages/{id}', [PageController::class, 'update'])->name('admin.pages.update');
         Route::delete('/pages/{id}', [PageController::class, 'destroy'])->name('admin.pages.destroy');
 
+        // Visual Page Builder
+        Route::get('/pages/{id}/builder', [PageController::class, 'builder'])->name('admin.pages.builder');
+        Route::post('/pages/{id}/builder/save', [PageController::class, 'builderSave'])->name('admin.pages.builder.save');
+
         // Page Sections
         Route::post('/page-sections', [PageSectionController::class, 'store'])->name('admin.sections.store');
         Route::put('/page-sections/{id}', [PageSectionController::class, 'update'])->name('admin.sections.update');

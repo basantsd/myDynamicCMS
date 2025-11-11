@@ -9,8 +9,14 @@
         <div>
             <h1>Edit Page</h1>
             <p>Update page content and sections</p>
+            @if($page->use_builder)
+            <span class="badge bg-info">Using Visual Builder</span>
+            @endif
         </div>
         <div class="btn-group">
+            <a href="{{ route('admin.pages.builder', $page->id) }}" class="btn btn-primary">
+                <i class="fas fa-paint-brush me-2"></i> Visual Builder
+            </a>
             <a href="{{ route('page.show', $page->slug) }}" target="_blank" class="btn btn-outline-secondary">
                 <i class="fas fa-eye me-2"></i> Preview
             </a>
