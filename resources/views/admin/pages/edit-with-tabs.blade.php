@@ -250,34 +250,124 @@
     <!-- Tab 3: Visual Builder (GrapesJS) -->
     <div class="tab-pane fade" id="visual-builder" role="tabpanel">
         <!-- Help Section -->
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
+        <div class="alert alert-info alert-dismissible fade show" role="alert">
             <h5 class="alert-heading"><i class="fas fa-magic me-2"></i>How to Use Visual Builder</h5>
-            <p class="mb-2"><strong>Visual Builder</strong> gives you complete design freedom with drag-and-drop editing. Build anything you can imagine!</p>
-            <ul class="mb-2">
-                <li><strong>Left Panel:</strong> Drag blocks (text, images, buttons, etc.) onto the canvas</li>
-                <li><strong>Click to Edit:</strong> Click any element on the canvas to edit text or change styles</li>
-                <li><strong>Right Panel:</strong> Customize colors, fonts, spacing, and more</li>
-                <li><strong>Device Preview:</strong> Use the device icons at top to preview on desktop, tablet, and mobile</li>
-                <li><strong>Save Your Work:</strong> Click "Save Design" button when you're done</li>
-            </ul>
-            <p class="mb-0"><strong>Tip:</strong> Start with pre-built blocks from "Custom Sections" category, then customize them to your needs!</p>
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-2"><strong>✨ Getting Started:</strong></p>
+                    <ul class="mb-0 small">
+                        <li><strong>Drag & Drop:</strong> Drag blocks from left panel onto canvas</li>
+                        <li><strong>Click to Edit:</strong> Double-click text to edit, single-click for settings</li>
+                        <li><strong>Right Panel:</strong> Layers, Styles, and Settings tabs</li>
+                    </ul>
+                </div>
+                <div class="col-md-6">
+                    <p class="mb-2"><strong>🎨 Tips:</strong></p>
+                    <ul class="mb-0 small">
+                        <li><strong>Templates:</strong> Click template icon in toolbar for ready-made pages</li>
+                        <li><strong>Devices:</strong> Preview on desktop/tablet/mobile views</li>
+                        <li><strong>Save Often:</strong> Click Save Design (or Ctrl+S) frequently</li>
+                    </ul>
+                </div>
+            </div>
             <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
         </div>
 
         <div class="card">
-            <div class="card-header d-flex justify-content-between align-items-center">
-                <h5><i class="fas fa-paint-brush me-2"></i> Visual Page Builder</h5>
-                <div class="btn-group">
+            <div class="card-header d-flex justify-content-between align-items-center py-2">
+                <div class="d-flex align-items-center gap-3">
+                    <h5 class="mb-0"><i class="fas fa-paint-brush me-2"></i> Visual Page Builder</h5>
+                    <div class="panel__devices btn-group btn-group-sm"></div>
+                </div>
+                <div class="btn-group btn-group-sm">
                     <button onclick="saveBuilderContent()" class="btn btn-success" id="saveBuilderBtn">
-                        <i class="fas fa-save me-2"></i> Save Design
+                        <i class="fas fa-save me-1"></i> Save Design
                     </button>
                     <button onclick="previewPage()" class="btn btn-outline-secondary">
-                        <i class="fas fa-eye me-2"></i> Preview
+                        <i class="fas fa-eye me-1"></i> Preview
                     </button>
                 </div>
             </div>
             <div class="card-body p-0">
-                <div id="gjs" style="height: 70vh; overflow: hidden;"></div>
+                <!-- GrapesJS Editor with Panels -->
+                <div class="editor-row" style="display: flex; height: 75vh;">
+                    <!-- Left Panel: Blocks -->
+                    <div class="editor-column" style="flex: 0 0 250px; overflow-y: auto; border-right: 1px solid #dee2e6; background: #f8f9fa;">
+                        <div style="padding: 15px 10px; background: #fff; border-bottom: 2px solid #bd2828;">
+                            <h6 class="mb-0" style="font-weight: 600; color: #bd2828;">
+                                <i class="fas fa-th-large me-2"></i>Block Library
+                            </h6>
+                            <small class="text-muted">Drag blocks onto canvas</small>
+                        </div>
+                        <div class="blocks-container" style="padding: 10px;"></div>
+                    </div>
+
+                    <!-- Center: Canvas -->
+                    <div class="editor-column" style="flex: 1; display: flex; flex-direction: column;">
+                        <div class="panel__switcher" style="padding: 10px; background: #fff; border-bottom: 1px solid #dee2e6; display: flex; gap: 5px;"></div>
+                        <div id="gjs" style="flex: 1; overflow: hidden;"></div>
+                    </div>
+
+                    <!-- Right Panel: Layers, Styles, Traits -->
+                    <div class="panel__right editor-column" style="flex: 0 0 300px; display: flex; flex-direction: column; border-left: 1px solid #dee2e6; background: #fff;">
+                        <!-- Panel Tabs -->
+                        <div style="padding: 10px; background: #f8f9fa; border-bottom: 1px solid #dee2e6;">
+                            <ul class="nav nav-pills nav-fill" role="tablist" style="font-size: 13px;">
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link active" id="layers-tab" data-bs-toggle="pill" data-bs-target="#layers-panel" type="button" role="tab">
+                                        <i class="fas fa-bars"></i> Layers
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="styles-tab" data-bs-toggle="pill" data-bs-target="#styles-panel" type="button" role="tab">
+                                        <i class="fas fa-paint-brush"></i> Styles
+                                    </button>
+                                </li>
+                                <li class="nav-item" role="presentation">
+                                    <button class="nav-link" id="traits-tab" data-bs-toggle="pill" data-bs-target="#traits-panel" type="button" role="tab">
+                                        <i class="fas fa-cog"></i> Settings
+                                    </button>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- Tab Content -->
+                        <div class="tab-content" style="flex: 1; overflow-y: auto;">
+                            <!-- Layers Panel -->
+                            <div class="tab-pane fade show active" id="layers-panel" role="tabpanel">
+                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
+                                    <h6 class="mb-0" style="font-weight: 600;">
+                                        <i class="fas fa-layer-group me-2"></i>Element Layers
+                                    </h6>
+                                    <small class="text-muted">Click to select, drag to reorder</small>
+                                </div>
+                                <div class="layers-container" style="padding: 5px;"></div>
+                            </div>
+
+                            <!-- Styles Panel -->
+                            <div class="tab-pane fade" id="styles-panel" role="tabpanel">
+                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
+                                    <h6 class="mb-0" style="font-weight: 600;">
+                                        <i class="fas fa-palette me-2"></i>Style Properties
+                                    </h6>
+                                    <small class="text-muted">Customize appearance</small>
+                                </div>
+                                <div class="styles-container"></div>
+                            </div>
+
+                            <!-- Traits Panel -->
+                            <div class="tab-pane fade" id="traits-panel" role="tabpanel">
+                                <div style="padding: 15px 10px; background: #fff; border-bottom: 1px solid #dee2e6;">
+                                    <h6 class="mb-0" style="font-weight: 600;">
+                                        <i class="fas fa-sliders-h me-2"></i>Element Settings
+                                    </h6>
+                                    <small class="text-muted">Configure attributes</small>
+                                </div>
+                                <div class="traits-container" style="padding: 10px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -322,7 +412,7 @@
         font-weight: 500;
     }
     .nav-tabs .nav-link.active {
-        color: #3b82f6;
+        color: #bd2828;
         font-weight: 600;
     }
     .section-item {
@@ -333,21 +423,209 @@
     }
     .section-type-card:hover {
         background: #f8f9fa;
-        border-color: #3b82f6;
+        border-color: #bd2828;
     }
     #gjs {
         border: 1px solid #dee2e6;
         border-top: none;
     }
+
+    /* Enhanced GrapesJS Styling - Make UI More User Friendly */
     .gjs-one-bg {
-        background-color: #f8f9fa;
+        background-color: #f8f9fa !important;
+    }
+    .gjs-two-color {
+        color: #212529 !important;
     }
     .gjs-three-bg {
-        background-color: #3b82f6;
-        color: white;
+        background-color: #bd2828 !important;
+        color: white !important;
     }
     .gjs-four-color, .gjs-four-color-h:hover {
-        color: #3b82f6;
+        color: #bd2828 !important;
+    }
+
+    /* Make buttons look active and clickable */
+    .gjs-pn-btn {
+        opacity: 1 !important;
+        cursor: pointer !important;
+        background-color: transparent !important;
+        border: none !important;
+        color: #495057 !important;
+        transition: all 0.2s ease !important;
+    }
+    .gjs-pn-btn:hover {
+        background-color: #e9ecef !important;
+        color: #212529 !important;
+    }
+    .gjs-pn-btn.gjs-pn-active {
+        background-color: #bd2828 !important;
+        color: #ffffff !important;
+    }
+
+    /* Block Manager Styling */
+    .gjs-blocks-c {
+        background-color: #ffffff !important;
+    }
+    .gjs-block-category .gjs-title {
+        background-color: #e9ecef !important;
+        color: #212529 !important;
+        font-weight: 600 !important;
+        padding: 12px 10px !important;
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+    .gjs-block {
+        background-color: #ffffff !important;
+        border: 2px solid #dee2e6 !important;
+        border-radius: 6px !important;
+        margin: 8px !important;
+        padding: 15px 10px !important;
+        min-height: 90px !important;
+        cursor: move !important;
+        transition: all 0.2s ease !important;
+    }
+    .gjs-block:hover {
+        border-color: #bd2828 !important;
+        background-color: #f8f9fa !important;
+        transform: scale(1.05) !important;
+        box-shadow: 0 4px 8px rgba(59, 130, 246, 0.2) !important;
+    }
+    .gjs-block__media {
+        margin-bottom: 8px !important;
+        font-size: 32px !important;
+    }
+    .gjs-block-label {
+        font-size: 12px !important;
+        font-weight: 600 !important;
+        color: #495057 !important;
+        text-align: center !important;
+    }
+
+    /* Rich Text Editor Toolbar */
+    .gjs-rte-toolbar {
+        background-color: #ffffff !important;
+        border: 2px solid #bd2828 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.15) !important;
+        padding: 5px !important;
+    }
+    .gjs-rte-action {
+        color: #495057 !important;
+        border: 1px solid #dee2e6 !important;
+        margin: 2px !important;
+        background-color: #f8f9fa !important;
+        border-radius: 4px !important;
+        padding: 6px 10px !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+    }
+    .gjs-rte-action:hover {
+        background-color: #e9ecef !important;
+        color: #212529 !important;
+        border-color: #bd2828 !important;
+    }
+    .gjs-rte-active {
+        background-color: #bd2828 !important;
+        color: #ffffff !important;
+        border-color: #bd2828 !important;
+    }
+
+    /* Style Manager */
+    .gjs-sm-sector {
+        border-bottom: 1px solid #dee2e6 !important;
+    }
+    .gjs-sm-sector-title {
+        background-color: #f8f9fa !important;
+        color: #212529 !important;
+        font-weight: 600 !important;
+        padding: 12px 10px !important;
+        border-bottom: 1px solid #dee2e6 !important;
+        cursor: pointer !important;
+    }
+    .gjs-sm-sector-title:hover {
+        background-color: #e9ecef !important;
+    }
+    .gjs-sm-property {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #f8f9fa !important;
+        padding: 8px 10px !important;
+    }
+    .gjs-sm-label {
+        font-weight: 500 !important;
+        color: #495057 !important;
+    }
+
+    /* Layer Manager */
+    .gjs-layer {
+        background-color: #ffffff !important;
+        border-bottom: 1px solid #f8f9fa !important;
+    }
+    .gjs-layer:hover {
+        background-color: #f8f9fa !important;
+    }
+    .gjs-layer.gjs-selected {
+        background-color: #e7f1ff !important;
+        border-left: 3px solid #bd2828 !important;
+    }
+
+    /* Toolbar on elements */
+    .gjs-toolbar {
+        background-color: #bd2828 !important;
+        border-radius: 6px !important;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.2) !important;
+    }
+    .gjs-toolbar-item {
+        color: #ffffff !important;
+        border-radius: 4px !important;
+        padding: 6px 8px !important;
+    }
+    .gjs-toolbar-item:hover {
+        background-color: rgba(255,255,255,0.2) !important;
+    }
+
+    /* Canvas */
+    .gjs-cv-canvas {
+        background-color: #ffffff !important;
+        background-image:
+            linear-gradient(45deg, #f8f9fa 25%, transparent 25%),
+            linear-gradient(-45deg, #f8f9fa 25%, transparent 25%),
+            linear-gradient(45deg, transparent 75%, #f8f9fa 75%),
+            linear-gradient(-45deg, transparent 75%, #f8f9fa 75%);
+        background-size: 20px 20px;
+        background-position: 0 0, 0 10px, 10px -10px, -10px 0px;
+    }
+
+    /* Panel containers */
+    .gjs-pn-panel {
+        background-color: #ffffff !important;
+    }
+
+    /* Input fields */
+    input.gjs-sm-input,
+    select.gjs-sm-input {
+        background-color: #ffffff !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 4px !important;
+        padding: 6px 8px !important;
+        color: #212529 !important;
+    }
+    input.gjs-sm-input:focus,
+    select.gjs-sm-input:focus {
+        border-color: #bd2828 !important;
+        outline: none !important;
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1) !important;
+    }
+
+    /* Color picker */
+    .gjs-field-color-picker {
+        border: 2px solid #dee2e6 !important;
+        border-radius: 4px !important;
+    }
+
+    /* Device buttons */
+    .gjs-pn-devices-c {
+        display: flex;
+        gap: 5px;
     }
 </style>
 @endpush
@@ -374,11 +652,18 @@
             height: '70vh',
             width: '100%',
             storageManager: false,
+            fromElement: false,
 
+            // Plugins
             plugins: ['gjs-preset-webpage', 'gjs-blocks-basic', 'gjs-plugin-forms', 'gjs-navbar', 'gjs-tabs'],
             pluginsOpts: {
                 'gjs-preset-webpage': {
                     blocks: ['column1', 'column2', 'column3', 'column3-7', 'text', 'link', 'image', 'video', 'map'],
+                    modalImportTitle: 'Import Template',
+                    modalImportLabel: '<div style="margin-bottom: 10px; font-size: 13px;">Paste your HTML/CSS here</div>',
+                    modalImportContent: function(editor) {
+                        return editor.getHtml() + '<style>' + editor.getCss() + '</style>';
+                    },
                 },
                 'gjs-blocks-basic': {},
                 'gjs-plugin-forms': {
@@ -388,6 +673,7 @@
                 'gjs-tabs': {}
             },
 
+            // Canvas configuration
             canvas: {
                 styles: [
                     '{{ asset("assets/css/bootstrap.min.css") }}',
@@ -399,38 +685,107 @@
                 ]
             },
 
-            deviceManager: {
-                devices: [{
-                    name: 'Desktop',
-                    width: ''
-                }, {
-                    name: 'Tablet',
-                    width: '768px',
-                    widthMedia: '992px'
-                }, {
-                    name: 'Mobile',
-                    width: '320px',
-                    widthMedia: '480px'
-                }]
+            // Layer Manager
+            layerManager: {
+                appendTo: '.layers-container',
+                sortable: true,
+                hidable: true,
             },
 
-            blockManager: {
-                appendTo: '#blocks-wrapper',
+            // Panels configuration
+            panels: {
+                defaults: [
+                    {
+                        id: 'layers',
+                        el: '.panel__right',
+                        resizable: {
+                            maxDim: 350,
+                            minDim: 200,
+                            tc: 0,
+                            cl: 1,
+                            cr: 0,
+                            bc: 0,
+                            keyWidth: 'flex-basis',
+                        },
+                    },
+                    {
+                        id: 'panel-switcher',
+                        el: '.panel__switcher',
+                        buttons: [{
+                            id: 'show-layers',
+                            active: true,
+                            label: '<i class="fa fa-bars"></i>',
+                            command: 'show-layers',
+                            togglable: false,
+                            attributes: { title: 'Show Layers' }
+                        }, {
+                            id: 'show-style',
+                            active: true,
+                            label: '<i class="fa fa-paint-brush"></i>',
+                            command: 'show-styles',
+                            togglable: false,
+                            attributes: { title: 'Show Styles' }
+                        }, {
+                            id: 'show-traits',
+                            active: true,
+                            label: '<i class="fa fa-cog"></i>',
+                            command: 'show-traits',
+                            togglable: false,
+                            attributes: { title: 'Show Settings' }
+                        }],
+                    },
+                    {
+                        id: 'panel-devices',
+                        el: '.panel__devices',
+                        buttons: [{
+                            id: 'device-desktop',
+                            label: '<i class="fa fa-desktop"></i>',
+                            command: 'set-device-desktop',
+                            active: true,
+                            togglable: false,
+                            attributes: { title: 'Desktop' }
+                        }, {
+                            id: 'device-tablet',
+                            label: '<i class="fa fa-tablet"></i>',
+                            command: 'set-device-tablet',
+                            togglable: false,
+                            attributes: { title: 'Tablet' }
+                        }, {
+                            id: 'device-mobile',
+                            label: '<i class="fa fa-mobile"></i>',
+                            command: 'set-device-mobile',
+                            togglable: false,
+                            attributes: { title: 'Mobile' }
+                        }],
+                    },
+                ]
             },
 
+            // Trait Manager
+            traitManager: {
+                appendTo: '.traits-container',
+            },
+
+            // Selector Manager
+            selectorManager: {
+                appendTo: '.styles-container',
+            },
+
+            // Style Manager
             styleManager: {
+                appendTo: '.styles-container',
                 sectors: [{
                     name: 'General',
                     open: true,
-                    buildProps: ['display', 'position', 'top', 'right', 'left', 'bottom']
+                    buildProps: ['display', 'position', 'top', 'right', 'left', 'bottom', 'float', 'clear']
                 }, {
                     name: 'Dimension',
                     open: false,
-                    buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding']
+                    buildProps: ['width', 'height', 'max-width', 'max-height', 'min-width', 'min-height', 'margin', 'padding']
                 }, {
                     name: 'Typography',
                     open: false,
-                    buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow']
+                    buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow', 'text-transform']
                 }, {
                     name: 'Decorations',
                     open: false,
@@ -438,9 +793,44 @@
                 }, {
                     name: 'Extra',
                     open: false,
-                    buildProps: ['transition', 'perspective', 'transform', 'cursor']
+                    buildProps: ['transition', 'perspective', 'transform', 'cursor', 'overflow', 'z-index']
                 }]
-            }
+            },
+
+            // Device Manager
+            deviceManager: {
+                devices: [{
+                    name: 'Desktop',
+                    width: '',
+                }, {
+                    name: 'Tablet',
+                    width: '768px',
+                    widthMedia: '992px',
+                }, {
+                    name: 'Mobile',
+                    width: '320px',
+                    widthMedia: '480px',
+                }]
+            },
+
+            // Block Manager
+            blockManager: {
+                appendTo: '.blocks-container',
+            },
+
+            // Rich Text Editor
+            richTextEditor: {
+                actions: ['bold', 'italic', 'underline', 'strikethrough', '|', 'link', '|', 'h1', 'h2', 'h3', 'p', '|', 'ul', 'ol', '|', 'align-left', 'align-center', 'align-right', 'align-justify'],
+            },
+
+            // Asset Manager
+            assetManager: {
+                assets: [],
+                upload: false,
+                uploadText: 'Drop files here or click to upload',
+                addBtnText: 'Add Image',
+                customFetch: () => { return [] },
+            },
         });
 
         // Load existing content
@@ -465,6 +855,65 @@
                 </div>
             `);
         @endif
+
+        // Add custom commands
+        const commands = editor.Commands;
+
+        // Layer panel commands
+        commands.add('show-layers', {
+            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
+            getLayersEl(row) { return row.querySelector('.layers-container') },
+
+            run(editor, sender) {
+                const lmEl = this.getLayersEl(this.getRowEl(editor));
+                lmEl.style.display = '';
+            },
+            stop(editor, sender) {
+                const lmEl = this.getLayersEl(this.getRowEl(editor));
+                lmEl.style.display = 'none';
+            },
+        });
+
+        // Styles panel commands
+        commands.add('show-styles', {
+            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
+            getStyleEl(row) { return row.querySelector('.styles-container') },
+
+            run(editor, sender) {
+                const smEl = this.getStyleEl(this.getRowEl(editor));
+                smEl.style.display = '';
+            },
+            stop(editor, sender) {
+                const smEl = this.getStyleEl(this.getRowEl(editor));
+                smEl.style.display = 'none';
+            },
+        });
+
+        // Traits panel commands
+        commands.add('show-traits', {
+            getRowEl(editor) { return editor.getContainer().closest('.editor-row'); },
+            getTraitsEl(row) { return row.querySelector('.traits-container') },
+
+            run(editor, sender) {
+                const tmEl = this.getTraitsEl(this.getRowEl(editor));
+                tmEl.style.display = '';
+            },
+            stop(editor, sender) {
+                const tmEl = this.getTraitsEl(this.getRowEl(editor));
+                tmEl.style.display = 'none';
+            },
+        });
+
+        // Device commands
+        commands.add('set-device-desktop', {
+            run: editor => editor.setDevice('Desktop')
+        });
+        commands.add('set-device-tablet', {
+            run: editor => editor.setDevice('Tablet')
+        });
+        commands.add('set-device-mobile', {
+            run: editor => editor.setDevice('Mobile')
+        });
 
         // Add custom blocks
         addCustomBlocks(editor);
@@ -590,7 +1039,7 @@
                                 <p style="color: #666; font-size: 14px;">Always here to help you</p>
                             </div>
                             <div class="col-lg-3 col-md-6 text-center">
-                                <i class="fas fa-users fa-3x mb-3" style="color: #3b82f6;"></i>
+                                <i class="fas fa-users fa-3x mb-3" style="color: #bd2828;"></i>
                                 <h4>Community</h4>
                                 <p style="color: #666; font-size: 14px;">Join thousands of users</p>
                             </div>
@@ -666,8 +1115,8 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); border: 2px solid #3b82f6; position: relative;">
-                                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #3b82f6; color: white; padding: 5px 20px; border-radius: 20px; font-size: 12px;">POPULAR</div>
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3); border: 2px solid #bd2828; position: relative;">
+                                    <div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #bd2828; color: white; padding: 5px 20px; border-radius: 20px; font-size: 12px;">POPULAR</div>
                                     <h3 style="font-size: 24px; margin-bottom: 10px;">Professional</h3>
                                     <div style="font-size: 48px; font-weight: bold; margin: 20px 0;"><span style="font-size: 24px;">$</span>29<span style="font-size: 18px; color: #666;">/mo</span></div>
                                     <ul style="list-style: none; padding: 0; margin: 30px 0;">
@@ -829,8 +1278,8 @@
                                 <h4 style="font-size: 20px; margin-bottom: 5px;">Team Member</h4>
                                 <p style="color: #667eea; margin-bottom: 10px;">Position</p>
                                 <div>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 text-center">
@@ -838,8 +1287,8 @@
                                 <h4 style="font-size: 20px; margin-bottom: 5px;">Team Member</h4>
                                 <p style="color: #667eea; margin-bottom: 10px;">Position</p>
                                 <div>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 text-center">
@@ -847,8 +1296,8 @@
                                 <h4 style="font-size: 20px; margin-bottom: 5px;">Team Member</h4>
                                 <p style="color: #667eea; margin-bottom: 10px;">Position</p>
                                 <div>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
                                 </div>
                             </div>
                             <div class="col-lg-3 col-md-6 text-center">
@@ -856,8 +1305,8 @@
                                 <h4 style="font-size: 20px; margin-bottom: 5px;">Team Member</h4>
                                 <p style="color: #667eea; margin-bottom: 10px;">Position</p>
                                 <div>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
-                                    <a href="#" style="color: #3b82f6; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-linkedin"></i></a>
+                                    <a href="#" style="color: #bd2828; margin: 0 5px;"><i class="fab fa-twitter"></i></a>
                                 </div>
                             </div>
                         </div>
@@ -907,7 +1356,7 @@
                                 <p style="color: #d1d5db; margin-bottom: 15px;">Subscribe to get updates</p>
                                 <form style="display: flex; margin-bottom: 15px;">
                                     <input type="email" placeholder="Your email" style="flex: 1; padding: 10px; border: none; border-radius: 5px 0 0 5px;">
-                                    <button type="submit" style="padding: 10px 20px; background: #3b82f6; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Subscribe</button>
+                                    <button type="submit" style="padding: 10px 20px; background: #bd2828; color: white; border: none; border-radius: 0 5px 5px 0; cursor: pointer;">Subscribe</button>
                                 </form>
                             </div>
                         </div>
@@ -1313,7 +1762,7 @@
                                 </div>
                             </div>
                             <div class="col-lg-4">
-                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; border: 2px solid #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; border: 2px solid #bd2828; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
                                     <h3>Professional</h3>
                                     <div style="font-size: 48px; font-weight: bold; margin: 20px 0;">$29<span style="font-size: 18px;">/mo</span></div>
                                     <ul style="list-style: none; padding: 0; margin: 30px 0;">
