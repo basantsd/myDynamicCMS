@@ -1,8 +1,8 @@
 @extends('frontend.layouts.treasury')
 
-@section('title', $page->title . ' - Accountant General\'s Department')
-@section('meta_description', $page->meta_description)
-@section('meta_keywords', $page->meta_keywords)
+@section('title', $page->title . ' - ' . ($settings['site_name'] ?? 'Accountant General\'s Department'))
+@section('meta_description', $page->meta_description ?: ($settings['site_description'] ?? ''))
+@section('meta_keywords', $page->meta_keywords ?: ($settings['site_keywords'] ?? ''))
 
 @section('content')
 @if($page->use_builder && $page->builder_html)

@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>@yield('title', 'Accountant General\'s Department Government Of St. Kitts Nevis')</title>
-    <meta name="author" content="vecuro" />
-    <meta name="description" content="@yield('meta_description', 'Accountant General\'s Department')" />
-    <meta name="keywords" content="@yield('meta_keywords', 'Accountant General\'s Department')" />
+    <title>@yield('title', ($settings['site_name'] ?? 'Accountant General\'s Department') . ' - Government Of St. Kitts Nevis')</title>
+    <meta name="author" content="{{ $settings['site_author'] ?? 'vecuro' }}" />
+    <meta name="description" content="@yield('meta_description', $settings['site_description'] ?? 'Accountant General\'s Department')" />
+    <meta name="keywords" content="@yield('meta_keywords', $settings['site_keywords'] ?? 'Accountant General\'s Department, St. Kitts, Nevis, Treasury')" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Fonts and Icons -->
