@@ -1,1 +1,24 @@
 *.vscode
+
+# Laravel & CMS Files
+/vendor/
+/node_modules/
+.env
+/database/database.sqlite
+/database/*.sqlite
+/storage/*.key
+/storage/app/*
+!/storage/app/public
+/storage/framework/cache/*
+/storage/framework/sessions/*
+/storage/framework/views/*
+/storage/logs/*
+!/storage/logs/.gitkeep
+/public/storage
+.phpunit.result.cache
+Homestead.json
+Homestead.yaml
+npm-debug.log
+yarn-error.log
+.DS_Store
+Thumbs.db
