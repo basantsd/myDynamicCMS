@@ -12,6 +12,7 @@ return new class extends Migration
             $table->id();
             $table->string('name')->unique();
             $table->string('location'); // header, footer, mobile
+            $table->string('description')->nullable();
             $table->timestamps();
         });
 
@@ -19,10 +20,11 @@ return new class extends Migration
             $table->id();
             $table->foreignId('menu_id')->constrained()->onDelete('cascade');
             $table->foreignId('parent_id')->nullable()->constrained('menu_items')->onDelete('cascade');
-            $table->string('title');
+            $table->string('label');
             $table->string('url')->nullable();
             $table->foreignId('page_id')->nullable()->constrained('pages')->onDelete('cascade');
-            $table->string('target')->default('_self'); // _self, _blank
+            $table->string('type')->default('page'); // page, url
+            $table->boolean('target_blank')->default(false);
             $table->integer('order')->default(0);
             $table->boolean('is_active')->default(true);
             $table->timestamps();
