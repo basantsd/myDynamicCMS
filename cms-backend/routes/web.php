@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\CustomBlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MediaController;
@@ -50,6 +51,18 @@ Route::prefix('admin')->group(function () {
         Route::put('/page-sections/{id}', [PageSectionController::class, 'update'])->name('admin.sections.update');
         Route::post('/page-sections/reorder', [PageSectionController::class, 'updateOrder'])->name('admin.sections.reorder');
         Route::delete('/page-sections/{id}', [PageSectionController::class, 'destroy'])->name('admin.sections.destroy');
+
+        // Custom Blocks Management
+        Route::get('/custom-blocks', [CustomBlockController::class, 'index'])->name('admin.blocks.index');
+        Route::get('/custom-blocks/list', [CustomBlockController::class, 'list'])->name('admin.blocks.list');
+        Route::get('/custom-blocks/create', [CustomBlockController::class, 'create'])->name('admin.blocks.create');
+        Route::post('/custom-blocks', [CustomBlockController::class, 'store'])->name('admin.blocks.store');
+        Route::get('/custom-blocks/{id}', [CustomBlockController::class, 'show'])->name('admin.blocks.show');
+        Route::get('/custom-blocks/{id}/edit', [CustomBlockController::class, 'edit'])->name('admin.blocks.edit');
+        Route::put('/custom-blocks/{id}', [CustomBlockController::class, 'update'])->name('admin.blocks.update');
+        Route::delete('/custom-blocks/{id}', [CustomBlockController::class, 'destroy'])->name('admin.blocks.destroy');
+        Route::post('/custom-blocks/{id}/toggle', [CustomBlockController::class, 'toggleActive'])->name('admin.blocks.toggle');
+        Route::post('/custom-blocks/{id}/duplicate', [CustomBlockController::class, 'duplicate'])->name('admin.blocks.duplicate');
 
         // Menus Management
         Route::get('/menus', [MenuController::class, 'index'])->name('admin.menus.index');

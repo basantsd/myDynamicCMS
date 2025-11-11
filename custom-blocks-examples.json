@@ -1,0 +1,476 @@
+{
+  "description": "Example custom block definitions and usage for the Dynamic CMS",
+  "examples": {
+    "creating_custom_block": {
+      "endpoint": "POST /admin/custom-blocks",
+      "payload": {
+        "name": "Hero with Parallax Effect",
+        "icon": "fa-mountain",
+        "category": "hero",
+        "description": "Hero section with parallax scrolling background image",
+        "schema": {
+          "fields": [
+            {
+              "name": "background_image",
+              "type": "image",
+              "label": "Background Image",
+              "required": true
+            },
+            {
+              "name": "parallax_speed",
+              "type": "range",
+              "label": "Parallax Speed",
+              "min": 0,
+              "max": 10,
+              "required": false
+            },
+            {
+              "name": "heading",
+              "type": "text",
+              "label": "Main Heading",
+              "required": true
+            },
+            {
+              "name": "description",
+              "type": "textarea",
+              "label": "Description",
+              "required": false
+            },
+            {
+              "name": "cta_button",
+              "type": "button",
+              "label": "Call to Action",
+              "fields": ["text", "url", "style"],
+              "required": false
+            }
+          ]
+        },
+        "default_values": {
+          "parallax_speed": 5,
+          "heading": "Scroll to Experience",
+          "cta_button": {
+            "text": "Learn More",
+            "url": "#",
+            "style": "primary"
+          }
+        },
+        "is_active": true
+      }
+    },
+    "using_block_in_page_section": {
+      "endpoint": "POST /admin/page-sections",
+      "payload": {
+        "page_id": 1,
+        "section_type": "hero_banner",
+        "name": "Homepage Hero Section",
+        "custom_block_id": 1,
+        "content": {
+          "background_image": "/uploads/hero-background.jpg",
+          "heading": "Welcome to Our Platform",
+          "subheading": "Innovation Meets Excellence",
+          "description": "Discover how we transform ideas into reality",
+          "primary_button": {
+            "text": "Get Started Free",
+            "url": "/signup",
+            "style": "primary"
+          },
+          "secondary_button": {
+            "text": "Watch Demo",
+            "url": "/demo",
+            "style": "outline"
+          }
+        }
+      }
+    },
+    "hero_with_image_slider": {
+      "endpoint": "POST /admin/page-sections",
+      "payload": {
+        "page_id": 2,
+        "section_type": "hero_banner",
+        "name": "Product Showcase Slider",
+        "custom_block_id": 3,
+        "content": {
+          "autoplay": true,
+          "interval": 7,
+          "slides": [
+            {
+              "image": "/uploads/product-1.jpg",
+              "heading": "Revolutionary Design",
+              "description": "Experience the next generation of innovation",
+              "button": {
+                "text": "Explore",
+                "url": "/products/design",
+                "style": "primary"
+              }
+            },
+            {
+              "image": "/uploads/product-2.jpg",
+              "heading": "Powerful Performance",
+              "description": "Built for speed and efficiency",
+              "button": {
+                "text": "Learn More",
+                "url": "/products/performance",
+                "style": "primary"
+              }
+            },
+            {
+              "image": "/uploads/product-3.jpg",
+              "heading": "Seamless Integration",
+              "description": "Works with all your favorite tools",
+              "button": {
+                "text": "View Integrations",
+                "url": "/integrations",
+                "style": "secondary"
+              }
+            }
+          ]
+        }
+      }
+    },
+    "hero_split_layout": {
+      "endpoint": "POST /admin/page-sections",
+      "payload": {
+        "page_id": 3,
+        "section_type": "hero_banner",
+        "name": "About Us Hero",
+        "custom_block_id": 4,
+        "content": {
+          "image_position": "right",
+          "image": "/uploads/about-team.jpg",
+          "heading": "Building the Future Together",
+          "subheading": "Since 2010",
+          "description": "<p>We're a passionate team dedicated to creating innovative solutions that make a difference.</p>",
+          "features": [
+            {
+              "icon": "fa-users",
+              "text": "Over 500 satisfied clients worldwide"
+            },
+            {
+              "icon": "fa-award",
+              "text": "Award-winning customer service"
+            },
+            {
+              "icon": "fa-shield-alt",
+              "text": "Enterprise-grade security"
+            }
+          ],
+          "buttons": [
+            {
+              "text": "Meet the Team",
+              "url": "/team",
+              "style": "primary"
+            },
+            {
+              "text": "Our Story",
+              "url": "/about",
+              "style": "outline"
+            }
+          ]
+        }
+      }
+    },
+    "hero_with_statistics_table": {
+      "endpoint": "POST /admin/page-sections",
+      "payload": {
+        "page_id": 4,
+        "section_type": "hero_banner",
+        "name": "Performance Metrics Hero",
+        "custom_block_id": 5,
+        "content": {
+          "heading": "Our Impact in Numbers",
+          "description": "See how we're making a difference across the globe",
+          "table_style": "striped",
+          "table_data": {
+            "headers": ["Metric", "2023", "2024", "Growth"],
+            "rows": [
+              ["Active Users", "50,000", "125,000", "+150%"],
+              ["Projects Completed", "1,200", "3,500", "+192%"],
+              ["Customer Satisfaction", "94%", "98%", "+4%"],
+              ["Countries Served", "45", "72", "+60%"]
+            ]
+          }
+        }
+      }
+    },
+    "hero_with_contact_form": {
+      "endpoint": "POST /admin/page-sections",
+      "payload": {
+        "page_id": 5,
+        "section_type": "hero_banner",
+        "name": "Contact Hero with Form",
+        "custom_block_id": 6,
+        "content": {
+          "background_image": "/uploads/contact-bg.jpg",
+          "heading": "Let's Start a Conversation",
+          "description": "Have a project in mind? We'd love to hear from you.",
+          "form_title": "Get in Touch",
+          "form_fields": [
+            {
+              "type": "text",
+              "label": "Full Name",
+              "placeholder": "John Doe",
+              "required": true
+            },
+            {
+              "type": "email",
+              "label": "Email Address",
+              "placeholder": "john@example.com",
+              "required": true
+            },
+            {
+              "type": "tel",
+              "label": "Phone Number",
+              "placeholder": "+1 (555) 123-4567",
+              "required": false
+            },
+            {
+              "type": "select",
+              "label": "I'm interested in",
+              "options": ["Web Development", "Mobile Apps", "Consulting", "Support"],
+              "required": true
+            },
+            {
+              "type": "textarea",
+              "label": "Message",
+              "placeholder": "Tell us about your project...",
+              "required": true
+            }
+          ],
+          "submit_button_text": "Send Message"
+        }
+      }
+    },
+    "searching_blocks": {
+      "description": "Examples of searching and filtering custom blocks",
+      "search_by_name": {
+        "endpoint": "GET /admin/custom-blocks/list?search=hero+image"
+      },
+      "filter_by_category": {
+        "endpoint": "GET /admin/custom-blocks/list?category=hero"
+      },
+      "sort_by_usage": {
+        "endpoint": "GET /admin/custom-blocks?sort=usage&order=desc"
+      },
+      "active_blocks_only": {
+        "endpoint": "GET /admin/custom-blocks/list?active=true&category=hero"
+      }
+    },
+    "block_management": {
+      "toggle_active_status": {
+        "endpoint": "POST /admin/custom-blocks/1/toggle",
+        "description": "Toggles the is_active status of block with ID 1"
+      },
+      "duplicate_block": {
+        "endpoint": "POST /admin/custom-blocks/1/duplicate",
+        "description": "Creates a copy of block with ID 1"
+      },
+      "update_block": {
+        "endpoint": "PUT /admin/custom-blocks/1",
+        "payload": {
+          "name": "Updated Hero Name",
+          "description": "Updated description",
+          "is_active": true
+        }
+      }
+    }
+  },
+  "icon_reference": {
+    "description": "Common FontAwesome icons for custom blocks",
+    "hero_blocks": [
+      "fa-image",
+      "fa-video",
+      "fa-images",
+      "fa-mountain",
+      "fa-layer-group",
+      "fa-heading",
+      "fa-star",
+      "fa-rocket"
+    ],
+    "content_blocks": [
+      "fa-align-left",
+      "fa-paragraph",
+      "fa-file-alt",
+      "fa-quote-left",
+      "fa-list"
+    ],
+    "media_blocks": [
+      "fa-photo-video",
+      "fa-film",
+      "fa-camera",
+      "fa-play-circle"
+    ],
+    "form_blocks": [
+      "fa-envelope",
+      "fa-paper-plane",
+      "fa-edit",
+      "fa-clipboard-list"
+    ],
+    "feature_blocks": [
+      "fa-cube",
+      "fa-cubes",
+      "fa-th",
+      "fa-columns",
+      "fa-table"
+    ]
+  },
+  "field_types_reference": {
+    "text": {
+      "description": "Single line text input",
+      "example": {
+        "name": "heading",
+        "type": "text",
+        "label": "Heading",
+        "required": true
+      }
+    },
+    "textarea": {
+      "description": "Multi-line text input",
+      "example": {
+        "name": "description",
+        "type": "textarea",
+        "label": "Description",
+        "required": false
+      }
+    },
+    "wysiwyg": {
+      "description": "Rich text editor",
+      "example": {
+        "name": "content",
+        "type": "wysiwyg",
+        "label": "Rich Content",
+        "required": false
+      }
+    },
+    "image": {
+      "description": "Image upload/select",
+      "example": {
+        "name": "background_image",
+        "type": "image",
+        "label": "Background Image",
+        "required": true
+      }
+    },
+    "video": {
+      "description": "Video upload or URL",
+      "example": {
+        "name": "video_url",
+        "type": "video",
+        "label": "Video URL",
+        "required": false
+      }
+    },
+    "color": {
+      "description": "Color picker",
+      "example": {
+        "name": "background_color",
+        "type": "color",
+        "label": "Background Color",
+        "required": false
+      }
+    },
+    "number": {
+      "description": "Numeric input",
+      "example": {
+        "name": "count",
+        "type": "number",
+        "label": "Item Count",
+        "required": false
+      }
+    },
+    "range": {
+      "description": "Slider input",
+      "example": {
+        "name": "opacity",
+        "type": "range",
+        "label": "Opacity",
+        "min": 0,
+        "max": 100,
+        "required": false
+      }
+    },
+    "select": {
+      "description": "Dropdown selection",
+      "example": {
+        "name": "layout",
+        "type": "select",
+        "label": "Layout Style",
+        "options": ["default", "wide", "boxed"],
+        "required": true
+      }
+    },
+    "toggle": {
+      "description": "On/off switch",
+      "example": {
+        "name": "autoplay",
+        "type": "toggle",
+        "label": "Enable Autoplay",
+        "required": false
+      }
+    },
+    "icon": {
+      "description": "Icon picker (FontAwesome)",
+      "example": {
+        "name": "feature_icon",
+        "type": "icon",
+        "label": "Feature Icon",
+        "required": false
+      }
+    },
+    "button": {
+      "description": "Button configuration",
+      "example": {
+        "name": "cta_button",
+        "type": "button",
+        "label": "Call to Action",
+        "fields": ["text", "url", "style"],
+        "required": false
+      }
+    },
+    "repeater": {
+      "description": "Repeating field group",
+      "example": {
+        "name": "features",
+        "type": "repeater",
+        "label": "Features",
+        "fields": [
+          {
+            "name": "title",
+            "type": "text",
+            "label": "Feature Title",
+            "required": true
+          },
+          {
+            "name": "description",
+            "type": "textarea",
+            "label": "Feature Description",
+            "required": false
+          }
+        ],
+        "required": false
+      }
+    },
+    "table": {
+      "description": "Table data structure",
+      "example": {
+        "name": "pricing_table",
+        "type": "table",
+        "label": "Pricing Data",
+        "fields": [
+          {
+            "name": "headers",
+            "type": "array",
+            "label": "Column Headers",
+            "required": true
+          },
+          {
+            "name": "rows",
+            "type": "repeater",
+            "label": "Data Rows",
+            "required": true
+          }
+        ],
+        "required": true
+      }
+    }
+  }
+}
