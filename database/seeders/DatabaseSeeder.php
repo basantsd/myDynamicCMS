@@ -13,6 +13,8 @@ class DatabaseSeeder extends Seeder
             PermissionSeeder::class,
             UserSeeder::class,
             SettingSeeder::class,
+            MenuSeeder::class,
+            CustomBlockSeeder::class,
             PageSeeder::class,      // Create pages first
             MenuSeeder::class,       // Then create menus with page references
         ]);

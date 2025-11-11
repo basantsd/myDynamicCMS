@@ -12,6 +12,8 @@ class PageSection extends Model
     protected $fillable = [
         'page_id',
         'section_type',
+        'name',
+        'custom_block_id',
         'order',
         'content',
         'is_active',
@@ -25,6 +27,11 @@ class PageSection extends Model
     public function page()
     {
         return $this->belongsTo(Page::class);
+    }
+
+    public function customBlock()
+    {
+        return $this->belongsTo(CustomBlock::class);
     }
 
     // Section type constants
