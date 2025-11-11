@@ -10,40 +10,48 @@ class MediaController extends Controller
 {
     public function index()
     {
-        $media = Media::with('uploader')->latest()->paginate(30);
+        $media = Media::latest()->paginate(30);
         return view('admin.media.index', compact('media'));
     }
 
     public function upload(Request $request)
     {
         $request->validate([
-            'file' => 'required|file|max:10240', // 10MB max
+            'files' => 'required|array',
+            'files.*' => 'file|max:10240', // 10MB max per file
         ]);
 
-        $file = $request->file('file');
-        $filename = time() . '_' . $file->getClientOriginalName();
-        $path = $file->storeAs('media', $filename, 'public');
+        $uploadedFiles = [];
 
-        $type = 'document';
-        if (strpos($file->getMimeType(), 'image') !== false) {
-            $type = 'image';
-        } elseif (strpos($file->getMimeType(), 'video') !== false) {
-            $type = 'video';
+        foreach ($request->file('files') as $file) {
+            $filename = time() . '_' . uniqid() . '_' . $file->getClientOriginalName();
+            $path = $file->storeAs('media', $filename, 'public');
+
+            $type = 'other';
+            $mimeType = $file->getMimeType();
+            if (strpos($mimeType, 'image') !== false) {
+                $type = 'image';
+            } elseif (strpos($mimeType, 'video') !== false) {
+                $type = 'video';
+            } elseif (in_array($file->getClientOriginalExtension(), ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'ppt', 'pptx'])) {
+                $type = 'document';
+            }
+
+            $media = Media::create([
+                'title' => pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME),
+                'file_name' => $filename,
+                'file_path' => $path,
+                'mime_type' => $mimeType,
+                'file_size' => $file->getSize(),
+                'type' => $type,
+                'alt_text' => '',
+                'uploaded_by' => session('user_id') ?? auth()->id(),
+            ]);
+
+            $uploadedFiles[] = $media;
         }
 
-        $media = Media::create([
-            'title' => $request->title ?? $file->getClientOriginalName(),
-            'file_name' => $filename,
-            'file_path' => $path,
-            'mime_type' => $file->getMimeType(),
-            'file_size' => $file->getSize(),
-            'type' => $type,
-            'alt_text' => $request->alt_text,
-            'description' => $request->description,
-            'uploaded_by' => session('user_id'),
-        ]);
-
-        return response()->json(['success' => true, 'media' => $media]);
+        return back()->with('success', count($uploadedFiles) . ' file(s) uploaded successfully!');
     }
 
     public function update(Request $request, $id)
@@ -53,7 +61,6 @@ class MediaController extends Controller
         $media->update([
             'title' => $request->title,
             'alt_text' => $request->alt_text,
-            'description' => $request->description,
         ]);
 
         return response()->json(['success' => true, 'media' => $media]);

@@ -11,7 +11,7 @@ class MenuController extends Controller
 {
     public function index()
     {
-        $menus = Menu::with('allItems')->get();
+        $menus = Menu::with('items')->get();
         return view('admin.menus.index', compact('menus'));
     }
 
@@ -27,21 +27,22 @@ class MenuController extends Controller
     {
         $request->validate([
             'menu_id' => 'required|exists:menus,id',
-            'title' => 'required|max:255',
+            'label' => 'required|max:255',
         ]);
 
         $item = MenuItem::create([
             'menu_id' => $request->menu_id,
             'parent_id' => $request->parent_id,
-            'title' => $request->title,
+            'label' => $request->label,
             'url' => $request->url,
             'page_id' => $request->page_id,
-            'target' => $request->target ?? '_self',
+            'type' => $request->type ?? 'page',
+            'target_blank' => $request->has('target_blank'),
             'order' => MenuItem::where('menu_id', $request->menu_id)->max('order') + 1,
             'is_active' => true,
         ]);
 
-        return response()->json(['success' => true, 'item' => $item->load('page')]);
+        return back()->with('success', 'Menu item added successfully!');
     }
 
     public function updateItem(Request $request, $id)
@@ -49,14 +50,15 @@ class MenuController extends Controller
         $item = MenuItem::findOrFail($id);
 
         $request->validate([
-            'title' => 'required|max:255',
+            'label' => 'required|max:255',
         ]);
 
         $item->update([
-            'title' => $request->title,
+            'label' => $request->label,
             'url' => $request->url,
             'page_id' => $request->page_id,
-            'target' => $request->target ?? '_self',
+            'type' => $request->type ?? 'page',
+            'target_blank' => $request->has('target_blank'),
             'parent_id' => $request->parent_id,
             'is_active' => $request->has('is_active'),
         ]);

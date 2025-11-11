@@ -11,16 +11,38 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $stats = [
-            'total_pages' => Page::count(),
-            'published_pages' => Page::where('is_published', true)->count(),
-            'total_media' => Media::count(),
-            'total_users' => User::count(),
-            'total_menu_items' => MenuItem::count(),
-        ];
+        $totalPages = Page::count();
+        $publishedPages = Page::where('is_published', true)->count();
+        $totalMedia = Media::count();
+        $mediaSize = $this->formatBytes(Media::sum('file_size'));
+        $totalUsers = User::count();
+        $activeUsers = User::where('is_active', true)->count();
+        $totalMenuItems = MenuItem::count();
 
-        $recent_pages = Page::with('creator')->latest()->take(5)->get();
+        $recentPages = Page::latest()->take(5)->get();
 
-        return view('admin.dashboard', compact('stats', 'recent_pages'));
+        return view('admin.dashboard', compact(
+            'totalPages',
+            'publishedPages',
+            'totalMedia',
+            'mediaSize',
+            'totalUsers',
+            'activeUsers',
+            'totalMenuItems',
+            'recentPages'
+        ));
+    }
+
+    private function formatBytes($bytes, $precision = 2)
+    {
+        if ($bytes === 0) return '0 B';
+
+        $units = ['B', 'KB', 'MB', 'GB'];
+        $pow = floor(($bytes ? log($bytes) : 0) / log(1024));
+        $pow = min($pow, count($units) - 1);
+
+        $bytes /= (1024 ** $pow);
+
+        return round($bytes, $precision) . ' ' . $units[$pow];
     }
 }
