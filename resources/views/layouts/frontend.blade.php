@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
-    <title>@yield('title', 'Accountant General\'s Department Government Of St. Kitts Nevis')</title>
+    <title>@yield('title', $settings['site_name'] ?? 'Accountant General\'s Department Government Of St. Kitts Nevis')</title>
     <meta name="author" content="vecuro" />
-    <meta name="description" content="@yield('meta_description', 'Accountant General\'s Department')" />
-    <meta name="keywords" content="@yield('meta_keywords', 'Accountant General\'s Department')" />
+    <meta name="description" content="@yield('meta_description', $settings['meta_description'] ?? 'Accountant General\'s Department')" />
+    <meta name="keywords" content="@yield('meta_keywords', $settings['meta_keywords'] ?? 'Accountant General\'s Department')" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
     <!-- Fonts -->
@@ -16,7 +16,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Exo:wght@400;500;600;700&family=Fira+Sans:wght@400;500&display=swap" rel="stylesheet" />
 
-    <link rel="icon" href="{{ asset('assets/img/fav.jpg') }}" />
+    <!-- Favicon -->
+    @if(isset($settings['site_favicon']) && $settings['site_favicon'])
+    <link rel="icon" href="{{ asset('storage/' . $settings['site_favicon']) }}" />
+    @else
+    <link rel="icon" href="{{ asset('assets/img/favicon.jpg') }}" />
+    @endif
 
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.min.css') }}" />

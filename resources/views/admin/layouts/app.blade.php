@@ -13,6 +13,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('assets/img/favicon.jpg') }}" />
+
     <style>
         * {
             margin: 0;
@@ -61,6 +64,12 @@
             display: flex;
             align-items: center;
             gap: 12px;
+            justify-content: center;
+        }
+
+        .sidebar-brand img {
+            max-width: 150px;
+            height: auto;
         }
 
         .sidebar-brand i {
@@ -319,8 +328,7 @@
     <!-- Sidebar -->
     <div class="sidebar">
         <div class="sidebar-brand">
-            <i class="fas fa-cog"></i>
-            <h4>DynamicCMS</h4>
+            <img src="{{ asset('assets/img/Logo11.png') }}" alt="DynamicCMS">
         </div>
 
         <ul class="sidebar-menu">

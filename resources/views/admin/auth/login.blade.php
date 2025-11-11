@@ -12,6 +12,9 @@
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 
+    <!-- Favicon -->
+    <link rel="icon" href="{{ asset('assets/img/favicon.jpg') }}" />
+
     <style>
         * {
             margin: 0;
@@ -52,6 +55,12 @@
             font-size: 48px;
             color: #3b82f6;
             margin-bottom: 15px;
+        }
+
+        .login-header img {
+            max-width: 180px;
+            height: auto;
+            margin-bottom: 20px;
         }
 
         .login-header h3 {
@@ -226,7 +235,7 @@
     <div class="login-container">
         <div class="login-card">
             <div class="login-header">
-                <i class="fas fa-shield-alt"></i>
+                <img src="{{ asset('assets/img/Logo11.png') }}" alt="Logo">
                 <h3>Admin Login</h3>
                 <p>Enter your credentials to access the admin panel</p>
             </div>

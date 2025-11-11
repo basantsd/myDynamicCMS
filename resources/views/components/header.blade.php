@@ -7,10 +7,10 @@
                     <div class="col-auto">
                         <div class="header-logo">
                             <a href="{{ route('home') }}">
-                                @if(isset($settings['site_logo']))
+                                @if(isset($settings['site_logo']) && $settings['site_logo'])
                                 <img src="{{ asset('storage/' . $settings['site_logo']) }}" alt="{{ $settings['site_name'] ?? 'Logo' }}">
                                 @else
-                                <img src="{{ asset('assets/img/logo.svg') }}" alt="Logo">
+                                <img src="{{ asset('assets/img/Logo1.png') }}" alt="{{ $settings['site_name'] ?? 'Logo' }}">
                                 @endif
                             </a>
                         </div>
