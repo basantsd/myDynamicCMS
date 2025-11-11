@@ -978,6 +978,425 @@
         window.open('{{ route("page.show", $page->slug) }}', '_blank');
     }
 
+    function showTemplateLibrary() {
+        // Create modal HTML
+        const modalHTML = `
+            <div class="modal fade" id="templateLibraryModal" tabindex="-1">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title"><i class="fas fa-file-alt me-2"></i>Choose Page Template</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-muted mb-4">Select a pre-designed template to get started quickly. You can customize everything after!</p>
+                            <div class="row g-4">
+                                <!-- Landing Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('landing')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden; transition: transform 0.3s;">
+                                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                                            <div class="text-center">
+                                                <i class="fas fa-rocket fa-3x mb-3"></i>
+                                                <h4>Landing Page</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>Landing Page</h5>
+                                            <p class="text-muted small">Hero + Features + CTA + Footer</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- About Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('about')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                        <div style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                                            <div class="text-center">
+                                                <i class="fas fa-users fa-3x mb-3"></i>
+                                                <h4>About Us</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>About Us Page</h5>
+                                            <p class="text-muted small">Hero + Stats + Team + CTA</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Services Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('services')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                        <div style="background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                                            <div class="text-center">
+                                                <i class="fas fa-cogs fa-3x mb-3"></i>
+                                                <h4>Services</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>Services Page</h5>
+                                            <p class="text-muted small">Hero + Features Grid + Testimonials</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Pricing Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('pricing')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                        <div style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                                            <div class="text-center">
+                                                <i class="fas fa-dollar-sign fa-3x mb-3"></i>
+                                                <h4>Pricing</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>Pricing Page</h5>
+                                            <p class="text-muted small">Hero + Pricing Table + FAQ</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Contact Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('contact')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                        <div style="background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); height: 200px; display: flex; align-items: center; justify-content: center; color: white;">
+                                            <div class="text-center">
+                                                <i class="fas fa-envelope fa-3x mb-3"></i>
+                                                <h4>Contact</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>Contact Page</h5>
+                                            <p class="text-muted small">Hero + Contact Form + Map</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Blank Page -->
+                                <div class="col-md-4">
+                                    <div class="template-card" onclick="loadTemplate('blank')" style="cursor: pointer; border: 2px solid #ddd; border-radius: 10px; overflow: hidden;">
+                                        <div style="background: #f8f9fa; height: 200px; display: flex; align-items: center; justify-content: center; color: #666;">
+                                            <div class="text-center">
+                                                <i class="fas fa-file fa-3x mb-3"></i>
+                                                <h4>Start Fresh</h4>
+                                            </div>
+                                        </div>
+                                        <div class="p-3">
+                                            <h5>Blank Page</h5>
+                                            <p class="text-muted small">Empty canvas - build from scratch</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+
+        // Remove existing modal if any
+        const existing = document.getElementById('templateLibraryModal');
+        if (existing) existing.remove();
+
+        // Add modal to body
+        document.body.insertAdjacentHTML('beforeend', modalHTML);
+
+        // Show modal
+        const modal = new bootstrap.Modal(document.getElementById('templateLibraryModal'));
+        modal.show();
+
+        // Add hover effect
+        document.querySelectorAll('.template-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-5px)';
+                this.style.boxShadow = '0 10px 20px rgba(0,0,0,0.1)';
+            });
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+    }
+
+    function loadTemplate(templateType) {
+        if (!editorInitialized) {
+            alert('Please wait for the editor to initialize.');
+            return;
+        }
+
+        // Close modal
+        const modal = bootstrap.Modal.getInstance(document.getElementById('templateLibraryModal'));
+        if (modal) modal.hide();
+
+        // Define templates
+        const templates = {
+            landing: `
+                <!-- Hero Section -->
+                <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 100px 0; color: white;">
+                    <div class="container">
+                        <div class="row align-items-center">
+                            <div class="col-lg-6">
+                                <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">Build Amazing Websites</h1>
+                                <p style="font-size: 18px; margin-bottom: 30px;">Create stunning pages with our drag-and-drop builder. No coding required!</p>
+                                <a href="#" class="btn btn-light btn-lg" style="padding: 12px 30px; margin-right: 10px;">Get Started</a>
+                                <a href="#" class="btn btn-outline-light btn-lg" style="padding: 12px 30px;">Learn More</a>
+                            </div>
+                            <div class="col-lg-6 text-center">
+                                <img src="{{ asset('assets/img/hero/hero_bg_1_1.jpg') }}" alt="Hero" style="max-width: 100%; border-radius: 10px;">
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Features -->
+                <section style="padding: 80px 0;">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <h2 style="font-size: 36px; font-weight: bold;">Our Features</h2>
+                            <p style="font-size: 18px; color: #666;">Everything you need to succeed</p>
+                        </div>
+                        <div class="row gy-4">
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-rocket fa-3x mb-3" style="color: #667eea;"></i>
+                                <h3>Fast</h3>
+                                <p style="color: #666;">Lightning-fast performance</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-shield-alt fa-3x mb-3" style="color: #667eea;"></i>
+                                <h3>Secure</h3>
+                                <p style="color: #666;">Enterprise-grade security</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <i class="fas fa-mobile-alt fa-3x mb-3" style="color: #667eea;"></i>
+                                <h3>Responsive</h3>
+                                <p style="color: #666;">Perfect on all devices</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- CTA -->
+                <section style="padding: 60px 0; background: #f8f9fa;">
+                    <div class="container text-center">
+                        <h2 style="font-size: 36px; margin-bottom: 20px;">Ready to Get Started?</h2>
+                        <p style="font-size: 18px; color: #666; margin-bottom: 30px;">Join thousands of satisfied customers</p>
+                        <a href="#" class="btn btn-primary btn-lg">Start Free Trial</a>
+                    </div>
+                </section>
+            `,
+            about: `
+                <!-- Hero -->
+                <section style="padding: 100px 0; background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); color: white; text-center;">
+                    <div class="container">
+                        <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">About Us</h1>
+                        <p style="font-size: 20px; margin: 0;">Learn about our story and mission</p>
+                    </div>
+                </section>
+
+                <!-- Stats -->
+                <section style="padding: 60px 0; background: white;">
+                    <div class="container">
+                        <div class="row text-center">
+                            <div class="col-md-3">
+                                <h2 style="font-size: 48px; font-weight: bold; color: #667eea;">1000+</h2>
+                                <p>Clients</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h2 style="font-size: 48px; font-weight: bold; color: #667eea;">500+</h2>
+                                <p>Projects</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h2 style="font-size: 48px; font-weight: bold; color: #667eea;">50+</h2>
+                                <p>Awards</p>
+                            </div>
+                            <div class="col-md-3">
+                                <h2 style="font-size: 48px; font-weight: bold; color: #667eea;">15+</h2>
+                                <p>Years</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- Team -->
+                <section style="padding: 80px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <div class="text-center mb-5">
+                            <h2 style="font-size: 36px; font-weight: bold;">Meet Our Team</h2>
+                        </div>
+                        <div class="row gy-4">
+                            <div class="col-md-4 text-center">
+                                <div style="width: 150px; height: 150px; border-radius: 50%; background: #ddd; margin: 0 auto 20px;"></div>
+                                <h4>Team Member</h4>
+                                <p>Position</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div style="width: 150px; height: 150px; border-radius: 50%; background: #ddd; margin: 0 auto 20px;"></div>
+                                <h4>Team Member</h4>
+                                <p>Position</p>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <div style="width: 150px; height: 150px; border-radius: 50%; background: #ddd; margin: 0 auto 20px;"></div>
+                                <h4>Team Member</h4>
+                                <p>Position</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            services: `
+                <!-- Hero -->
+                <section style="padding: 100px 0; background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%); color: white; text-center;">
+                    <div class="container">
+                        <h1 style="font-size: 48px; font-weight: bold;">Our Services</h1>
+                        <p style="font-size: 20px; margin-top: 20px;">Comprehensive solutions for your needs</p>
+                    </div>
+                </section>
+
+                <!-- Services Grid -->
+                <section style="padding: 80px 0;">
+                    <div class="container">
+                        <div class="row gy-4">
+                            <div class="col-md-6">
+                                <div style="padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                                    <i class="fas fa-code fa-3x mb-3" style="color: #4facfe;"></i>
+                                    <h3>Web Development</h3>
+                                    <p style="color: #666;">Custom websites and applications</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                                    <i class="fas fa-mobile-alt fa-3x mb-3" style="color: #4facfe;"></i>
+                                    <h3>Mobile Apps</h3>
+                                    <p style="color: #666;">iOS and Android applications</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                                    <i class="fas fa-chart-line fa-3x mb-3" style="color: #4facfe;"></i>
+                                    <h3>Digital Marketing</h3>
+                                    <p style="color: #666;">SEO, SEM, and social media</p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="padding: 30px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-radius: 10px;">
+                                    <i class="fas fa-paint-brush fa-3x mb-3" style="color: #4facfe;"></i>
+                                    <h3>UI/UX Design</h3>
+                                    <p style="color: #666;">Beautiful, user-friendly designs</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            pricing: `
+                <!-- Hero -->
+                <section style="padding: 100px 0; background: linear-gradient(135deg, #fa709a 0%, #fee140 100%); text-center; color: white;">
+                    <div class="container">
+                        <h1 style="font-size: 48px; font-weight: bold;">Choose Your Plan</h1>
+                        <p style="font-size: 20px; margin-top: 20px;">Simple, transparent pricing</p>
+                    </div>
+                </section>
+
+                <!-- Pricing Table -->
+                <section style="padding: 80px 0;">
+                    <div class="container">
+                        <div class="row gy-4">
+                            <div class="col-lg-4">
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h3>Starter</h3>
+                                    <div style="font-size: 48px; font-weight: bold; margin: 20px 0;">$9<span style="font-size: 18px;">/mo</span></div>
+                                    <ul style="list-style: none; padding: 0; margin: 30px 0;">
+                                        <li style="margin: 15px 0;">✓ 10 Projects</li>
+                                        <li style="margin: 15px 0;">✓ 1 GB Storage</li>
+                                        <li style="margin: 15px 0;">✓ Email Support</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-outline-primary">Get Started</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; border: 2px solid #3b82f6; box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);">
+                                    <h3>Professional</h3>
+                                    <div style="font-size: 48px; font-weight: bold; margin: 20px 0;">$29<span style="font-size: 18px;">/mo</span></div>
+                                    <ul style="list-style: none; padding: 0; margin: 30px 0;">
+                                        <li style="margin: 15px 0;">✓ 100 Projects</li>
+                                        <li style="margin: 15px 0;">✓ 10 GB Storage</li>
+                                        <li style="margin: 15px 0;">✓ Priority Support</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-primary">Get Started</a>
+                                </div>
+                            </div>
+                            <div class="col-lg-4">
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h3>Enterprise</h3>
+                                    <div style="font-size: 48px; font-weight: bold; margin: 20px 0;">$99<span style="font-size: 18px;">/mo</span></div>
+                                    <ul style="list-style: none; padding: 0; margin: 30px 0;">
+                                        <li style="margin: 15px 0;">✓ Unlimited</li>
+                                        <li style="margin: 15px 0;">✓ 100 GB Storage</li>
+                                        <li style="margin: 15px 0;">✓ 24/7 Support</li>
+                                    </ul>
+                                    <a href="#" class="btn btn-outline-primary">Contact Sales</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            contact: `
+                <!-- Hero -->
+                <section style="padding: 100px 0; background: linear-gradient(135deg, #30cfd0 0%, #330867 100%); color: white; text-center;">
+                    <div class="container">
+                        <h1 style="font-size: 48px; font-weight: bold;">Get In Touch</h1>
+                        <p style="font-size: 20px; margin-top: 20px;">We'd love to hear from you</p>
+                    </div>
+                </section>
+
+                <!-- Contact Form -->
+                <section style="padding: 80px 0;">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4">
+                                <h2 style="margin-bottom: 30px;">Send Us a Message</h2>
+                                <form>
+                                    <div class="mb-3">
+                                        <input type="text" class="form-control" placeholder="Your Name" style="padding: 12px;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <input type="email" class="form-control" placeholder="Your Email" style="padding: 12px;">
+                                    </div>
+                                    <div class="mb-3">
+                                        <textarea class="form-control" rows="5" placeholder="Your Message" style="padding: 12px;"></textarea>
+                                    </div>
+                                    <button type="submit" class="btn btn-primary btn-lg">Send Message</button>
+                                </form>
+                            </div>
+                            <div class="col-lg-6">
+                                <h2 style="margin-bottom: 30px;">Contact Information</h2>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-map-marker-alt" style="margin-right: 15px; color: #667eea;"></i>
+                                    <span>123 Main Street, City, Country</span>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-phone" style="margin-right: 15px; color: #667eea;"></i>
+                                    <span>+1 (555) 123-4567</span>
+                                </div>
+                                <div style="margin-bottom: 20px;">
+                                    <i class="fas fa-envelope" style="margin-right: 15px; color: #667eea;"></i>
+                                    <span>info@example.com</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `,
+            blank: '<div class="container" style="padding: 40px 20px;"><div class="row"><div class="col-12"><h1>Start building your page!</h1><p>Drag blocks from the left panel to begin.</p></div></div></div>'
+        };
+
+        // Load selected template
+        if (templates[templateType]) {
+            editor.setComponents(templates[templateType]);
+            alert('Template loaded! Start customizing your page.');
+        }
+    }
+
     // Section Builder functions
     document.addEventListener('DOMContentLoaded', function() {
         const sectionsList = document.getElementById('sections-list');
