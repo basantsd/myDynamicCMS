@@ -762,6 +762,9 @@
     <!-- Custom Blocks Script -->
     <script src="{{ asset('js/grapes-custom-blocks.js') }}"></script>
 
+    <!-- Enhanced Editable Blocks Script -->
+    <script src="{{ asset('js/grapes-enhanced-blocks.js') }}"></script>
+
     <script>
         // Initialize GrapesJS with FREE Professional Plugins
         window.editor = grapesjs.init({
@@ -882,6 +885,9 @@
 
         // Add Custom GrapesJS Blocks (function defined in grapes-custom-blocks.js)
         addCustomBlocks(editor);
+
+        // Add Enhanced Editable Blocks (function defined in grapes-enhanced-blocks.js)
+        addEnhancedBlocks(editor);
 
         // Load Custom Blocks
         async function loadCustomBlocks() {
