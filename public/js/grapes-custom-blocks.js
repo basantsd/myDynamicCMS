@@ -1014,3 +1014,339 @@
                                 </table>
                             </div>
                         </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // ========== MORE SLIDER/CAROUSEL BLOCKS ==========
+
+        // Image Gallery Slider
+        editor.BlockManager.add('image-slider', {
+            label: 'Image Gallery Slider',
+            category: '🎢 Sliders',
+            content: `
+                <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        <div class="carousel-item active">
+                            <img src="/assets/img/hero/hero_bg_1_1.jpg" class="d-block w-100" alt="Image 1" style="height: 400px; object-fit: cover;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/assets/img/hero/hero_bg_1_1.jpg" class="d-block w-100" alt="Image 2" style="height: 400px; object-fit: cover;">
+                        </div>
+                        <div class="carousel-item">
+                            <img src="/assets/img/hero/hero_bg_1_1.jpg" class="d-block w-100" alt="Image 3" style="height: 400px; object-fit: cover;">
+                        </div>
+                    </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#imageSlider" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    </button>
+                </div>
+            `
+        });
+
+        // Testimonial Slider
+        editor.BlockManager.add('testimonial-slider', {
+            label: 'Testimonial Slider',
+            category: '🎢 Sliders',
+            content: `
+                <section style="padding: 80px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <h2 style="text-align: center; margin-bottom: 50px;">Client Testimonials</h2>
+                        <div id="testimonialSlider" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="text-center" style="max-width: 800px; margin: 0 auto; padding: 40px;">
+                                        <i class="fas fa-quote-left" style="font-size: 48px; color: #667eea; margin-bottom: 30px;"></i>
+                                        <p style="font-size: 20px; line-height: 1.8; color: #333; margin-bottom: 30px;">"This service has transformed our business. Professional and exceptional results."</p>
+                                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #e5e7eb; margin: 0 auto 15px;"></div>
+                                        <h5 style="font-weight: 600; margin-bottom: 5px;">Sarah Johnson</h5>
+                                        <p style="color: #667eea;">CEO, Tech Solutions</p>
+                                    </div>
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="text-center" style="max-width: 800px; margin: 0 auto; padding: 40px;">
+                                        <i class="fas fa-quote-left" style="font-size: 48px; color: #667eea; margin-bottom: 30px;"></i>
+                                        <p style="font-size: 20px; line-height: 1.8; color: #333; margin-bottom: 30px;">"Outstanding experience! Exceeded all our expectations."</p>
+                                        <div style="width: 80px; height: 80px; border-radius: 50%; background: #e5e7eb; margin: 0 auto 15px;"></div>
+                                        <h5 style="font-weight: 600; margin-bottom: 5px;">Michael Chen</h5>
+                                        <p style="color: #667eea;">Director, Innovation Hub</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialSlider" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#testimonialSlider" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // ========== TABLE BLOCKS ==========
+
+        // Simple Data Table
+        editor.BlockManager.add('simple-table', {
+            label: 'Simple Data Table',
+            category: '📋 Tables',
+            content: `
+                <section style="padding: 60px 0;">
+                    <div class="container">
+                        <h2 style="margin-bottom: 30px;">Data Table</h2>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                <thead>
+                                    <tr style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                        <th style="padding: 15px; text-align: left;">Name</th>
+                                        <th style="padding: 15px; text-align: left;">Position</th>
+                                        <th style="padding: 15px; text-align: left;">Department</th>
+                                        <th style="padding: 15px; text-align: left;">Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 15px;">John Doe</td>
+                                        <td style="padding: 15px;">Manager</td>
+                                        <td style="padding: 15px;">Sales</td>
+                                        <td style="padding: 15px;"><span style="background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Active</span></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e5e7eb; background: #f9fafb;">
+                                        <td style="padding: 15px;">Jane Smith</td>
+                                        <td style="padding: 15px;">Developer</td>
+                                        <td style="padding: 15px;">Engineering</td>
+                                        <td style="padding: 15px;"><span style="background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Active</span></td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 15px;">Bob Johnson</td>
+                                        <td style="padding: 15px;">Designer</td>
+                                        <td style="padding: 15px;">Creative</td>
+                                        <td style="padding: 15px;"><span style="background: #f59e0b; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Pending</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // Comparison Table
+        editor.BlockManager.add('comparison-table', {
+            label: 'Comparison Table',
+            category: '📋 Tables',
+            content: `
+                <section style="padding: 80px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <h2 style="text-align: center; margin-bottom: 50px;">Feature Comparison</h2>
+                        <div style="overflow-x: auto;">
+                            <table style="width: 100%; border-collapse: collapse; background: white;">
+                                <thead>
+                                    <tr>
+                                        <th style="padding: 20px; text-align: left; background: #667eea; color: white;">Feature</th>
+                                        <th style="padding: 20px; text-align: center; background: #667eea; color: white;">Basic</th>
+                                        <th style="padding: 20px; text-align: center; background: #bd2828; color: white;">Pro</th>
+                                        <th style="padding: 20px; text-align: center; background: #667eea; color: white;">Enterprise</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 20px; font-weight: 600;">Users</td>
+                                        <td style="padding: 20px; text-align: center;">5</td>
+                                        <td style="padding: 20px; text-align: center; background: #fef3f2;">50</td>
+                                        <td style="padding: 20px; text-align: center;">Unlimited</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e5e7eb; background: #f9fafb;">
+                                        <td style="padding: 20px; font-weight: 600;">Storage</td>
+                                        <td style="padding: 20px; text-align: center;">10 GB</td>
+                                        <td style="padding: 20px; text-align: center; background: #fef3f2;">100 GB</td>
+                                        <td style="padding: 20px; text-align: center;">1 TB</td>
+                                    </tr>
+                                    <tr style="border-bottom: 1px solid #e5e7eb;">
+                                        <td style="padding: 20px; font-weight: 600;">Support</td>
+                                        <td style="padding: 20px; text-align: center;"><i class="fas fa-check" style="color: #10b981;"></i></td>
+                                        <td style="padding: 20px; text-align: center; background: #fef3f2;"><i class="fas fa-check" style="color: #10b981;"></i></td>
+                                        <td style="padding: 20px; text-align: center;"><i class="fas fa-check" style="color: #10b981;"></i></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // ========== BUTTON COLLECTION BLOCKS ==========
+
+        // Button Collection
+        editor.BlockManager.add('button-collection', {
+            label: 'Button Collection',
+            category: '🔘 Buttons',
+            content: `
+                <section style="padding: 60px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <h2 style="text-align: center; margin-bottom: 40px;">Button Styles</h2>
+                        <div class="row g-4">
+                            <div class="col-md-4 text-center">
+                                <h5 style="margin-bottom: 20px;">Primary Buttons</h5>
+                                <a href="#" class="btn btn-primary" style="padding: 12px 30px; margin: 5px; display: inline-block;">Primary</a><br>
+                                <a href="#" class="btn btn-success" style="padding: 12px 30px; margin: 5px; display: inline-block;">Success</a><br>
+                                <a href="#" class="btn btn-danger" style="padding: 12px 30px; margin: 5px; display: inline-block;">Danger</a>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 style="margin-bottom: 20px;">Outlined Buttons</h5>
+                                <a href="#" class="btn btn-outline-primary" style="padding: 12px 30px; margin: 5px; display: inline-block;">Outline</a><br>
+                                <a href="#" class="btn btn-outline-success" style="padding: 12px 30px; margin: 5px; display: inline-block;">Outline</a><br>
+                                <a href="#" class="btn btn-outline-danger" style="padding: 12px 30px; margin: 5px; display: inline-block;">Outline</a>
+                            </div>
+                            <div class="col-md-4 text-center">
+                                <h5 style="margin-bottom: 20px;">Icon Buttons</h5>
+                                <a href="#" class="btn btn-primary" style="padding: 12px 30px; margin: 5px; display: inline-block;"><i class="fas fa-download me-2"></i>Download</a><br>
+                                <a href="#" class="btn btn-success" style="padding: 12px 30px; margin: 5px; display: inline-block;"><i class="fas fa-check me-2"></i>Success</a><br>
+                                <a href="#" class="btn btn-info" style="padding: 12px 30px; margin: 5px; display: inline-block;"><i class="fas fa-info me-2"></i>Info</a>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // CTA Buttons
+        editor.BlockManager.add('cta-buttons', {
+            label: 'CTA Button Group',
+            category: '🔘 Buttons',
+            content: `
+                <section style="padding: 60px 0;">
+                    <div class="container text-center">
+                        <h2 style="margin-bottom: 30px;">Take Action Now</h2>
+                        <div style="margin-bottom: 20px;">
+                            <a href="#" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; padding: 15px 40px; border-radius: 30px; text-decoration: none; display: inline-block; font-weight: 600; margin: 10px; box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);">Get Started Now</a>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <a href="#" style="background: #bd2828; color: white; padding: 15px 40px; border-radius: 5px; text-decoration: none; display: inline-block; font-weight: 600; margin: 10px;">Join Today <i class="fas fa-arrow-right ms-2"></i></a>
+                        </div>
+                        <div style="margin-bottom: 20px;">
+                            <a href="#" style="background: #10b981; color: white; padding: 18px 50px; border-radius: 50px; text-decoration: none; display: inline-block; font-weight: 600; margin: 10px; box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);"><i class="fas fa-play-circle me-2"></i>Watch Demo</a>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // ========== LISTING BLOCKS ==========
+
+        // Bullet List
+        editor.BlockManager.add('bullet-list', {
+            label: 'Bullet List',
+            category: '📝 Lists',
+            content: `
+                <section style="padding: 60px 0;">
+                    <div class="container">
+                        <h2 style="margin-bottom: 30px;">Key Features</h2>
+                        <ul style="list-style: none; padding: 0;">
+                            <li style="padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: start;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 15px; margin-top: 5px; font-size: 20px;"></i>
+                                <span style="flex: 1; line-height: 1.6;">Easy to use drag-and-drop interface</span>
+                            </li>
+                            <li style="padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: start;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 15px; margin-top: 5px; font-size: 20px;"></i>
+                                <span style="flex: 1; line-height: 1.6;">Responsive design for all devices</span>
+                            </li>
+                            <li style="padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: start;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 15px; margin-top: 5px; font-size: 20px;"></i>
+                                <span style="flex: 1; line-height: 1.6;">24/7 customer support available</span>
+                            </li>
+                            <li style="padding: 15px 0; border-bottom: 1px solid #e5e7eb; display: flex; align-items: start;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 15px; margin-top: 5px; font-size: 20px;"></i>
+                                <span style="flex: 1; line-height: 1.6;">Regular updates and new features</span>
+                            </li>
+                            <li style="padding: 15px 0; display: flex; align-items: start;">
+                                <i class="fas fa-check-circle" style="color: #10b981; margin-right: 15px; margin-top: 5px; font-size: 20px;"></i>
+                                <span style="flex: 1; line-height: 1.6;">Secure and encrypted data storage</span>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+            `
+        });
+
+        // Icon List
+        editor.BlockManager.add('icon-list', {
+            label: 'Icon List',
+            category: '📝 Lists',
+            content: `
+                <section style="padding: 60px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <h2 style="text-align: center; margin-bottom: 50px;">What We Offer</h2>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div style="display: flex; align-items: start; margin-bottom: 30px;">
+                                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px;">
+                                        <i class="fas fa-rocket" style="color: white; font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <h5 style="margin-bottom: 10px;">Fast Performance</h5>
+                                        <p style="color: #666; line-height: 1.6;">Lightning-fast loading speeds</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="display: flex; align-items: start; margin-bottom: 30px;">
+                                    <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px;">
+                                        <i class="fas fa-shield-alt" style="color: white; font-size: 20px;"></i>
+                                    </div>
+                                    <div>
+                                        <h5 style="margin-bottom: 10px;">Secure & Safe</h5>
+                                        <p style="color: #666; line-height: 1.6;">Enterprise-grade security</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        // Numbered List
+        editor.BlockManager.add('numbered-list', {
+            label: 'Numbered List',
+            category: '📝 Lists',
+            content: `
+                <section style="padding: 60px 0;">
+                    <div class="container">
+                        <h2 style="margin-bottom: 30px;">How It Works</h2>
+                        <div style="max-width: 800px;">
+                            <div style="display: flex; align-items: start; margin-bottom: 30px;">
+                                <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px; font-weight: 600; font-size: 18px;">1</div>
+                                <div style="flex: 1;">
+                                    <h4 style="margin-bottom: 10px;">Sign Up</h4>
+                                    <p style="color: #666; line-height: 1.6;">Create your account in just 30 seconds</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: start; margin-bottom: 30px;">
+                                <div style="background: #667eea; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px; font-weight: 600; font-size: 18px;">2</div>
+                                <div style="flex: 1;">
+                                    <h4 style="margin-bottom: 10px;">Customize</h4>
+                                    <p style="color: #666; line-height: 1.6;">Set up your workspace</p>
+                                </div>
+                            </div>
+                            <div style="display: flex; align-items: start;">
+                                <div style="background: #10b981; color: white; width: 40px; height: 40px; border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px; font-weight: 600; font-size: 18px;"><i class="fas fa-check"></i></div>
+                                <div style="flex: 1;">
+                                    <h4 style="margin-bottom: 10px;">Launch</h4>
+                                    <p style="color: #666; line-height: 1.6;">You're all set!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            `
+        });
+
+        console.log('✅ All Custom Blocks Loaded Successfully! (40+ Blocks Available)');
+    }
