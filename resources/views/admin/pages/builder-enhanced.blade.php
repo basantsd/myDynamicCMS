@@ -1757,25 +1757,525 @@
                                 <div class="row">
                                     <div class="col-md-6 mb-3">
                                         <label style="font-weight: 600; margin-bottom: 8px;">Years of Service</label>
-                                        <input type="number" class="form-control" placeholder="Enter years">
+                                        <input type="number" class="form-control" placeholder="Enter years" id="pension_years">
                                     </div>
                                     <div class="col-md-6 mb-3">
                                         <label style="font-weight: 600; margin-bottom: 8px;">Additional Months</label>
-                                        <input type="number" class="form-control" placeholder="0-11 months">
+                                        <input type="number" class="form-control" placeholder="0-11 months" id="pension_months">
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label style="font-weight: 600; margin-bottom: 8px;">Final Annual Salary (XCD)</label>
-                                        <input type="text" class="form-control" placeholder="Enter your final annual salary">
+                                        <input type="number" class="form-control" placeholder="Enter your final annual salary" id="pension_salary">
                                     </div>
                                 </div>
                                 <div style="margin-top: 25px;">
-                                    <button class="btn btn-primary me-2" style="background: #bd2828; border: none; padding: 12px 30px;">Calculate Pension</button>
-                                    <button class="btn btn-secondary" style="padding: 12px 30px;">Reset</button>
+                                    <button class="btn btn-primary me-2" onclick="calculatePension()" style="background: #bd2828; border: none; padding: 12px 30px;">Calculate Pension</button>
+                                    <button class="btn btn-secondary" onclick="resetPensionCalc()" style="padding: 12px 30px;">Reset</button>
+                                </div>
+                                <div id="pension_result" style="margin-top: 30px; padding: 25px; background: #f0f9ff; border-radius: 8px; display: none;">
+                                    <h4 style="color: #bd2828; margin-bottom: 15px;">Your Estimated Benefits</h4>
+                                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                                        <div style="background: white; padding: 20px; border-radius: 8px;">
+                                            <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Monthly Pension</p>
+                                            <p style="font-size: 28px; font-weight: bold; color: #bd2828;" id="monthly_pension">$0</p>
+                                        </div>
+                                        <div style="background: white; padding: 20px; border-radius: 8px;">
+                                            <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Gratuity Payment</p>
+                                            <p style="font-size: 28px; font-weight: bold; color: #bd2828;" id="gratuity_amount">$0</p>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
                 `,
+
+                // ========== SLIDER BLOCKS ==========
+                'Image Slider with Autoplay': () => {
+                    const slides = fields.slides || [];
+                    const uniqueId = 'slider_' + Math.random().toString(36).substr(2, 9);
+
+                    if (slides.length === 0) {
+                        return `
+                            <section style="padding: 60px 0; background: #f8f9fa; text-center;">
+                                <div class="container">
+                                    <i class="fas fa-images fa-4x mb-3" style="color: #ccc;"></i>
+                                    <h3>Image Slider</h3>
+                                    <p style="color: #666;">Add slides to configure this slider</p>
+                                </div>
+                            </section>
+                        `;
+                    }
+
+                    const slideItems = slides.map((slide, index) => `
+                        <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                            <img src="${slide.image || '/assets/img/hero/hero_bg_1_1.jpg'}" class="d-block w-100" alt="Slide ${index + 1}" style="height: 500px; object-fit: cover;">
+                            ${slide.heading || slide.description || slide.button ? `
+                                <div class="carousel-caption d-none d-md-block" style="background: rgba(0,0,0,0.6); padding: 20px; border-radius: 10px;">
+                                    ${slide.heading ? `<h3 style="font-size: 36px; margin-bottom: 15px;">${slide.heading}</h3>` : ''}
+                                    ${slide.description ? `<p style="font-size: 18px;">${slide.description}</p>` : ''}
+                                    ${slide.button ? `<a href="#" class="btn btn-primary btn-lg mt-3">${slide.button}</a>` : ''}
+                                </div>
+                            ` : ''}
+                        </div>
+                    `).join('');
+
+                    return `
+                        <div id="${uniqueId}" class="carousel slide" data-bs-ride="carousel">
+                            <div class="carousel-inner">
+                                ${slideItems}
+                            </div>
+                            <button class="carousel-control-prev" type="button" data-bs-target="#${uniqueId}" data-bs-slide="prev">
+                                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#${uniqueId}" data-bs-slide="next">
+                                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
+                            </button>
+                        </div>
+                    `;
+                },
+
+                'Testimonial Slider': () => {
+                    const testimonials = fields.testimonials || [];
+                    const uniqueId = 'testimonial_' + Math.random().toString(36).substr(2, 9);
+
+                    if (testimonials.length === 0) {
+                        return `
+                            <section style="padding: 80px 0; background: #f8f9fa; text-center;">
+                                <div class="container">
+                                    <i class="fas fa-quote-left fa-4x mb-3" style="color: #ccc;"></i>
+                                    <h3>Testimonial Slider</h3>
+                                    <p style="color: #666;">Add testimonials to configure this slider</p>
+                                </div>
+                            </section>
+                        `;
+                    }
+
+                    const testimonialItems = testimonials.map((t, index) => {
+                        const rating = t.rating ? parseInt(t.rating) : 5;
+                        const stars = '⭐'.repeat(Math.min(5, Math.max(0, rating)));
+
+                        return `
+                            <div class="carousel-item ${index === 0 ? 'active' : ''}">
+                                <div class="container">
+                                    <div style="max-width: 800px; margin: 0 auto; text-align: center; padding: 40px;">
+                                        ${t.photo ? `<img src="${t.photo}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 25px;" alt="${t.name}" />` :
+                                            '<div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0 auto 25px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-user" style="font-size: 40px; color: white;"></i></div>'}
+                                        <i class="fas fa-quote-left fa-2x mb-3" style="color: #667eea;"></i>
+                                        <p style="font-size: 20px; font-style: italic; color: #333; line-height: 1.8; margin-bottom: 25px;">"${t.testimonial || 'Great service!'}"</p>
+                                        ${rating > 0 ? `<div style="font-size: 24px; margin-bottom: 15px;">${stars}</div>` : ''}
+                                        <h5 style="font-size: 20px; font-weight: 600; margin-bottom: 5px;">${t.name || 'Customer'}</h5>
+                                        ${t.position ? `<p style="color: #666;">${t.position}</p>` : ''}
+                                    </div>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <h2 style="text-align: center; font-size: 36px; margin-bottom: 50px;">What Our Clients Say</h2>
+                                <div id="${uniqueId}" class="carousel slide" data-bs-ride="carousel">
+                                    <div class="carousel-inner">
+                                        ${testimonialItems}
+                                    </div>
+                                    <button class="carousel-control-prev" type="button" data-bs-target="#${uniqueId}" data-bs-slide="prev" style="filter: invert(1);">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Previous</span>
+                                    </button>
+                                    <button class="carousel-control-next" type="button" data-bs-target="#${uniqueId}" data-bs-slide="next" style="filter: invert(1);">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="visually-hidden">Next</span>
+                                    </button>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== TABLE BLOCKS ==========
+                'Data Table with CSV Import': () => `
+                    <section style="padding: 60px 0;">
+                        <div class="container">
+                            <h2 style="margin-bottom: 30px;">${fields.table_title || 'Data Table'}</h2>
+                            <div style="overflow-x: auto;">
+                                <table class="table table-hover" style="background: white; box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-radius: 8px; overflow: hidden;">
+                                    <thead style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                                        <tr>
+                                            <th style="padding: 15px;">Name</th>
+                                            <th style="padding: 15px;">Position</th>
+                                            <th style="padding: 15px;">Department</th>
+                                            <th style="padding: 15px;">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td style="padding: 15px;">John Doe</td>
+                                            <td style="padding: 15px;">Manager</td>
+                                            <td style="padding: 15px;">Sales</td>
+                                            <td style="padding: 15px;"><span style="background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Active</span></td>
+                                        </tr>
+                                        <tr style="background: #f9fafb;">
+                                            <td style="padding: 15px;">Jane Smith</td>
+                                            <td style="padding: 15px;">Developer</td>
+                                            <td style="padding: 15px;">Engineering</td>
+                                            <td style="padding: 15px;"><span style="background: #10b981; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Active</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td style="padding: 15px;">Bob Johnson</td>
+                                            <td style="padding: 15px;">Designer</td>
+                                            <td style="padding: 15px;">Creative</td>
+                                            <td style="padding: 15px;"><span style="background: #f59e0b; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;">Pending</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                // ========== FORM BLOCKS ==========
+                'Contact Form - Submission': () => {
+                    const formFields = fields.form_fields || [
+                        {type: 'text', label: 'Name', placeholder: 'Your name', required: true},
+                        {type: 'email', label: 'Email', placeholder: 'your@email.com', required: true},
+                        {type: 'textarea', label: 'Message', placeholder: 'Your message', required: true}
+                    ];
+
+                    const fieldHTML = formFields.map(field => {
+                        if (field.type === 'textarea') {
+                            return `
+                                <div class="mb-3">
+                                    <label style="font-weight: 600; margin-bottom: 8px;">${field.label}${field.required ? ' *' : ''}</label>
+                                    <textarea class="form-control" rows="4" placeholder="${field.placeholder || ''}" ${field.required ? 'required' : ''}></textarea>
+                                </div>
+                            `;
+                        } else if (field.type === 'select') {
+                            return `
+                                <div class="mb-3">
+                                    <label style="font-weight: 600; margin-bottom: 8px;">${field.label}${field.required ? ' *' : ''}</label>
+                                    <select class="form-control" ${field.required ? 'required' : ''}>
+                                        <option value="">Select...</option>
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
+                                    </select>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="mb-3">
+                                    <label style="font-weight: 600; margin-bottom: 8px;">${field.label}${field.required ? ' *' : ''}</label>
+                                    <input type="${field.type}" class="form-control" placeholder="${field.placeholder || ''}" ${field.required ? 'required' : ''}>
+                                </div>
+                            `;
+                        }
+                    }).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-8">
+                                        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                            <h2 style="font-size: 32px; margin-bottom: 15px; text-align: center;">${fields.form_title || 'Contact Us'}</h2>
+                                            <p style="text-align: center; color: #666; margin-bottom: 30px;">Fill out the form below and we'll get back to you soon</p>
+                                            <form>
+                                                ${fieldHTML}
+                                                <button type="submit" class="btn btn-primary w-100" style="padding: 12px; font-size: 16px; font-weight: 600;">
+                                                    ${fields.submit_button_text || 'Send Message'}
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Calculator Form - Calculation': () => {
+                    const formFields = fields.form_fields || [
+                        {label: 'Value 1', type: 'number'},
+                        {label: 'Value 2', type: 'number'}
+                    ];
+                    const calcType = fields.calculation_type || 'sum';
+                    const uniqueId = 'calc_' + Math.random().toString(36).substr(2, 9);
+
+                    const fieldHTML = formFields.map((field, i) => `
+                        <div class="mb-3">
+                            <label style="font-weight: 600; margin-bottom: 8px;">${field.label}</label>
+                            <input type="number" class="form-control calc-input" data-calc-id="${uniqueId}" id="${uniqueId}_field_${i}" placeholder="Enter ${field.label.toLowerCase()}">
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 60px 0;">
+                            <div class="container">
+                                <div class="row justify-content-center">
+                                    <div class="col-lg-6">
+                                        <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-top: 4px solid #667eea;">
+                                            <h2 style="margin-bottom: 10px;">
+                                                <i class="fas fa-calculator" style="color: #667eea; margin-right: 10px;"></i>
+                                                ${fields.form_title || 'Calculator'}
+                                            </h2>
+                                            <p style="color: #666; margin-bottom: 25px;">Calculation Type: <strong>${calcType.toUpperCase()}</strong></p>
+                                            <form onsubmit="return false;">
+                                                ${fieldHTML}
+                                                <button type="button" onclick="performCalculation('${uniqueId}', '${calcType}', ${formFields.length})" class="btn btn-primary w-100 mb-3" style="padding: 12px;">
+                                                    Calculate
+                                                </button>
+                                            </form>
+                                            <div id="${uniqueId}_result" style="display: none; padding: 20px; background: #f0f9ff; border-radius: 8px; border-left: 4px solid #667eea;">
+                                                <p style="color: #666; font-size: 14px; margin-bottom: 5px;">Result:</p>
+                                                <p style="font-size: 32px; font-weight: bold; color: #667eea; margin: 0;" id="${uniqueId}_result_value">0</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Newsletter Signup - Action': () => `
+                    <section style="padding: 60px 0; background: #f8f9fa;">
+                        <div class="container">
+                            <div class="row justify-content-center">
+                                <div class="col-lg-6 text-center">
+                                    <i class="fas fa-envelope-open-text fa-3x mb-3" style="color: #667eea;"></i>
+                                    <h2 style="font-size: 32px; font-weight: bold; margin-bottom: 15px;">${fields.heading || 'Subscribe to Our Newsletter'}</h2>
+                                    <p style="font-size: 16px; color: #666; margin-bottom: 30px;">${fields.description || 'Get the latest updates and offers delivered to your inbox'}</p>
+                                    <form style="display: flex; gap: 10px; max-width: 500px; margin: 0 auto;">
+                                        <input type="email" placeholder="Enter your email" required style="flex: 1; padding: 12px 20px; border: 1px solid #ddd; border-radius: 5px; font-size: 16px;">
+                                        <button type="submit" class="btn btn-primary" style="padding: 12px 30px; white-space: nowrap;">
+                                            ${fields.submit_button_text || 'Subscribe'}
+                                        </button>
+                                    </form>
+                                    <p style="font-size: 12px; color: #999; margin-top: 15px;">We respect your privacy. Unsubscribe at any time.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                // ========== BUTTON BLOCKS ==========
+                'Call-to-Action Buttons': () => {
+                    const buttons = fields.buttons || [];
+                    const alignment = fields.button_alignment || 'center';
+                    const size = fields.button_size || 'lg';
+
+                    if (buttons.length === 0) {
+                        return `
+                            <section style="padding: 60px 0; text-align: ${alignment};">
+                                <div class="container">
+                                    <a href="#" class="btn btn-primary btn-${size} m-2">Primary Button</a>
+                                    <a href="#" class="btn btn-secondary btn-${size} m-2">Secondary Button</a>
+                                </div>
+                            </section>
+                        `;
+                    }
+
+                    const buttonHTML = buttons.map(btn => {
+                        let btnClass = 'btn-primary';
+                        if (btn.style === 'secondary') btnClass = 'btn-secondary';
+                        else if (btn.style === 'outline') btnClass = 'btn-outline-primary';
+                        else if (btn.style === 'success') btnClass = 'btn-success';
+                        else if (btn.style === 'danger') btnClass = 'btn-danger';
+
+                        return `
+                            <a href="${btn.url || '#'}" class="btn ${btnClass} btn-${size} m-2" ${btn.target ? `target="${btn.target}"` : ''}>
+                                ${btn.icon ? `<i class="fas ${btn.icon} me-2"></i>` : ''}
+                                ${btn.text || 'Button'}
+                            </a>
+                        `;
+                    }).join('');
+
+                    return `
+                        <section style="padding: 60px 0; text-align: ${alignment};">
+                            <div class="container">
+                                ${buttonHTML}
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Download Button': () => `
+                    <section style="padding: 60px 0;">
+                        <div class="container text-center">
+                            <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); max-width: 500px; margin: 0 auto;">
+                                <i class="fas fa-file-download fa-4x mb-3" style="color: #667eea;"></i>
+                                <h3 style="margin-bottom: 15px;">${fields.file_name || 'Download Document'}</h3>
+                                ${fields.file_size ? `<p style="color: #666; margin-bottom: 25px;">File Size: ${fields.file_size}</p>` : ''}
+                                <a href="${fields.file_url || '#'}" class="btn btn-${fields.style || 'primary'} btn-lg" download>
+                                    <i class="fas fa-download me-2"></i>
+                                    ${fields.button_text || 'Download File'}
+                                </a>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                // ========== LIST BLOCKS ==========
+                'Icon List': () => {
+                    const items = fields.items || [];
+                    const listStyle = fields.list_style || 'default';
+
+                    if (items.length === 0) {
+                        return `
+                            <section style="padding: 60px 0; background: #f8f9fa;">
+                                <div class="container">
+                                    <h2 style="text-align: center; margin-bottom: 50px;">${fields.list_title || 'Icon List'}</h2>
+                                    <p style="text-align: center; color: #666;">Add items to configure this list</p>
+                                </div>
+                            </section>
+                        `;
+                    }
+
+                    const itemHTML = items.map(item => {
+                        if (listStyle === 'cards') {
+                            return `
+                                <div class="col-md-6 col-lg-4 mb-4">
+                                    <div style="background: white; padding: 25px; border-radius: 10px; box-shadow: 0 3px 10px rgba(0,0,0,0.1); height: 100%;">
+                                        <i class="fas ${item.icon || 'fa-check'} fa-2x mb-3" style="color: #667eea;"></i>
+                                        <h5 style="margin-bottom: 10px;">${item.text}</h5>
+                                        ${item.description ? `<p style="color: #666; font-size: 14px;">${item.description}</p>` : ''}
+                                    </div>
+                                </div>
+                            `;
+                        } else if (listStyle === 'compact') {
+                            return `
+                                <div class="col-md-6 mb-2">
+                                    <div style="display: flex; align-items: center;">
+                                        <i class="fas ${item.icon || 'fa-check-circle'}" style="color: #10b981; margin-right: 10px; font-size: 18px;"></i>
+                                        <span>${item.text}</span>
+                                    </div>
+                                </div>
+                            `;
+                        } else {
+                            return `
+                                <div class="col-md-6 mb-4">
+                                    <div style="display: flex; align-items: start;">
+                                        <div style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); width: 50px; height: 50px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-right: 20px;">
+                                            <i class="fas ${item.icon || 'fa-star'}" style="color: white; font-size: 20px;"></i>
+                                        </div>
+                                        <div>
+                                            <h5 style="margin-bottom: 10px;">${item.text}</h5>
+                                            ${item.description ? `<p style="color: #666; line-height: 1.6;">${item.description}</p>` : ''}
+                                        </div>
+                                    </div>
+                                </div>
+                            `;
+                        }
+                    }).join('');
+
+                    return `
+                        <section style="padding: 60px 0; background: #f8f9fa;">
+                            <div class="container">
+                                ${fields.list_title ? `<h2 style="text-align: center; margin-bottom: 50px;">${fields.list_title}</h2>` : ''}
+                                <div class="row">${itemHTML}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Features List': () => {
+                    const features = fields.features || [];
+                    const columns = fields.columns || '3';
+                    const colClass = columns === '4' ? 'col-lg-3 col-md-6' : columns === '2' ? 'col-md-6' : columns === '1' ? 'col-12' : 'col-md-4';
+
+                    if (features.length === 0) {
+                        return `
+                            <section style="padding: 80px 0;">
+                                <div class="container text-center">
+                                    <h2 style="margin-bottom: 30px;">${fields.heading || 'Features'}</h2>
+                                    <p style="color: #666;">Add features to configure this list</p>
+                                </div>
+                            </section>
+                        `;
+                    }
+
+                    const featureHTML = features.map(f => `
+                        <div class="${colClass} text-center mb-4">
+                            <div style="padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); height: 100%; background: white;">
+                                <i class="fas ${f.icon || 'fa-check'} fa-3x mb-3" style="color: #667eea;"></i>
+                                <h3 style="font-size: 20px; margin-bottom: 15px;">${f.title || 'Feature'}</h3>
+                                ${f.description ? `<p style="color: #666;">${f.description}</p>` : ''}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0;">
+                            <div class="container">
+                                ${fields.heading ? `
+                                    <div class="text-center mb-5">
+                                        <h2 style="font-size: 36px; font-weight: bold;">${fields.heading}</h2>
+                                    </div>
+                                ` : ''}
+                                <div class="row gy-4">${featureHTML}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== HERO BLOCKS (Additional) ==========
+                'Hero with Background Image': () => `
+                    <section style="background: url('${fields.background_image || '/assets/img/hero/hero_bg_1_1.jpg'}') center/cover; padding: 150px 0; position: relative;">
+                        <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5);"></div>
+                        <div class="container" style="position: relative; z-index: 1;">
+                            <div class="row">
+                                <div class="col-12 text-center text-white">
+                                    <h1 style="font-size: 56px; font-weight: bold; margin-bottom: 20px;">${fields.heading || 'Welcome to Our Website'}</h1>
+                                    ${fields.subheading ? `<p style="font-size: 24px; margin-bottom: 15px;">${fields.subheading}</p>` : ''}
+                                    ${fields.description ? `<p style="font-size: 18px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">${fields.description}</p>` : ''}
+                                    ${fields.primary_button ? `<a href="#" class="btn btn-primary btn-lg me-2" style="padding: 15px 40px;">${fields.primary_button}</a>` : ''}
+                                    ${fields.secondary_button ? `<a href="#" class="btn btn-outline-light btn-lg" style="padding: 15px 40px;">${fields.secondary_button}</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                'Hero with Video Background': () => `
+                    <section style="position: relative; padding: 150px 0; overflow: hidden;">
+                        <video autoplay muted loop playsinline style="position: absolute; top: 50%; left: 50%; min-width: 100%; min-height: 100%; width: auto; height: auto; transform: translate(-50%, -50%); z-index: 0; object-fit: cover;" ${fields.video_poster ? `poster="${fields.video_poster}"` : ''}>
+                            <source src="${fields.video_url || '/assets/video/hero.mp4'}" type="video/mp4">
+                        </video>
+                        <div style="position: absolute; inset: 0; background: rgba(0,0,0,0.5); z-index: 1;"></div>
+                        <div class="container" style="position: relative; z-index: 2;">
+                            <div class="row">
+                                <div class="col-12 text-center text-white">
+                                    <h1 style="font-size: 56px; font-weight: bold; margin-bottom: 20px;">${fields.heading || 'Watch Our Story'}</h1>
+                                    ${fields.description ? `<p style="font-size: 20px; margin-bottom: 30px; max-width: 700px; margin-left: auto; margin-right: auto;">${fields.description}</p>` : ''}
+                                    ${fields.button ? `<a href="#" class="btn btn-primary btn-lg" style="padding: 15px 40px;">${fields.button}</a>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                'Features 4 Columns': () => {
+                    const features = fields.features || [];
+                    const featureCols = features.map((f, i) => `
+                        <div class="col-lg-3 col-md-6 text-center mb-4">
+                            <i class="fas ${f.icon || 'fa-check-circle'} fa-3x mb-3" style="color: #667eea;"></i>
+                            <h4>${f.title || 'Feature'}</h4>
+                            ${f.description ? `<p style="color: #666; font-size: 14px;">${f.description}</p>` : ''}
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                ${fields.section_title ? `<h2 style="text-align: center; font-size: 36px; margin-bottom: 50px;">${fields.section_title}</h2>` : ''}
+                                <div class="row gy-4">${featureCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
             };
 
             // Return template if exists, otherwise create a simple layout
@@ -2159,6 +2659,131 @@
                 }
             }
         });
+
+        // ========== CALCULATOR FUNCTIONS ==========
+
+        // Pension Calculator
+        function calculatePension() {
+            const years = parseFloat(document.getElementById('pension_years')?.value || 0);
+            const months = parseFloat(document.getElementById('pension_months')?.value || 0);
+            const salary = parseFloat(document.getElementById('pension_salary')?.value || 0);
+
+            if (!salary || salary <= 0) {
+                alert('Please enter a valid final annual salary');
+                return;
+            }
+
+            const totalMonths = (years * 12) + months;
+            const totalYears = totalMonths / 12;
+
+            // Pension calculation: (Years of Service / 400) * Final Salary
+            // Max pensionable service is 33.33 years (400 months)
+            const pensionableMonths = Math.min(totalMonths, 400);
+            const annualPension = (pensionableMonths / 400) * salary;
+            const monthlyPension = annualPension / 12;
+
+            // Gratuity calculation: typically 1/4 of annual pension * years of service (simplified)
+            // For 10-15 years: 12.5% of final salary per year
+            let gratuity = 0;
+            if (totalYears >= 10) {
+                gratuity = salary * 0.125 * Math.min(totalYears, 33.33);
+            }
+
+            // Display results
+            const resultDiv = document.getElementById('pension_result');
+            if (resultDiv) {
+                resultDiv.style.display = 'block';
+
+                const monthlyPensionEl = document.getElementById('monthly_pension');
+                const gratuityEl = document.getElementById('gratuity_amount');
+
+                if (monthlyPensionEl) {
+                    monthlyPensionEl.textContent = totalYears >= 15 ?
+                        '$' + monthlyPension.toFixed(2) :
+                        'Not Eligible (min 15 years)';
+                }
+
+                if (gratuityEl) {
+                    gratuityEl.textContent = totalYears >= 10 ?
+                        '$' + gratuity.toFixed(2) :
+                        'Not Eligible (min 10 years)';
+                }
+            }
+        }
+
+        function resetPensionCalc() {
+            const yearsInput = document.getElementById('pension_years');
+            const monthsInput = document.getElementById('pension_months');
+            const salaryInput = document.getElementById('pension_salary');
+            const resultDiv = document.getElementById('pension_result');
+
+            if (yearsInput) yearsInput.value = '';
+            if (monthsInput) monthsInput.value = '';
+            if (salaryInput) salaryInput.value = '';
+            if (resultDiv) resultDiv.style.display = 'none';
+        }
+
+        // Generic Calculator Form
+        function performCalculation(calcId, calcType, fieldCount) {
+            const values = [];
+
+            // Collect all field values
+            for (let i = 0; i < fieldCount; i++) {
+                const field = document.getElementById(`${calcId}_field_${i}`);
+                if (field) {
+                    const value = parseFloat(field.value || 0);
+                    values.push(value);
+                }
+            }
+
+            if (values.length === 0 || values.every(v => v === 0)) {
+                alert('Please enter at least one value');
+                return;
+            }
+
+            let result = 0;
+
+            // Perform calculation based on type
+            switch (calcType) {
+                case 'sum':
+                    result = values.reduce((a, b) => a + b, 0);
+                    break;
+
+                case 'average':
+                    result = values.reduce((a, b) => a + b, 0) / values.length;
+                    break;
+
+                case 'percentage':
+                    // Calculate percentage of first value relative to second
+                    if (values.length >= 2 && values[1] !== 0) {
+                        result = (values[0] / values[1]) * 100;
+                    }
+                    break;
+
+                case 'custom':
+                    // For custom, just multiply all values (can be extended)
+                    result = values.reduce((a, b) => a * b, 1);
+                    break;
+
+                default:
+                    result = values.reduce((a, b) => a + b, 0);
+            }
+
+            // Display result
+            const resultDiv = document.getElementById(`${calcId}_result`);
+            const resultValue = document.getElementById(`${calcId}_result_value`);
+
+            if (resultDiv && resultValue) {
+                resultDiv.style.display = 'block';
+
+                // Format result based on calculation type
+                if (calcType === 'percentage') {
+                    resultValue.textContent = result.toFixed(2) + '%';
+                } else {
+                    resultValue.textContent = result.toFixed(2);
+                }
+            }
+        }
 
         // Initialize
         loadCustomBlocks();
