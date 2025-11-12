@@ -19,6 +19,10 @@
     <!-- Font Awesome for icons in blocks -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Google Fonts for Typography Options -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
     <style>
         * {
             box-sizing: border-box;
@@ -543,6 +547,10 @@
                             <i class="bi bi-puzzle"></i><br>
                             Custom Blocks
                         </button>
+                        <button class="blocks-tab" data-tab="templates">
+                            <i class="bi bi-file-earmark-text"></i><br>
+                            Templates
+                        </button>
                     </div>
                 </div>
                 <div class="blocks-search">
@@ -555,6 +563,16 @@
                     <!-- Custom Blocks Tab -->
                     <div class="blocks-tab-content" id="custom-blocks">
                         <div id="customBlocksList"></div>
+                    </div>
+
+                    <!-- Templates Tab -->
+                    <div class="blocks-tab-content" id="templates-blocks">
+                        <div style="padding: 15px;">
+                            <button onclick="saveAsTemplate()" class="btn btn-primary w-100 mb-3">
+                                <i class="bi bi-save"></i> Save Current as Template
+                            </button>
+                            <div id="templatesList"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -579,6 +597,10 @@
                         <i class="bi bi-layers"></i>
                         Layers
                     </button>
+                    <button class="properties-tab" data-tab="global-styles">
+                        <i class="bi bi-paint-bucket"></i>
+                        Global
+                    </button>
                     <button class="properties-tab" data-tab="page-settings">
                         <i class="bi bi-file-earmark"></i>
                         Page
@@ -593,6 +615,75 @@
                     </div>
                     <div class="tab-pane" id="layers-pane">
                         <div class="layers-container"></div>
+                    </div>
+                    <div class="tab-pane" id="global-styles-pane">
+                        <div class="page-settings-container">
+                            <h6 class="section-heading">Global Color Palette</h6>
+                            <div class="form-group">
+                                <label>Primary Color</label>
+                                <input type="color" class="form-control form-control-color w-100" id="globalPrimaryColor" value="#667eea">
+                            </div>
+                            <div class="form-group">
+                                <label>Secondary Color</label>
+                                <input type="color" class="form-control form-control-color w-100" id="globalSecondaryColor" value="#764ba2">
+                            </div>
+                            <div class="form-group">
+                                <label>Accent Color</label>
+                                <input type="color" class="form-control form-control-color w-100" id="globalAccentColor" value="#10b981">
+                            </div>
+                            <div class="form-group">
+                                <label>Text Color</label>
+                                <input type="color" class="form-control form-control-color w-100" id="globalTextColor" value="#333333">
+                            </div>
+
+                            <h6 class="section-heading">Google Fonts</h6>
+                            <div class="form-group">
+                                <label>Heading Font</label>
+                                <select class="form-select" id="globalHeadingFont" onchange="applyGoogleFont('heading', this.value)">
+                                    <option value="default">Default</option>
+                                    <option value="Roboto">Roboto</option>
+                                    <option value="Open Sans">Open Sans</option>
+                                    <option value="Lato">Lato</option>
+                                    <option value="Montserrat">Montserrat</option>
+                                    <option value="Raleway">Raleway</option>
+                                    <option value="Poppins">Poppins</option>
+                                    <option value="Inter">Inter</option>
+                                    <option value="Playfair Display">Playfair Display</option>
+                                    <option value="Merriweather">Merriweather</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label>Body Font</label>
+                                <select class="form-select" id="globalBodyFont" onchange="applyGoogleFont('body', this.value)">
+                                    <option value="default">Default</option>
+                                    <option value="Roboto">Roboto</option>
+                                    <option value="Open Sans">Open Sans</option>
+                                    <option value="Lato">Lato</option>
+                                    <option value="Montserrat">Montserrat</option>
+                                    <option value="Raleway">Raleway</option>
+                                    <option value="Poppins">Poppins</option>
+                                    <option value="Inter">Inter</option>
+                                    <option value="Nunito">Nunito</option>
+                                    <option value="Source Sans Pro">Source Sans Pro</option>
+                                </select>
+                            </div>
+
+                            <h6 class="section-heading">Typography Scale</h6>
+                            <div class="form-group">
+                                <label>Base Font Size (px)</label>
+                                <input type="number" class="form-control" id="globalBaseFontSize" value="16" min="12" max="24">
+                            </div>
+
+                            <h6 class="section-heading">Spacing</h6>
+                            <div class="form-group">
+                                <label>Base Spacing (px)</label>
+                                <input type="number" class="form-control" id="globalBaseSpacing" value="16" min="4" max="32">
+                            </div>
+
+                            <button onclick="applyGlobalStyles()" class="btn btn-primary w-100 mt-3">
+                                <i class="bi bi-check2-circle"></i> Apply Global Styles
+                            </button>
+                        </div>
                     </div>
                     <div class="tab-pane" id="page-settings-pane">
                         <div class="page-settings-container">
@@ -660,21 +751,68 @@
     <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
     <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 
+    <!-- FREE GrapesJS Plugins -->
+    <script src="https://unpkg.com/grapesjs-custom-code"></script>
+    <script src="https://unpkg.com/grapesjs-plugin-forms"></script>
+    <script src="https://unpkg.com/grapesjs-style-gradient"></script>
+    <script src="https://unpkg.com/grapesjs-tabs"></script>
+    <script src="https://unpkg.com/grapesjs-tooltip"></script>
+    <script src="https://unpkg.com/grapesjs-typed"></script>
+
     <!-- Custom Blocks Script -->
     <script src="{{ asset('js/grapes-custom-blocks.js') }}"></script>
 
     <script>
-        // Initialize GrapesJS
+        // Initialize GrapesJS with FREE Professional Plugins
         window.editor = grapesjs.init({
             container: '#gjs',
             height: '100%',
             width: '100%',
             storageManager: false,
             panels: { defaults: [] },
-            plugins: ['gjs-preset-webpage', 'gjs-blocks-basic'],
+            plugins: [
+                'gjs-preset-webpage',
+                'gjs-blocks-basic',
+                'grapesjs-custom-code',
+                'grapesjs-plugin-forms',
+                'grapesjs-style-gradient',
+                'grapesjs-tabs',
+                'grapesjs-tooltip',
+                'grapesjs-typed'
+            ],
             pluginsOpts: {
                 'gjs-preset-webpage': {
                     blocks: ['column1', 'column2', 'column3', 'column3-7'],
+                },
+                'grapesjs-custom-code': {
+                    blockLabel: 'Custom Code',
+                    toolbarBtnCustomCode: 'Edit Code',
+                    placeholderContent: 'Insert your custom HTML/CSS/JS code here'
+                },
+                'grapesjs-plugin-forms': {
+                    blocks: ['form', 'input', 'textarea', 'select', 'button', 'label', 'checkbox', 'radio']
+                },
+                'grapesjs-style-gradient': {
+                    colorPicker: 'default',
+                    grapickOpts: {}
+                },
+                'grapesjs-tabs': {
+                    tabsBlock: {
+                        category: 'Extra'
+                    }
+                },
+                'grapesjs-tooltip': {
+                    // Tooltip plugin options
+                },
+                'grapesjs-typed': {
+                    block: {
+                        category: 'Extra',
+                        content: {
+                            type: 'typed',
+                            'type-speed': 40,
+                            strings: ['Text row one', 'Text row two', 'Text row three'],
+                        }
+                    }
                 }
             },
             canvas: {
@@ -693,19 +831,27 @@
                 sectors: [{
                     name: 'General',
                     open: true,
-                    buildProps: ['display', 'position', 'float']
+                    buildProps: ['display', 'position', 'float', 'opacity', 'z-index']
                 }, {
                     name: 'Dimension',
                     open: false,
-                    buildProps: ['width', 'height', 'max-width', 'min-height', 'margin', 'padding']
+                    buildProps: ['width', 'height', 'max-width', 'max-height', 'min-width', 'min-height', 'margin', 'padding']
                 }, {
                     name: 'Typography',
                     open: false,
-                    buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align']
+                    buildProps: ['font-family', 'font-size', 'font-weight', 'letter-spacing', 'color', 'line-height', 'text-align', 'text-decoration', 'text-shadow']
                 }, {
                     name: 'Decorations',
                     open: false,
-                    buildProps: ['background-color', 'border-radius', 'border', 'box-shadow', 'background']
+                    buildProps: ['background-color', 'border-radius', 'border', 'box-shadow', 'background', 'background-gradient']
+                }, {
+                    name: 'Extra',
+                    open: false,
+                    buildProps: ['transition', 'transform', 'cursor', 'overflow', 'overflow-x', 'overflow-y']
+                }, {
+                    name: 'Flex',
+                    open: false,
+                    buildProps: ['flex-direction', 'flex-wrap', 'justify-content', 'align-items', 'align-content', 'order', 'flex-basis', 'flex-grow', 'flex-shrink']
                 }]
             },
             traitManager: {
@@ -1034,8 +1180,259 @@
             }
         });
 
+        // ============================================
+        // GOOGLE FONTS INTEGRATION (FREE)
+        // ============================================
+        const loadedGoogleFonts = new Set();
+
+        function applyGoogleFont(type, fontFamily) {
+            if (fontFamily === 'default') return;
+
+            // Load Google Font if not already loaded
+            if (!loadedGoogleFonts.has(fontFamily)) {
+                const link = document.createElement('link');
+                link.href = `https://fonts.googleapis.com/css2?family=${fontFamily.replace(' ', '+')}:wght@300;400;500;600;700&display=swap`;
+                link.rel = 'stylesheet';
+                document.head.appendChild(link);
+                loadedGoogleFonts.add(fontFamily);
+
+                // Also add to canvas
+                const iframe = editor.Canvas.getFrameEl();
+                if (iframe && iframe.contentDocument) {
+                    const canvasLink = iframe.contentDocument.createElement('link');
+                    canvasLink.href = link.href;
+                    canvasLink.rel = 'stylesheet';
+                    iframe.contentDocument.head.appendChild(canvasLink);
+                }
+            }
+        }
+
+        function applyGlobalStyles() {
+            const primaryColor = document.getElementById('globalPrimaryColor').value;
+            const secondaryColor = document.getElementById('globalSecondaryColor').value;
+            const accentColor = document.getElementById('globalAccentColor').value;
+            const textColor = document.getElementById('globalTextColor').value;
+            const headingFont = document.getElementById('globalHeadingFont').value;
+            const bodyFont = document.getElementById('globalBodyFont').value;
+            const baseFontSize = document.getElementById('globalBaseFontSize').value;
+            const baseSpacing = document.getElementById('globalBaseSpacing').value;
+
+            // Create CSS Variables
+            let cssVars = ':root {\n';
+            cssVars += `  --primary-color: ${primaryColor};\n`;
+            cssVars += `  --secondary-color: ${secondaryColor};\n`;
+            cssVars += `  --accent-color: ${accentColor};\n`;
+            cssVars += `  --text-color: ${textColor};\n`;
+            cssVars += `  --base-font-size: ${baseFontSize}px;\n`;
+            cssVars += `  --base-spacing: ${baseSpacing}px;\n`;
+            cssVars += '}\n\n';
+
+            // Apply fonts
+            if (bodyFont !== 'default') {
+                cssVars += `body { font-family: '${bodyFont}', sans-serif; }\n`;
+            }
+            if (headingFont !== 'default') {
+                cssVars += `h1, h2, h3, h4, h5, h6 { font-family: '${headingFont}', serif; }\n`;
+            }
+
+            // Apply to editor
+            const currentCss = editor.getCss();
+            const updatedCss = cssVars + currentCss.replace(/^:root\s*\{[^}]*\}\s*/gm, '');
+            editor.setStyle(updatedCss);
+
+            alert('Global styles applied successfully!');
+        }
+
+        // ============================================
+        // TEMPLATE MANAGER (FREE)
+        // ============================================
+        let savedTemplates = JSON.parse(localStorage.getItem('gjsTemplates') || '[]');
+
+        function saveAsTemplate() {
+            const templateName = prompt('Enter a name for this template:');
+            if (!templateName) return;
+
+            const template = {
+                id: Date.now(),
+                name: templateName,
+                html: editor.getHtml(),
+                css: editor.getCss(),
+                components: editor.getComponents(),
+                styles: editor.getStyle(),
+                thumbnail: captureCanvasThumbnail(),
+                createdAt: new Date().toISOString()
+            };
+
+            savedTemplates.push(template);
+            localStorage.setItem('gjsTemplates', JSON.stringify(savedTemplates));
+            renderTemplatesList();
+            alert('Template saved successfully!');
+        }
+
+        function loadTemplate(templateId) {
+            const template = savedTemplates.find(t => t.id === templateId);
+            if (!template) return;
+
+            if (confirm(`Load template "${template.name}"? This will replace your current content.`)) {
+                editor.setComponents(template.components);
+                editor.setStyle(template.styles);
+            }
+        }
+
+        function deleteTemplate(templateId) {
+            if (confirm('Are you sure you want to delete this template?')) {
+                savedTemplates = savedTemplates.filter(t => t.id !== templateId);
+                localStorage.setItem('gjsTemplates', JSON.stringify(savedTemplates));
+                renderTemplatesList();
+            }
+        }
+
+        function renderTemplatesList() {
+            const container = document.getElementById('templatesList');
+            if (savedTemplates.length === 0) {
+                container.innerHTML = '<p class="text-muted text-center">No templates saved yet</p>';
+                return;
+            }
+
+            container.innerHTML = savedTemplates.map(template => `
+                <div class="custom-block-item" style="cursor: pointer; margin-bottom: 10px;">
+                    <div class="custom-block-header">
+                        <div class="custom-block-icon" style="color: #667eea">
+                            <i class="bi bi-file-earmark-text"></i>
+                        </div>
+                        <div class="custom-block-info">
+                            <div class="custom-block-name">${template.name}</div>
+                            <div class="custom-block-description">
+                                ${new Date(template.createdAt).toLocaleDateString()}
+                            </div>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 5px; margin-top: 8px;">
+                        <button onclick="loadTemplate(${template.id})" class="btn btn-sm btn-primary flex-fill">
+                            <i class="bi bi-download"></i> Load
+                        </button>
+                        <button onclick="deleteTemplate(${template.id})" class="btn btn-sm btn-danger">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function captureCanvasThumbnail() {
+            // Simple placeholder - in production you could use html2canvas
+            return 'data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48cmVjdCB3aWR0aD0iMjAwIiBoZWlnaHQ9IjE1MCIgZmlsbD0iI2YwZjBmMCIvPjx0ZXh0IHg9IjUwJSIgeT0iNTAlIiBmb250LWZhbWlseT0iQXJpYWwiIGZvbnQtc2l6ZT0iMTQiIGZpbGw9IiM5OTkiIHRleHQtYW5jaG9yPSJtaWRkbGUiIGR5PSIuM2VtIj5UZW1wbGF0ZTwvdGV4dD48L3N2Zz4=';
+        }
+
+        // ============================================
+        // EXPORT/IMPORT FUNCTIONALITY (FREE)
+        // ============================================
+        function exportPage() {
+            const exportData = {
+                html: editor.getHtml(),
+                css: editor.getCss(),
+                components: editor.getComponents(),
+                styles: editor.getStyle(),
+                exportedAt: new Date().toISOString()
+            };
+
+            const dataStr = JSON.stringify(exportData, null, 2);
+            const dataUri = 'data:application/json;charset=utf-8,'+ encodeURIComponent(dataStr);
+
+            const exportFileDefaultName = 'page-export-' + Date.now() + '.json';
+
+            const linkElement = document.createElement('a');
+            linkElement.setAttribute('href', dataUri);
+            linkElement.setAttribute('download', exportFileDefaultName);
+            linkElement.click();
+        }
+
+        function importPage() {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = '.json';
+            input.onchange = (e) => {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    try {
+                        const data = JSON.parse(event.target.result);
+                        if (confirm('Import this page? This will replace your current content.')) {
+                            editor.setComponents(data.components || data.html);
+                            editor.setStyle(data.styles || data.css);
+                            alert('Page imported successfully!');
+                        }
+                    } catch (error) {
+                        alert('Error importing page: Invalid file format');
+                    }
+                };
+                reader.readAsText(file);
+            };
+            input.click();
+        }
+
+        // ============================================
+        // KEYBOARD SHORTCUTS (FREE)
+        // ============================================
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + S: Save
+            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                e.preventDefault();
+                savePage();
+            }
+            // Ctrl/Cmd + E: Export
+            if ((e.ctrlKey || e.metaKey) && e.key === 'e') {
+                e.preventDefault();
+                exportPage();
+            }
+            // Ctrl/Cmd + I: Import
+            if ((e.ctrlKey || e.metaKey) && e.key === 'i') {
+                e.preventDefault();
+                importPage();
+            }
+        });
+
+        // Add Export/Import buttons to toolbar
+        document.addEventListener('DOMContentLoaded', function() {
+            const toolbarRight = document.querySelector('.builder-toolbar-right');
+            if (toolbarRight) {
+                const exportBtn = document.createElement('button');
+                exportBtn.className = 'btn btn-transparent';
+                exportBtn.innerHTML = '<i class="bi bi-download"></i> Export';
+                exportBtn.onclick = exportPage;
+
+                const importBtn = document.createElement('button');
+                importBtn.className = 'btn btn-transparent';
+                importBtn.innerHTML = '<i class="bi bi-upload"></i> Import';
+                importBtn.onclick = importPage;
+
+                // Insert before Preview button
+                const previewBtn = toolbarRight.querySelector('[onclick="previewPage()"]');
+                if (previewBtn) {
+                    toolbarRight.insertBefore(importBtn, previewBtn);
+                    toolbarRight.insertBefore(exportBtn, previewBtn);
+                }
+            }
+        });
+
         // Initialize
         loadCustomBlocks();
+        renderTemplatesList();
+
+        // Show welcome notification
+        setTimeout(() => {
+            console.log('🎨 FREE Professional Features Loaded:');
+            console.log('✓ Custom Code Editor');
+            console.log('✓ Advanced Forms Builder');
+            console.log('✓ Gradient Backgrounds');
+            console.log('✓ Tabs Component');
+            console.log('✓ Tooltips');
+            console.log('✓ Typing Animations');
+            console.log('✓ Google Fonts Integration');
+            console.log('✓ Template Manager');
+            console.log('✓ Global Styles System');
+            console.log('✓ Export/Import');
+        }, 1000);
     </script>
 </body>
 </html>
