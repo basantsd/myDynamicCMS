@@ -12,17 +12,23 @@ class CustomBlock extends Model
     protected $fillable = [
         'name',
         'icon',
+        'color',
         'category',
         'description',
         'preview_image',
         'schema',
+        'advanced_features',
+        'action_settings',
         'default_values',
+        'form_table_name',
         'is_active',
         'usage_count',
     ];
 
     protected $casts = [
         'schema' => 'array',
+        'advanced_features' => 'array',
+        'action_settings' => 'array',
         'default_values' => 'array',
         'is_active' => 'boolean',
         'usage_count' => 'integer',
@@ -34,6 +40,10 @@ class CustomBlock extends Model
     const CATEGORY_MEDIA = 'media';
     const CATEGORY_FORM = 'form';
     const CATEGORY_FEATURE = 'feature';
+    const CATEGORY_SLIDER = 'slider';
+    const CATEGORY_TABLE = 'table';
+    const CATEGORY_LIST = 'list';
+    const CATEGORY_BUTTON = 'button';
 
     /**
      * Get all available categories
@@ -44,9 +54,26 @@ class CustomBlock extends Model
             self::CATEGORY_HERO => 'Hero Sections',
             self::CATEGORY_CONTENT => 'Content Blocks',
             self::CATEGORY_MEDIA => 'Media Blocks',
+            self::CATEGORY_SLIDER => 'Sliders',
+            self::CATEGORY_TABLE => 'Tables',
             self::CATEGORY_FORM => 'Forms',
+            self::CATEGORY_LIST => 'Lists',
+            self::CATEGORY_BUTTON => 'Buttons & Actions',
             self::CATEGORY_FEATURE => 'Features',
         ];
+    }
+
+    /**
+     * Get form submissions for this block
+     */
+    public function formSubmissions()
+    {
+        return $this->hasManyThrough(
+            FormSubmission::class,
+            PageSection::class,
+            'custom_block_id',
+            'page_section_id'
+        );
     }
 
     /**

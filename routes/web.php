@@ -3,6 +3,7 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomBlockController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\FrontendController;
 use App\Http\Controllers\MediaController;
 use App\Http\Controllers\MenuController;
@@ -46,6 +47,20 @@ Route::prefix('admin')->group(function () {
         Route::put('/page-sections/{id}', [PageSectionController::class, 'update'])->name('admin.sections.update');
         Route::post('/page-sections/reorder', [PageSectionController::class, 'updateOrder'])->name('admin.sections.reorder');
         Route::delete('/page-sections/{id}', [PageSectionController::class, 'destroy'])->name('admin.sections.destroy');
+
+        // Table Management for Page Sections
+        Route::post('/page-sections/{id}/import-csv', [PageSectionController::class, 'importCsv'])->name('admin.sections.import-csv');
+        Route::post('/page-sections/{id}/table/add-column', [PageSectionController::class, 'addTableColumn'])->name('admin.sections.table.add-column');
+        Route::delete('/page-sections/{id}/table/remove-column', [PageSectionController::class, 'removeTableColumn'])->name('admin.sections.table.remove-column');
+        Route::put('/page-sections/{id}/table/update-cell', [PageSectionController::class, 'updateTableCell'])->name('admin.sections.table.update-cell');
+        Route::get('/page-sections/{id}/table/export-csv', [PageSectionController::class, 'exportTableCsv'])->name('admin.sections.table.export-csv');
+
+        // Form Submissions Management
+        Route::get('/form-submissions', [FormSubmissionController::class, 'index'])->name('admin.form-submissions.index');
+        Route::get('/form-submissions/form/{formName}', [FormSubmissionController::class, 'getByForm'])->name('admin.form-submissions.by-form');
+        Route::get('/form-submissions/export/{formName}', [FormSubmissionController::class, 'export'])->name('admin.form-submissions.export');
+        Route::delete('/form-submissions/{id}', [FormSubmissionController::class, 'destroy'])->name('admin.form-submissions.destroy');
+        Route::get('/form-submissions/statistics', [FormSubmissionController::class, 'statistics'])->name('admin.form-submissions.statistics');
 
         // Custom Blocks Management
         Route::get('/custom-blocks', [CustomBlockController::class, 'index'])->name('admin.blocks.index');
@@ -94,6 +109,9 @@ Route::prefix('admin')->group(function () {
 | Frontend Routes (MUST BE LAST - catch-all)
 |--------------------------------------------------------------------------
 */
+
+// Public Form Submission
+Route::post('/api/form-submit', [FormSubmissionController::class, 'submit'])->name('form.submit');
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/{slug}', [FrontendController::class, 'showPage'])->name('page.show');
