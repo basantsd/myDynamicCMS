@@ -39,9 +39,33 @@ class FormSubmissionController extends Controller
 
         $submissions = $query->orderBy('submitted_at', 'desc')->paginate(20);
 
+        // Get statistics
+        $stats = [
+            'total' => FormSubmission::count(),
+            'submission_type' => FormSubmission::where('form_type', 'submission')->count(),
+            'calculation_type' => FormSubmission::where('form_type', 'calculation')->count(),
+            'action_type' => FormSubmission::where('form_type', 'action')->count(),
+        ];
+
+        // Get unique form names for filter
+        $formNames = FormSubmission::distinct()->pluck('form_name');
+
+        // Get all pages for filter
+        $pages = Page::orderBy('title')->get();
+
+        return view('admin.form-submissions.index', compact('submissions', 'stats', 'formNames', 'pages'));
+    }
+
+    /**
+     * Show a single submission
+     */
+    public function show($id)
+    {
+        $submission = FormSubmission::with(['page', 'pageSection'])->findOrFail($id);
+
         return response()->json([
             'success' => true,
-            'submissions' => $submissions,
+            'submission' => $submission,
         ]);
     }
 

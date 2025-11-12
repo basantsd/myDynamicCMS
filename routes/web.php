@@ -59,8 +59,9 @@ Route::prefix('admin')->group(function () {
         Route::get('/form-submissions', [FormSubmissionController::class, 'index'])->name('admin.form-submissions.index');
         Route::get('/form-submissions/form/{formName}', [FormSubmissionController::class, 'getByForm'])->name('admin.form-submissions.by-form');
         Route::get('/form-submissions/export/{formName}', [FormSubmissionController::class, 'export'])->name('admin.form-submissions.export');
-        Route::delete('/form-submissions/{id}', [FormSubmissionController::class, 'destroy'])->name('admin.form-submissions.destroy');
         Route::get('/form-submissions/statistics', [FormSubmissionController::class, 'statistics'])->name('admin.form-submissions.statistics');
+        Route::get('/form-submissions/{id}', [FormSubmissionController::class, 'show'])->name('admin.form-submissions.show');
+        Route::delete('/form-submissions/{id}', [FormSubmissionController::class, 'destroy'])->name('admin.form-submissions.destroy');
 
         // Custom Blocks Management
         Route::get('/custom-blocks', [CustomBlockController::class, 'index'])->name('admin.blocks.index');

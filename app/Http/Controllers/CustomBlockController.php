@@ -40,12 +40,9 @@ class CustomBlockController extends Controller
         }
 
         $blocks = $query->paginate(20);
+        $categories = CustomBlock::getCategories();
 
-        return response()->json([
-            'success' => true,
-            'blocks' => $blocks,
-            'categories' => CustomBlock::getCategories(),
-        ]);
+        return view('admin.blocks.index', compact('blocks', 'categories'));
     }
 
     /**
@@ -80,10 +77,7 @@ class CustomBlockController extends Controller
      */
     public function create()
     {
-        return response()->json([
-            'success' => true,
-            'categories' => CustomBlock::getCategories(),
-        ]);
+        return view('admin.blocks.create');
     }
 
     /**
@@ -94,29 +88,38 @@ class CustomBlockController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'icon' => 'required|string|max:255',
+            'color' => 'required|string|max:7',
             'category' => 'required|string|in:' . implode(',', array_keys(CustomBlock::getCategories())),
             'description' => 'nullable|string',
-            'schema' => 'required|array',
-            'default_values' => 'nullable|array',
+            'schema' => 'required|string',
+            'default_values' => 'nullable|string',
             'preview_image' => 'nullable|string',
         ]);
+
+        // Decode JSON strings
+        $schema = json_decode($request->schema, true);
+        $defaultValues = $request->default_values ? json_decode($request->default_values, true) : [];
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return redirect()->back()
+                ->withErrors(['schema' => 'Invalid JSON format'])
+                ->withInput();
+        }
 
         $block = CustomBlock::create([
             'name' => $request->name,
             'icon' => $request->icon,
+            'color' => $request->color,
             'category' => $request->category,
             'description' => $request->description,
-            'schema' => $request->schema,
-            'default_values' => $request->default_values ?? [],
+            'schema' => $schema,
+            'default_values' => $defaultValues,
             'preview_image' => $request->preview_image,
-            'is_active' => $request->has('is_active') ? $request->is_active : true,
+            'is_active' => $request->has('is_active') ? true : false,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Custom block created successfully',
-            'block' => $block,
-        ], 201);
+        return redirect()->route('admin.blocks.index')
+            ->with('success', 'Custom block created successfully');
     }
 
     /**
@@ -138,12 +141,7 @@ class CustomBlockController extends Controller
     public function edit($id)
     {
         $block = CustomBlock::findOrFail($id);
-
-        return response()->json([
-            'success' => true,
-            'block' => $block,
-            'categories' => CustomBlock::getCategories(),
-        ]);
+        return view('admin.blocks.edit', compact('block'));
     }
 
     /**
@@ -156,29 +154,38 @@ class CustomBlockController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'icon' => 'required|string|max:255',
+            'color' => 'required|string|max:7',
             'category' => 'required|string|in:' . implode(',', array_keys(CustomBlock::getCategories())),
             'description' => 'nullable|string',
-            'schema' => 'required|array',
-            'default_values' => 'nullable|array',
+            'schema' => 'required|string',
+            'default_values' => 'nullable|string',
             'preview_image' => 'nullable|string',
         ]);
+
+        // Decode JSON strings
+        $schema = json_decode($request->schema, true);
+        $defaultValues = $request->default_values ? json_decode($request->default_values, true) : [];
+
+        if (json_last_error() !== JSON_ERROR_NONE) {
+            return redirect()->back()
+                ->withErrors(['schema' => 'Invalid JSON format'])
+                ->withInput();
+        }
 
         $block->update([
             'name' => $request->name,
             'icon' => $request->icon,
+            'color' => $request->color,
             'category' => $request->category,
             'description' => $request->description,
-            'schema' => $request->schema,
-            'default_values' => $request->default_values ?? [],
+            'schema' => $schema,
+            'default_values' => $defaultValues,
             'preview_image' => $request->preview_image,
-            'is_active' => $request->has('is_active') ? $request->is_active : $block->is_active,
+            'is_active' => $request->has('is_active') ? true : false,
         ]);
 
-        return response()->json([
-            'success' => true,
-            'message' => 'Custom block updated successfully',
-            'block' => $block,
-        ]);
+        return redirect()->route('admin.blocks.index')
+            ->with('success', 'Custom block updated successfully');
     }
 
     /**
