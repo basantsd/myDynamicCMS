@@ -329,10 +329,25 @@
     });
 
     function editMenuItem(itemId) {
-        // Find the item in the menu items array
-        const item = menuItems.find(i => i.id === itemId);
+        // Find the item in the menu items array (including nested children)
+        let item = null;
+
+        // First try to find in top-level items
+        item = menuItems.find(i => i.id === itemId);
+
+        // If not found, search in children
         if (!item) {
-            alert('Menu item not found');
+            for (const parentItem of menuItems) {
+                if (parentItem.children && parentItem.children.length > 0) {
+                    item = parentItem.children.find(child => child.id === itemId);
+                    if (item) break;
+                }
+            }
+        }
+
+        if (!item) {
+            alert('Menu item not found. Please refresh the page and try again.');
+            console.error('Could not find menu item with ID:', itemId);
             return;
         }
 
