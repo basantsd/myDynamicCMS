@@ -660,6 +660,9 @@
     <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
     <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 
+    <!-- Custom Blocks Script -->
+    <script src="{{ asset('js/grapes-custom-blocks.js') }}"></script>
+
     <script>
         // Initialize GrapesJS
         window.editor = grapesjs.init({
@@ -730,6 +733,9 @@
         const editor = window.editor;
         let customBlocks = [];
         let currentCustomBlock = null;
+
+        // Add Custom GrapesJS Blocks (function defined in grapes-custom-blocks.js)
+        addCustomBlocks(editor);
 
         // Load Custom Blocks
         async function loadCustomBlocks() {
