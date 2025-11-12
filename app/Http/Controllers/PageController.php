@@ -49,11 +49,9 @@ class PageController extends Controller
     public function edit($id)
     {
         $page = Page::with('sections')->findOrFail($id);
-        $pages = Page::where('id', '!=', $id)->whereNull('parent_id')->get();
-        $templates = ['default', 'treasury', 'home', 'contact', 'about', 'team'];
-        $sectionTypes = PageSection::getSectionTypes();
+        $pages = Page::where('id', '!=', $id)->get();
 
-        return view('admin.pages.edit-with-tabs', compact('page', 'pages', 'templates', 'sectionTypes'));
+        return view('admin.pages.edit-new', compact('page', 'pages'));
     }
 
     public function update(Request $request, $id)
@@ -92,19 +90,38 @@ class PageController extends Controller
     public function builder($id)
     {
         $page = Page::findOrFail($id);
-        return view('admin.pages.builder', compact('page'));
+        return view('admin.pages.builder-enhanced', compact('page'));
     }
 
     public function builderSave(Request $request, $id)
     {
         $page = Page::findOrFail($id);
 
-        $page->update([
+        $updateData = [
             'use_builder' => $request->use_builder ?? true,
             'builder_html' => $request->builder_html,
             'builder_css' => $request->builder_css,
             'builder_data' => $request->builder_data,
-        ]);
+        ];
+
+        // Also update page settings if provided
+        if ($request->has('title')) {
+            $updateData['title'] = $request->title;
+        }
+        if ($request->has('slug')) {
+            $updateData['slug'] = $request->slug;
+        }
+        if ($request->has('template')) {
+            $updateData['template'] = $request->template;
+        }
+        if ($request->has('is_published')) {
+            $updateData['is_published'] = $request->is_published;
+        }
+        if ($request->has('show_in_menu')) {
+            $updateData['show_in_menu'] = $request->show_in_menu;
+        }
+
+        $page->update($updateData);
 
         return response()->json(['success' => true, 'message' => 'Page saved successfully!']);
     }
