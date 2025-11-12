@@ -435,11 +435,45 @@
             label: 'Carousel Slider',
             category: '🏛️ Treasury Sections',
             content: `
+                <style>
+                    #heroCarousel .carousel-indicators button {
+                        width: 12px;
+                        height: 12px;
+                        border-radius: 50%;
+                        margin: 0 5px;
+                        background-color: rgba(255,255,255,0.5);
+                        border: none;
+                    }
+                    #heroCarousel .carousel-indicators button.active {
+                        background-color: #fff;
+                    }
+                    #heroCarousel .carousel-control-prev,
+                    #heroCarousel .carousel-control-next {
+                        width: 50px;
+                        height: 50px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: rgba(0,0,0,0.3);
+                        border-radius: 50%;
+                        opacity: 0.8;
+                    }
+                    #heroCarousel .carousel-control-prev:hover,
+                    #heroCarousel .carousel-control-next:hover {
+                        opacity: 1;
+                        background: rgba(0,0,0,0.5);
+                    }
+                    #heroCarousel .carousel-control-prev {
+                        left: 20px;
+                    }
+                    #heroCarousel .carousel-control-next {
+                        right: 20px;
+                    }
+                </style>
                 <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-indicators">
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
-                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active" aria-label="Slide 1"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                        <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
                     </div>
                     <div class="carousel-inner">
                         <div class="carousel-item active" style="background-image: url('/assets/img/hero/hero_bg_1_1.jpg'); background-size: cover; background-position: center; min-height: 500px;">
@@ -471,10 +505,12 @@
                         </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#heroCarousel" data-bs-slide="prev">
-                        <i class="fa fa-long-arrow-left" aria-hidden="true"></i>
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#heroCarousel" data-bs-slide="next">
-                        <i class="fa fa-long-arrow-right" aria-hidden="true"></i>
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
             `
@@ -1026,6 +1062,28 @@
             label: 'Image Gallery Slider',
             category: '🎢 Sliders',
             content: `
+                <style>
+                    #imageSlider .carousel-control-prev,
+                    #imageSlider .carousel-control-next {
+                        width: 50px;
+                        height: 50px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: rgba(0,0,0,0.5);
+                        border-radius: 50%;
+                        opacity: 0.7;
+                    }
+                    #imageSlider .carousel-control-prev:hover,
+                    #imageSlider .carousel-control-next:hover {
+                        opacity: 1;
+                    }
+                    #imageSlider .carousel-control-prev {
+                        left: 20px;
+                    }
+                    #imageSlider .carousel-control-next {
+                        right: 20px;
+                    }
+                </style>
                 <div id="imageSlider" class="carousel slide" data-bs-ride="carousel">
                     <div class="carousel-inner">
                         <div class="carousel-item active">
@@ -1040,9 +1098,11 @@
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#imageSlider" data-bs-slide="prev">
                         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
                     </button>
                     <button class="carousel-control-next" type="button" data-bs-target="#imageSlider" data-bs-slide="next">
                         <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
                     </button>
                 </div>
             `
@@ -1053,6 +1113,29 @@
             label: 'Testimonial Slider',
             category: '🎢 Sliders',
             content: `
+                <style>
+                    #testimonialSlider .carousel-control-prev,
+                    #testimonialSlider .carousel-control-next {
+                        width: 50px;
+                        height: 50px;
+                        top: 50%;
+                        transform: translateY(-50%);
+                        background: rgba(102, 126, 234, 0.8);
+                        border-radius: 50%;
+                        opacity: 0.8;
+                    }
+                    #testimonialSlider .carousel-control-prev:hover,
+                    #testimonialSlider .carousel-control-next:hover {
+                        opacity: 1;
+                        background: rgba(102, 126, 234, 1);
+                    }
+                    #testimonialSlider .carousel-control-prev {
+                        left: 20px;
+                    }
+                    #testimonialSlider .carousel-control-next {
+                        right: 20px;
+                    }
+                </style>
                 <section style="padding: 80px 0; background: #f8f9fa;">
                     <div class="container">
                         <h2 style="text-align: center; margin-bottom: 50px;">Client Testimonials</h2>
@@ -1079,9 +1162,11 @@
                             </div>
                             <button class="carousel-control-prev" type="button" data-bs-target="#testimonialSlider" data-bs-slide="prev">
                                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Previous</span>
                             </button>
                             <button class="carousel-control-next" type="button" data-bs-target="#testimonialSlider" data-bs-slide="next">
                                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                <span class="visually-hidden">Next</span>
                             </button>
                         </div>
                     </div>
