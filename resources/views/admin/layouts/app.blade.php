@@ -357,6 +357,18 @@
                 </a>
             </li>
             <li>
+                <a href="{{ route('admin.blocks.index') }}" class="{{ request()->routeIs('admin.blocks.*') ? 'active' : '' }}">
+                    <i class="fas fa-cube"></i>
+                    <span>Custom Blocks</span>
+                </a>
+            </li>
+            <li>
+                <a href="{{ route('admin.form-submissions.index') }}" class="{{ request()->routeIs('admin.form-submissions.*') ? 'active' : '' }}">
+                    <i class="fas fa-clipboard-list"></i>
+                    <span>Form Submissions</span>
+                </a>
+            </li>
+            <li>
                 <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
