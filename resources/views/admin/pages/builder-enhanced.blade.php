@@ -726,19 +726,37 @@
         </div>
     </div>
 
-    <!-- Custom Block Form Modal -->
+    <!-- Custom Block Form Modal with Preview -->
     <div class="custom-block-modal" id="customBlockModal">
-        <div class="custom-block-modal-content">
+        <div class="custom-block-modal-content" style="max-width: 1200px;">
             <div class="custom-block-modal-header">
                 <h5 id="customBlockModalTitle">Add Custom Block</h5>
                 <button onclick="closeCustomBlockModal()" class="btn-close"></button>
             </div>
-            <div class="custom-block-modal-body" id="customBlockModalBody">
-                <!-- Dynamic form will be inserted here -->
+            <div class="custom-block-modal-body" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-height: 70vh; overflow: hidden;">
+                <!-- Form Column -->
+                <div style="overflow-y: auto; padding-right: 15px;">
+                    <h6 style="margin-bottom: 15px; color: #667eea;">Configure Block</h6>
+                    <div id="customBlockModalBody">
+                        <!-- Dynamic form will be inserted here -->
+                    </div>
+                </div>
+                <!-- Preview Column -->
+                <div style="overflow-y: auto; background: #f8f9fa; padding: 20px; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                        <h6 style="margin: 0; color: #667eea;">Live Preview</h6>
+                        <button onclick="updatePreview()" class="btn btn-sm btn-primary">
+                            <i class="fas fa-sync"></i> Refresh
+                        </button>
+                    </div>
+                    <div id="customBlockPreview" style="background: white; padding: 20px; border-radius: 4px; min-height: 300px;">
+                        <!-- Preview will be inserted here -->
+                    </div>
+                </div>
             </div>
             <div class="custom-block-modal-footer">
                 <button onclick="closeCustomBlockModal()" class="btn btn-secondary">Cancel</button>
-                <button onclick="submitCustomBlockForm()" class="btn btn-primary">Add Block</button>
+                <button onclick="submitCustomBlockForm()" class="btn btn-primary">Add Block to Page</button>
             </div>
         </div>
     </div>
@@ -946,6 +964,9 @@
             document.getElementById('customBlockModalTitle').textContent = `Add ${block.name}`;
             document.getElementById('customBlockModalBody').innerHTML = generateCustomBlockForm(block);
             document.getElementById('customBlockModal').classList.add('active');
+
+            // Show initial preview with default values
+            setTimeout(() => updatePreview(), 100);
         }
 
         // Close Custom Block Modal
@@ -954,47 +975,88 @@
             currentCustomBlock = null;
         }
 
-        // Generate form based on block schema
+        // Generate form based on block schema - ENHANCED VERSION
         function generateCustomBlockForm(block) {
             let formHTML = '';
             const schema = block.schema;
             const defaults = block.default_values || {};
 
             if (schema && schema.fields) {
-                schema.fields.forEach(field => {
-                    formHTML += `<div class="mb-3">`;
-                    formHTML += `<label class="form-label">${field.label}</label>`;
+                schema.fields.forEach((field, fieldIndex) => {
+                    formHTML += `<div class="mb-3 field-wrapper" data-field-name="${field.name}">`;
+                    formHTML += `<label class="form-label fw-bold">${field.label}${field.required ? ' <span class="text-danger">*</span>' : ''}</label>`;
 
                     switch (field.type) {
                         case 'text':
-                            formHTML += `<input type="text" class="form-control" name="${field.name}" value="${defaults[field.name] || ''}" ${field.required ? 'required' : ''}>`;
+                            formHTML += `<input type="text" class="form-control" name="${field.name}" value="${defaults[field.name] || ''}" ${field.required ? 'required' : ''} onchange="updatePreview()">`;
                             break;
+
                         case 'textarea':
-                            formHTML += `<textarea class="form-control" name="${field.name}" rows="3" ${field.required ? 'required' : ''}>${defaults[field.name] || ''}</textarea>`;
+                            formHTML += `<textarea class="form-control" name="${field.name}" rows="3" ${field.required ? 'required' : ''} onchange="updatePreview()">${defaults[field.name] || ''}</textarea>`;
                             break;
+
+                        case 'number':
+                            formHTML += `<input type="number" class="form-control" name="${field.name}" value="${defaults[field.name] || field.min || 0}" min="${field.min || 0}" max="${field.max || 100}" ${field.required ? 'required' : ''} onchange="updatePreview()">`;
+                            break;
+
                         case 'image':
-                            formHTML += `<input type="url" class="form-control" name="${field.name}" placeholder="Image URL" value="${defaults[field.name] || ''}">`;
+                            const defaultImg = defaults[field.name] || '/assets/img/hero/hero_bg_1_1.jpg';
+                            formHTML += `
+                                <div class="input-group">
+                                    <input type="text" class="form-control" name="${field.name}" placeholder="Image URL or upload" value="${defaultImg}" onchange="updatePreview()">
+                                    <button type="button" class="btn btn-outline-secondary" onclick="alert('Image upload coming soon! For now, paste image URL.')">
+                                        <i class="fas fa-upload"></i> Upload
+                                    </button>
+                                </div>
+                                <small class="text-muted">Enter image URL or click upload</small>
+                            `;
                             break;
-                        case 'button':
-                            formHTML += `<input type="text" class="form-control mb-2" name="${field.name}_text" placeholder="Button Text" value="${defaults[field.name + '_text'] || ''}">`;
-                            formHTML += `<input type="url" class="form-control" name="${field.name}_url" placeholder="Button URL" value="${defaults[field.name + '_url'] || ''}">`;
+
+                        case 'icon':
+                            const defaultIcon = defaults[field.name] || 'fa-star';
+                            formHTML += `
+                                <input type="text" class="form-control" name="${field.name}" placeholder="FontAwesome icon class (e.g., fa-star)" value="${defaultIcon}" onchange="updatePreview()">
+                                <small class="text-muted">Use FontAwesome class names (fa-icon-name)</small>
+                            `;
                             break;
+
                         case 'color':
-                            formHTML += `<input type="color" class="form-control form-control-color" name="${field.name}" value="${defaults[field.name] || '#000000'}">`;
+                            formHTML += `<input type="color" class="form-control form-control-color" name="${field.name}" value="${defaults[field.name] || '#667eea'}" onchange="updatePreview()">`;
                             break;
+
                         case 'select':
-                            formHTML += `<select class="form-select" name="${field.name}">`;
+                            formHTML += `<select class="form-select" name="${field.name}" onchange="updatePreview()">`;
                             if (field.options) {
                                 field.options.forEach(opt => {
-                                    formHTML += `<option value="${opt}">${opt}</option>`;
+                                    const selected = defaults[field.name] === opt ? 'selected' : '';
+                                    formHTML += `<option value="${opt}" ${selected}>${opt}</option>`;
                                 });
                             }
                             formHTML += `</select>`;
                             break;
+
                         case 'toggle':
                             formHTML += `<div class="form-check form-switch">`;
-                            formHTML += `<input class="form-check-input" type="checkbox" name="${field.name}" ${defaults[field.name] ? 'checked' : ''}>`;
+                            formHTML += `<input class="form-check-input" type="checkbox" name="${field.name}" ${defaults[field.name] ? 'checked' : ''} onchange="updatePreview()">`;
                             formHTML += `</div>`;
+                            break;
+
+                        case 'repeater':
+                            const repeaterItems = defaults[field.name] || [];
+                            const maxItems = field.max || 10;
+                            formHTML += `<div class="repeater-container" data-repeater-name="${field.name}">`;
+
+                            // Render existing items or at least one default
+                            const itemsToRender = repeaterItems.length > 0 ? repeaterItems : [{}];
+                            itemsToRender.forEach((item, index) => {
+                                formHTML += generateRepeaterItem(field, item, index);
+                            });
+
+                            formHTML += `
+                                <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addRepeaterItem('${field.name}', ${fieldIndex})">
+                                    <i class="fas fa-plus"></i> Add ${field.label}
+                                </button>
+                            </div>`;
                             break;
                     }
 
@@ -1005,28 +1067,78 @@
             return formHTML;
         }
 
-        // Submit Custom Block Form
-        function submitCustomBlockForm() {
-            const formData = new FormData();
-            const modalBody = document.getElementById('customBlockModalBody');
-            const inputs = modalBody.querySelectorAll('input, textarea, select');
+        // Generate repeater item HTML
+        function generateRepeaterItem(repeaterField, itemData, index) {
+            let html = `<div class="repeater-item card mb-2 p-3" data-index="${index}">`;
+            html += `<div class="d-flex justify-content-between align-items-center mb-2">`;
+            html += `<small class="text-muted fw-bold">#${index + 1}</small>`;
+            html += `<button type="button" class="btn btn-sm btn-danger" onclick="removeRepeaterItem(this)"><i class="fas fa-trash"></i></button>`;
+            html += `</div>`;
 
-            const blockData = {
-                block_id: currentCustomBlock.id,
-                block_name: currentCustomBlock.name,
-                fields: {}
-            };
+            repeaterField.fields.forEach(subField => {
+                const fieldName = `${repeaterField.name}[${index}][${subField.name}]`;
+                const value = itemData[subField.name] || '';
 
-            inputs.forEach(input => {
-                if (input.type === 'checkbox') {
-                    blockData.fields[input.name] = input.checked;
-                } else {
-                    blockData.fields[input.name] = input.value;
+                html += `<div class="mb-2">`;
+                html += `<label class="form-label small">${subField.label}${subField.required ? ' *' : ''}</label>`;
+
+                switch (subField.type) {
+                    case 'text':
+                        html += `<input type="text" class="form-control form-control-sm" name="${fieldName}" value="${value}" onchange="updatePreview()">`;
+                        break;
+                    case 'textarea':
+                        html += `<textarea class="form-control form-control-sm" name="${fieldName}" rows="2" onchange="updatePreview()">${value}</textarea>`;
+                        break;
+                    case 'number':
+                        html += `<input type="number" class="form-control form-control-sm" name="${fieldName}" value="${value}" onchange="updatePreview()">`;
+                        break;
+                    case 'image':
+                        html += `<input type="text" class="form-control form-control-sm" name="${fieldName}" placeholder="Image URL" value="${value}" onchange="updatePreview()">`;
+                        break;
+                    case 'icon':
+                        html += `<input type="text" class="form-control form-control-sm" name="${fieldName}" placeholder="fa-icon" value="${value || 'fa-star'}" onchange="updatePreview()">`;
+                        break;
+                    case 'color':
+                        html += `<input type="color" class="form-control form-control-color form-control-sm" name="${fieldName}" value="${value || '#667eea'}" onchange="updatePreview()">`;
+                        break;
                 }
+
+                html += `</div>`;
             });
 
+            html += `</div>`;
+            return html;
+        }
+
+        // Add repeater item
+        function addRepeaterItem(repeaterName, fieldIndex) {
+            const container = document.querySelector(`[data-repeater-name="${repeaterName}"]`);
+            const items = container.querySelectorAll('.repeater-item');
+            const newIndex = items.length;
+
+            // Get field definition
+            const field = currentCustomBlock.schema.fields.find(f => f.name === repeaterName);
+            const newItem = generateRepeaterItem(field, {}, newIndex);
+
+            // Insert before the add button
+            const addButton = container.querySelector('button');
+            addButton.insertAdjacentHTML('beforebegin', newItem);
+            updatePreview();
+        }
+
+        // Remove repeater item
+        function removeRepeaterItem(button) {
+            button.closest('.repeater-item').remove();
+            updatePreview();
+        }
+
+        // Submit Custom Block Form
+        function submitCustomBlockForm() {
+            const modalBody = document.getElementById('customBlockModalBody');
+            const fields = collectFormData(modalBody);
+
             // Generate HTML based on block type and data
-            const blockHTML = generateBlockHTML(currentCustomBlock, blockData.fields);
+            const blockHTML = generateBlockHTML(currentCustomBlock, fields);
 
             // Add to canvas
             editor.addComponents(blockHTML);
@@ -1034,33 +1146,300 @@
             closeCustomBlockModal();
         }
 
-        // Generate HTML for custom block
+        // Collect form data including repeaters
+        function collectFormData(container) {
+            const data = {};
+            const inputs = container.querySelectorAll('input, textarea, select');
+
+            inputs.forEach(input => {
+                const name = input.getAttribute('name');
+                if (!name) return;
+
+                // Handle repeater fields (e.g., slides[0][image])
+                if (name.includes('[')) {
+                    const matches = name.match(/([^\[]+)\[(\d+)\]\[([^\]]+)\]/);
+                    if (matches) {
+                        const [, repeaterName, index, fieldName] = matches;
+                        if (!data[repeaterName]) data[repeaterName] = [];
+                        if (!data[repeaterName][index]) data[repeaterName][index] = {};
+                        data[repeaterName][index][fieldName] = input.type === 'checkbox' ? input.checked : input.value;
+                    }
+                } else {
+                    // Regular fields
+                    data[name] = input.type === 'checkbox' ? input.checked : input.value;
+                }
+            });
+
+            return data;
+        }
+
+        // Update preview in real-time
+        function updatePreview() {
+            if (!currentCustomBlock) return;
+
+            const modalBody = document.getElementById('customBlockModalBody');
+            const fields = collectFormData(modalBody);
+            const html = generateBlockHTML(currentCustomBlock, fields);
+
+            const previewContainer = document.getElementById('customBlockPreview');
+            previewContainer.innerHTML = html;
+
+            // Load Bootstrap CSS in preview if needed
+            if (!previewContainer.querySelector('link[href*="bootstrap"]')) {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css';
+                previewContainer.appendChild(link);
+            }
+        }
+
+        // Generate HTML for custom block - COMPREHENSIVE TEMPLATE SYSTEM
         function generateBlockHTML(block, fields) {
-            // This is a simple version - you can expand this based on block types
-            let html = `<section class="custom-block" data-block-type="${block.category}" style="padding: 60px 0;">`;
-            html += `<div class="container">`;
+            const blockName = block.name;
 
-            // Generate based on category
-            switch (block.category) {
-                case 'hero':
-                    html += `
-                        <div class="row align-items-center">
-                            <div class="col-lg-6">
-                                <h1>${fields.title || 'Title'}</h1>
-                                <p>${fields.subtitle || 'Subtitle'}</p>
-                                ${fields.button_text_text ? `<a href="${fields.button_url || '#'}" class="btn btn-primary">${fields.button_text_text}</a>` : ''}
+            // Template system based on block name for precise rendering
+            const templates = {
+                // ========== HERO BLOCKS ==========
+                'Hero Banner Split': () => `
+                    <section style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 100px 0; color: white;">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-6">
+                                    <h1 style="font-size: 48px; font-weight: bold; margin-bottom: 20px;">${fields.title || 'Welcome to Our Platform'}</h1>
+                                    <p style="font-size: 18px; margin-bottom: 30px;">${fields.subtitle || 'Build amazing websites'}</p>
+                                    <a href="${fields.button1_url || '#'}" class="btn btn-light btn-lg me-2">${fields.button1_text || 'Get Started'}</a>
+                                    <a href="${fields.button2_url || '#'}" class="btn btn-outline-light btn-lg">${fields.button2_text || 'Learn More'}</a>
+                                </div>
+                                <div class="col-lg-6">
+                                    <img src="${fields.image || '/assets/img/hero/hero_bg_1_1.jpg'}" class="img-fluid rounded" alt="Hero">
+                                </div>
                             </div>
-                            ${fields.image ? `<div class="col-lg-6"><img src="${fields.image}" class="img-fluid" /></div>` : ''}
                         </div>
-                    `;
-                    break;
+                    </section>
+                `,
 
-                default:
-                    html += `<div class="text-center"><h3>${block.name}</h3><p>Custom block content</p></div>`;
+                'Hero Centered with Overlay': () => `
+                    <section style="background: url('${fields.background_image || '/assets/img/hero/hero_bg_1_1.jpg'}') center/cover; padding: 150px 0; position: relative;">
+                        <div style="position: absolute; inset: 0; background: rgba(0,0,0,${fields.overlay_opacity || '0.5'});"></div>
+                        <div class="container" style="position: relative; z-index: 1;">
+                            <div class="text-center text-white">
+                                <h1 style="font-size: 56px; font-weight: bold; margin-bottom: 20px;">${fields.title || 'Your Amazing Headline'}</h1>
+                                <p style="font-size: 20px; margin-bottom: 30px;">${fields.subtitle || 'Tell your story'}</p>
+                                <a href="${fields.button_url || '#'}" class="btn btn-primary btn-lg">${fields.button_text || 'Call to Action'}</a>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                // ========== FEATURES ==========
+                'Features 3 Columns': () => {
+                    const features = fields.features || [];
+                    const featureCols = features.map((f, i) => `
+                        <div class="col-md-4 text-center">
+                            <div style="padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                <i class="fas ${f.icon || 'fa-star'} fa-3x mb-3" style="color: #667eea;"></i>
+                                <h3 style="font-size: 24px; margin-bottom: 15px;">${f.title || 'Feature ' + (i+1)}</h3>
+                                <p style="color: #666;">${f.description || 'Feature description'}</p>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0;">
+                            <div class="container">
+                                <div class="text-center mb-5">
+                                    <h2 style="font-size: 36px; font-weight: bold;">${fields.section_title || 'Our Features'}</h2>
+                                    <p style="font-size: 18px; color: #666;">${fields.section_subtitle || 'Everything you need'}</p>
+                                </div>
+                                <div class="row gy-4">${featureCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== CTAs ==========
+                'CTA Simple Horizontal': () => `
+                    <section style="padding: 60px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <div class="container">
+                            <div class="row align-items-center">
+                                <div class="col-lg-8">
+                                    <h2 style="font-size: 32px; margin-bottom: 10px;">${fields.title || 'Ready to Get Started?'}</h2>
+                                    <p style="font-size: 18px; margin: 0;">${fields.subtitle || 'Join thousands today'}</p>
+                                </div>
+                                <div class="col-lg-4 text-end">
+                                    <a href="${fields.button_url || '#'}" class="btn btn-light btn-lg">${fields.button_text || 'Get Started'}</a>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `,
+
+                'CTA Centered with Dual Buttons': () => `
+                    <section style="padding: 80px 0; background: #1f2937; color: white; text-align: center;">
+                        <div class="container">
+                            <h2 style="font-size: 42px; margin-bottom: 20px; font-weight: bold;">${fields.title || 'Transform Your Business'}</h2>
+                            <p style="font-size: 20px; margin-bottom: 30px; color: #d1d5db;">${fields.subtitle || 'Start your free trial'}</p>
+                            <a href="${fields.button1_url || '#'}" class="btn btn-primary btn-lg me-2">${fields.button1_text || 'Start Free Trial'}</a>
+                            <a href="${fields.button2_url || '#'}" class="btn btn-outline-light btn-lg">${fields.button2_text || 'Contact Sales'}</a>
+                        </div>
+                    </section>
+                `,
+
+                // ========== PRICING ==========
+                'Pricing 3 Plans': () => {
+                    const plans = fields.plans || [];
+                    const pricingCols = plans.map((plan, i) => {
+                        const highlighted = fields.highlight_middle && i === 1;
+                        const features = (plan.features || '').split('\n').filter(f => f.trim());
+
+                        return `
+                            <div class="col-lg-4">
+                                <div style="background: white; padding: 40px; border-radius: 10px; text-align: center; box-shadow: 0 ${highlighted ? '10px 30px rgba(59,130,246,0.3)' : '5px 15px rgba(0,0,0,0.1)'}; ${highlighted ? 'border: 2px solid #bd2828;' : ''} position: relative;">
+                                    ${highlighted ? '<div style="position: absolute; top: -15px; left: 50%; transform: translateX(-50%); background: #bd2828; color: white; padding: 5px 20px; border-radius: 20px; font-size: 12px;">POPULAR</div>' : ''}
+                                    <h3 style="font-size: 24px; margin-bottom: 10px;">${plan.name || 'Plan'}</h3>
+                                    <div style="font-size: 48px; font-weight: bold; margin: 20px 0;"><span style="font-size: 24px;">$</span>${plan.price || '0'}<span style="font-size: 18px; color: #666;">/mo</span></div>
+                                    <ul style="list-style: none; padding: 0; margin: 30px 0;">
+                                        ${features.map(f => `<li style="margin: 15px 0;"><i class="fas fa-check" style="color: #10b981;"></i> ${f}</li>`).join('')}
+                                    </ul>
+                                    <a href="#" class="btn btn-${highlighted ? 'primary' : 'outline-primary'}" style="width: 100%;">Get Started</a>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <div class="text-center mb-5">
+                                    <h2 style="font-size: 36px; font-weight: bold;">Choose Your Plan</h2>
+                                </div>
+                                <div class="row gy-4">${pricingCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== STATISTICS ==========
+                'Statistics 4 Columns': () => {
+                    const stats = fields.stats || [];
+                    const statCols = stats.map(s => `
+                        <div class="col-lg-3 col-md-6 mb-4 text-center">
+                            <div style="font-size: 48px; font-weight: bold; margin-bottom: 10px; color: white;">${s.number || '0'}</div>
+                            <div style="font-size: 18px; color: white;">${s.label || 'Stat'}</div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 60px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                            <div class="container">
+                                <div class="row">${statCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== TEAM ==========
+                'Team Grid': () => {
+                    const members = fields.members || [];
+                    const memberCols = members.map(m => `
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                ${m.photo ? `<img src="${m.photo}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;" />` :
+                                    '<div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #667eea, #764ba2); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-user" style="font-size: 50px; color: white;"></i></div>'}
+                                <h4 style="margin-bottom: 5px;">${m.name || 'Team Member'}</h4>
+                                <p style="color: #666; margin-bottom: 15px;">${m.position || 'Position'}</p>
+                                <p style="font-size: 14px; color: #999;">${m.bio || 'Team member bio'}</p>
+                                ${fields.show_social ? '<div style="margin-top: 20px;"><a href="#" style="color: #667eea; margin: 0 10px;"><i class="fab fa-linkedin"></i></a><a href="#" style="color: #667eea; margin: 0 10px;"><i class="fab fa-twitter"></i></a></div>' : ''}
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0;">
+                            <div class="container">
+                                <div class="text-center mb-5">
+                                    <h2 style="font-size: 36px; font-weight: bold;">${fields.section_title || 'Our Team'}</h2>
+                                    <p style="font-size: 18px; color: #666;">${fields.section_subtitle || 'Meet the team'}</p>
+                                </div>
+                                <div class="row">${memberCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                // ========== TREASURY BLOCKS ==========
+                'Treasury Core Values': () => {
+                    const values = fields.values || [];
+                    const valueCols = values.map(v => `
+                        <div class="col-md-4 mb-4">
+                            <div style="background: white; padding: 40px 30px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); text-align: center;">
+                                <i class="fas ${v.icon || 'fa-shield-alt'}" style="font-size: 48px; color: #bd2828; margin-bottom: 20px;"></i>
+                                <h5 style="font-size: 22px; font-weight: 600; margin-bottom: 15px;">${v.title || 'Value'}</h5>
+                                <p style="color: #666; line-height: 1.6;">${v.description || 'Description'}</p>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0;">
+                            <div class="container">
+                                <h2 style="text-align: center; font-size: 36px; margin-bottom: 15px;">${fields.title || 'Our Core Values'}</h2>
+                                <p style="text-align: center; color: #666; margin-bottom: 50px;">${fields.subtitle || 'Guiding principles'}</p>
+                                <div class="row justify-content-center">${valueCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Treasury Mission Section': () => `
+                    <section style="background: linear-gradient(135deg, #bd2828 0%, #8b1c1c 100%); padding: 60px 0; color: white;">
+                        <div class="container text-center">
+                            <h2 style="font-size: 32px; margin-bottom: 25px; font-weight: 600;">${fields.title || 'Our Mission'}</h2>
+                            <p style="font-size: 18px; line-height: 1.8; max-width: 900px; margin: 0 auto;">${fields.mission_text || 'Mission statement here'}</p>
+                        </div>
+                    </section>
+                `,
+
+                'Treasury Mandate Box': () => {
+                    const mandates = fields.mandates || [];
+                    const mandateItems = mandates.map((m, i) => `
+                        <li style="padding: 15px 0; ${i < mandates.length - 1 ? 'border-bottom: 1px solid #eee;' : ''} display: flex; align-items: start;">
+                            <span style="background: #bd2828; color: white; width: 32px; height: 32px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0; font-weight: 600;">${i + 1}</span>
+                            <span>${m.text || 'Mandate item'}</span>
+                        </li>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <h3 style="text-align: center; font-size: 32px; margin-bottom: 40px;">${fields.title || 'Our Mandate'}</h3>
+                                <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1);">
+                                    <p style="margin-bottom: 20px; line-height: 1.8; color: #333;">${fields.intro || 'Introduction'}</p>
+                                    <ul style="list-style: none; padding: 0;">${mandateItems}</ul>
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+            };
+
+            // Return template if exists, otherwise generic fallback
+            if (templates[blockName]) {
+                return templates[blockName]();
             }
 
-            html += `</div></section>`;
-            return html;
+            // Generic fallback for blocks without specific templates
+            return `
+                <section style="padding: 60px 0; background: #f8f9fa;">
+                    <div class="container">
+                        <div class="text-center">
+                            <h3>${blockName}</h3>
+                            <p>Custom block with default content. Edit in the page builder.</p>
+                            <pre style="text-align: left; background: #fff; padding: 20px; border-radius: 8px; font-size: 12px; max-height: 200px; overflow: auto;">${JSON.stringify(fields, null, 2)}</pre>
+                        </div>
+                    </div>
+                </section>
+            `;
         }
 
         // Tab Switching for Blocks Panel
