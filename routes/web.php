@@ -85,6 +85,7 @@ Route::prefix('admin')->group(function () {
 
         // Media Library
         Route::get('/media', [MediaController::class, 'index'])->name('admin.media.index');
+        Route::get('/media/list', [MediaController::class, 'list'])->name('admin.media.list');
         Route::post('/media/upload', [MediaController::class, 'upload'])->name('admin.media.upload');
         Route::put('/media/{id}', [MediaController::class, 'update'])->name('admin.media.update');
         Route::delete('/media/{id}', [MediaController::class, 'destroy'])->name('admin.media.destroy');

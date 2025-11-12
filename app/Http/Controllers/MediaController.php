@@ -14,6 +14,36 @@ class MediaController extends Controller
         return view('admin.media.index', compact('media'));
     }
 
+    /**
+     * Get media list for API (used in page builder)
+     */
+    public function list(Request $request)
+    {
+        $query = Media::query();
+
+        // Filter by type if specified
+        if ($request->has('type')) {
+            $query->where('type', $request->type);
+        }
+
+        // Search by title
+        if ($request->has('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        $media = $query->latest()->paginate(24);
+
+        return response()->json([
+            'success' => true,
+            'media' => $media->items(),
+            'pagination' => [
+                'current_page' => $media->currentPage(),
+                'last_page' => $media->lastPage(),
+                'total' => $media->total(),
+            ]
+        ]);
+    }
+
     public function upload(Request $request)
     {
         $request->validate([
@@ -49,6 +79,15 @@ class MediaController extends Controller
             ]);
 
             $uploadedFiles[] = $media;
+        }
+
+        // If AJAX request, return JSON
+        if ($request->expectsJson() || $request->ajax()) {
+            return response()->json([
+                'success' => true,
+                'message' => count($uploadedFiles) . ' file(s) uploaded successfully!',
+                'media' => $uploadedFiles
+            ]);
         }
 
         return back()->with('success', count($uploadedFiles) . ' file(s) uploaded successfully!');

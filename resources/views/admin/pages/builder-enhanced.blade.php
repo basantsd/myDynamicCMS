@@ -761,6 +761,49 @@
         </div>
     </div>
 
+    <!-- Media Picker Modal -->
+    <div class="custom-block-modal" id="mediaPickerModal">
+        <div class="custom-block-modal-content" style="max-width: 900px;">
+            <div class="custom-block-modal-header">
+                <h5>Select or Upload Image</h5>
+                <button onclick="closeMediaPicker()" class="btn-close"></button>
+            </div>
+            <div class="custom-block-modal-body" style="max-height: 70vh; overflow-y: auto;">
+                <!-- Upload Section -->
+                <div style="border: 2px dashed #667eea; border-radius: 8px; padding: 30px; text-align: center; margin-bottom: 20px; background: #f8f9fa;">
+                    <i class="fas fa-cloud-upload-alt" style="font-size: 48px; color: #667eea; margin-bottom: 15px;"></i>
+                    <h6>Upload New Image</h6>
+                    <input type="file" id="mediaUploadInput" accept="image/*" multiple style="display: none;">
+                    <button onclick="document.getElementById('mediaUploadInput').click()" class="btn btn-primary">
+                        <i class="fas fa-upload"></i> Choose Files
+                    </button>
+                    <p class="text-muted mt-2 mb-0" style="font-size: 12px;">or drag and drop images here</p>
+                </div>
+
+                <!-- Search Bar -->
+                <div class="mb-3">
+                    <input type="text" id="mediaSearchInput" class="form-control" placeholder="Search images..." onkeyup="searchMedia()">
+                </div>
+
+                <!-- Media Grid -->
+                <div id="mediaGrid" class="row g-3">
+                    <div class="col-12 text-center text-muted">
+                        <i class="fas fa-spinner fa-spin fa-2x"></i>
+                        <p>Loading media...</p>
+                    </div>
+                </div>
+
+                <!-- Load More -->
+                <div id="mediaLoadMore" class="text-center mt-3" style="display: none;">
+                    <button onclick="loadMoreMedia()" class="btn btn-outline-primary">Load More</button>
+                </div>
+            </div>
+            <div class="custom-block-modal-footer">
+                <button onclick="closeMediaPicker()" class="btn btn-secondary">Cancel</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -1002,13 +1045,15 @@
                         case 'image':
                             const defaultImg = defaults[field.name] || '/assets/img/hero/hero_bg_1_1.jpg';
                             formHTML += `
-                                <div class="input-group">
-                                    <input type="text" class="form-control" name="${field.name}" placeholder="Image URL or upload" value="${defaultImg}" onchange="updatePreview()">
-                                    <button type="button" class="btn btn-outline-secondary" onclick="alert('Image upload coming soon! For now, paste image URL.')">
-                                        <i class="fas fa-upload"></i> Upload
+                                <div class="image-field-wrapper">
+                                    <input type="hidden" name="${field.name}" value="${defaultImg}" id="field_${field.name}">
+                                    <div class="image-preview" style="border: 2px solid #e5e7eb; border-radius: 8px; padding: 10px; background: #f9fafb; margin-bottom: 10px;">
+                                        <img src="${defaultImg}" id="preview_${field.name}" style="max-width: 100%; height: 150px; object-fit: cover; border-radius: 4px; display: block; margin: 0 auto;">
+                                    </div>
+                                    <button type="button" class="btn btn-primary w-100" onclick="openMediaPicker('${field.name}')">
+                                        <i class="fas fa-images"></i> Choose from Media Library
                                     </button>
                                 </div>
-                                <small class="text-muted">Enter image URL or click upload</small>
                             `;
                             break;
 
@@ -1093,7 +1138,16 @@
                         html += `<input type="number" class="form-control form-control-sm" name="${fieldName}" value="${value}" onchange="updatePreview()">`;
                         break;
                     case 'image':
-                        html += `<input type="text" class="form-control form-control-sm" name="${fieldName}" placeholder="Image URL" value="${value}" onchange="updatePreview()">`;
+                        const imgValue = value || '/assets/img/hero/hero_bg_1_1.jpg';
+                        html += `
+                            <input type="hidden" name="${fieldName}" value="${imgValue}" id="field_${fieldName.replace(/[\[\]]/g, '_')}">
+                            <div style="border: 1px solid #e5e7eb; border-radius: 4px; padding: 5px; background: #f9fafb; margin-bottom: 5px;">
+                                <img src="${imgValue}" id="preview_${fieldName.replace(/[\[\]]/g, '_')}" style="width: 100%; height: 80px; object-fit: cover; border-radius: 4px;">
+                            </div>
+                            <button type="button" class="btn btn-sm btn-primary w-100" onclick="openMediaPicker('${fieldName.replace(/[\[\]]/g, '_')}')">
+                                <i class="fas fa-image"></i> Choose Image
+                            </button>
+                        `;
                         break;
                     case 'icon':
                         html += `<input type="text" class="form-control form-control-sm" name="${fieldName}" placeholder="fa-icon" value="${value || 'fa-star'}" onchange="updatePreview()">`;
@@ -1192,6 +1246,165 @@
                 previewContainer.appendChild(link);
             }
         }
+
+        // ========== MEDIA PICKER FUNCTIONS ==========
+        let currentMediaField = null;
+        let mediaData = [];
+        let mediaCurrentPage = 1;
+        let mediaLastPage = 1;
+
+        // Open media picker for specific field
+        function openMediaPicker(fieldName) {
+            currentMediaField = fieldName;
+            document.getElementById('mediaPickerModal').classList.add('active');
+            loadMedia();
+        }
+
+        // Close media picker
+        function closeMediaPicker() {
+            document.getElementById('mediaPickerModal').classList.remove('active');
+            currentMediaField = null;
+        }
+
+        // Load media from API
+        async function loadMedia(page = 1) {
+            try {
+                const response = await fetch(`{{ route('admin.media.list') }}?page=${page}&type=image`, {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+                const data = await response.json();
+
+                if (data.success) {
+                    mediaData = data.media;
+                    mediaCurrentPage = data.pagination.current_page;
+                    mediaLastPage = data.pagination.last_page;
+                    renderMediaGrid();
+                }
+            } catch (error) {
+                console.error('Error loading media:', error);
+                document.getElementById('mediaGrid').innerHTML = '<div class="col-12 text-center text-danger">Error loading media</div>';
+            }
+        }
+
+        // Render media grid
+        function renderMediaGrid() {
+            const grid = document.getElementById('mediaGrid');
+            if (mediaData.length === 0) {
+                grid.innerHTML = '<div class="col-12 text-center text-muted">No images found</div>';
+                return;
+            }
+
+            grid.innerHTML = mediaData.map(media => `
+                <div class="col-md-3 col-sm-4 col-6">
+                    <div style="border: 2px solid #e5e7eb; border-radius: 8px; overflow: hidden; cursor: pointer; transition: all 0.2s;"
+                         onclick="selectMedia('${media.file_path}')"
+                         onmouseover="this.style.borderColor='#667eea'; this.style.transform='scale(1.05)';"
+                         onmouseout="this.style.borderColor='#e5e7eb'; this.style.transform='scale(1)';">
+                        <img src="/storage/${media.file_path}" alt="${media.title}" style="width: 100%; height: 150px; object-fit: cover;">
+                        <div style="padding: 10px; background: #f9fafb;">
+                            <small style="font-size: 11px; color: #666; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">${media.title || 'Untitled'}</small>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+
+            // Show/hide load more button
+            const loadMoreBtn = document.getElementById('mediaLoadMore');
+            if (mediaCurrentPage < mediaLastPage) {
+                loadMoreBtn.style.display = 'block';
+            } else {
+                loadMoreBtn.style.display = 'none';
+            }
+        }
+
+        // Load more media
+        function loadMoreMedia() {
+            loadMedia(mediaCurrentPage + 1);
+        }
+
+        // Search media
+        let searchTimeout;
+        async function searchMedia() {
+            clearTimeout(searchTimeout);
+            const searchTerm = document.getElementById('mediaSearchInput').value;
+
+            searchTimeout = setTimeout(async () => {
+                try {
+                    const response = await fetch(`{{ route('admin.media.list') }}?search=${searchTerm}&type=image`, {
+                        headers: {
+                            'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                        }
+                    });
+                    const data = await response.json();
+
+                    if (data.success) {
+                        mediaData = data.media;
+                        mediaCurrentPage = data.pagination.current_page;
+                        mediaLastPage = data.pagination.last_page;
+                        renderMediaGrid();
+                    }
+                } catch (error) {
+                    console.error('Error searching media:', error);
+                }
+            }, 300);
+        }
+
+        // Select media
+        function selectMedia(filePath) {
+            const fullUrl = '/storage/' + filePath;
+
+            // Update hidden field value
+            const field = document.getElementById('field_' + currentMediaField);
+            if (field) {
+                field.value = fullUrl;
+
+                // Update preview image
+                const preview = document.getElementById('preview_' + currentMediaField);
+                if (preview) {
+                    preview.src = fullUrl;
+                }
+
+                // Update preview
+                updatePreview();
+            }
+
+            closeMediaPicker();
+        }
+
+        // Handle file upload
+        document.getElementById('mediaUploadInput')?.addEventListener('change', async (e) => {
+            const files = e.target.files;
+            if (files.length === 0) return;
+
+            const formData = new FormData();
+            for (let file of files) {
+                formData.append('files[]', file);
+            }
+
+            try {
+                const response = await fetch('{{ route("admin.media.upload") }}', {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                    },
+                    body: formData
+                });
+
+                const data = await response.json();
+                if (data.success && data.media.length > 0) {
+                    // Select the first uploaded image
+                    selectMedia(data.media[0].file_path);
+                    // Reload media grid
+                    loadMedia();
+                }
+            } catch (error) {
+                console.error('Error uploading files:', error);
+                alert('Error uploading files. Please try again.');
+            }
+        });
 
         // Generate HTML for custom block - COMPREHENSIVE TEMPLATE SYSTEM
         function generateBlockHTML(block, fields) {
@@ -1421,21 +1634,168 @@
                         </section>
                     `;
                 },
+
+                'Treasury Division Boxes': () => {
+                    const divisions = fields.divisions || [];
+                    const divisionCols = divisions.map(d => {
+                        const responsibilities = (d.responsibilities || '').split('\n').filter(r => r.trim());
+                        return `
+                            <div class="col-lg-6 col-md-6 mb-4">
+                                <div style="background: white; padding: 30px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1); border-left: 4px solid #bd2828; height: 100%;">
+                                    <h5 style="font-size: 20px; font-weight: 600; margin-bottom: 20px; color: #bd2828;">${d.title || 'Division'}</h5>
+                                    <ul style="line-height: 2; color: #666; padding-left: 20px;">
+                                        ${responsibilities.map(r => `<li>${r}</li>`).join('')}
+                                    </ul>
+                                </div>
+                            </div>
+                        `;
+                    }).join('');
+
+                    return `
+                        <section style="padding: 80px 0;">
+                            <div class="container">
+                                <h2 style="text-align: center; font-size: 36px; margin-bottom: 15px;">${fields.title || 'Divisions & Units'}</h2>
+                                <p style="text-align: center; color: #666; margin-bottom: 50px;">${fields.subtitle || 'Explore our divisions'}</p>
+                                <div class="row">${divisionCols}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Treasury Profile Cards': () => {
+                    const profiles = fields.profiles || [];
+                    const profileCards = profiles.map(p => `
+                        <div class="col-md-4 mb-4">
+                            <div style="background: white; padding: 30px; border-radius: 10px; text-align: center; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                ${p.photo ? `<img src="${p.photo}" style="width: 100px; height: 100px; border-radius: 50%; object-fit: cover; margin-bottom: 20px;" />` :
+                                    '<div style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #bd2828, #8b1c1c); margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;"><i class="fas fa-user" style="font-size: 40px; color: white;"></i></div>'}
+                                <h3 style="font-size: 22px; margin-bottom: 10px;">${p.name || 'Name'}</h3>
+                                <p style="color: #bd2828; font-weight: 600; margin-bottom: 20px;">${p.position || 'Position'}</p>
+                                <hr style="border-color: #eee; margin: 20px 0;">
+                                <div style="text-align: left; font-size: 14px;">
+                                    ${p.email ? `<div style="padding: 8px 0;"><i class="fas fa-envelope" style="color: #bd2828; margin-right: 10px;"></i> ${p.email}</div>` : ''}
+                                    ${p.phone ? `<div style="padding: 8px 0;"><i class="fas fa-phone" style="color: #bd2828; margin-right: 10px;"></i> ${p.phone}</div>` : ''}
+                                </div>
+                            </div>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 80px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <h1 style="text-align: center; font-size: 36px; margin-bottom: 15px;">${fields.title || 'Management Team'}</h1>
+                                <p style="text-align: center; color: #666; margin-bottom: 50px;">${fields.subtitle || 'Meet the team'}</p>
+                                <div class="row">${profileCards}</div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Treasury Budget Box': () => {
+                    const themes = (fields.themes || '').split('\n').filter(t => t.trim());
+                    return `
+                        <section style="padding: 60px 0;">
+                            <div class="container">
+                                <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-left: 5px solid #bd2828;">
+                                    <h2 style="font-size: 28px; margin-bottom: 20px; color: #bd2828;">${fields.title || 'Budget Overview'}</h2>
+                                    <p style="color: #666; line-height: 1.8; margin-bottom: 25px;">${fields.description || 'Budget description'}</p>
+                                    ${themes.length > 0 ? `
+                                        <h3 style="font-size: 18px; font-weight: 600; margin-bottom: 15px;">Key Budget Themes</h3>
+                                        <ul style="line-height: 2; color: #666;">
+                                            ${themes.map(t => `<li>${t}</li>`).join('')}
+                                        </ul>
+                                    ` : ''}
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Treasury Download Section': () => {
+                    const documents = fields.documents || [];
+                    const docItems = documents.map(d => `
+                        <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #f8f9fa; border-radius: 8px; margin-bottom: 15px;">
+                            <div>
+                                <i class="fas fa-file-pdf" style="color: #bd2828; margin-right: 10px; font-size: 20px;"></i>
+                                <span style="font-weight: 600;">${d.title || 'Document'}</span>
+                            </div>
+                            <a href="${d.file_url || '#'}" class="btn btn-primary" style="background: #bd2828; border: none;" download>
+                                <i class="fas fa-download"></i> Download
+                            </a>
+                        </div>
+                    `).join('');
+
+                    return `
+                        <section style="padding: 60px 0; background: #f8f9fa;">
+                            <div class="container">
+                                <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                                    <h2 style="font-size: 28px; margin-bottom: 30px; color: #333;">${fields.title || 'Download Documents'}</h2>
+                                    ${docItems}
+                                </div>
+                            </div>
+                        </section>
+                    `;
+                },
+
+                'Treasury Pension Calculator': () => `
+                    <section style="padding: 60px 0;">
+                        <div class="container">
+                            <div style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 20px rgba(0,0,0,0.1); border-top: 5px solid #bd2828;">
+                                <h2 style="margin-bottom: 20px;">
+                                    <i class="fas fa-calculator" style="color: #bd2828; margin-right: 10px;"></i>
+                                    ${fields.title || 'Pension Calculator'}
+                                </h2>
+                                <p style="color: #666; margin-bottom: 30px;">${fields.description || 'Calculate your pension'}</p>
+                                <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; margin-bottom: 30px;">
+                                    <h5 style="font-size: 18px; margin-bottom: 15px; color: #bd2828;">Eligibility Requirements:</h5>
+                                    <ul style="color: #666; line-height: 2;">
+                                        <li>Minimum 10 years (120 months) of service for gratuity</li>
+                                        <li>Minimum 15 years (180 months) of service for pension eligibility</li>
+                                        <li>Maximum pensionable service 33⅓ years (400 months)</li>
+                                    </ul>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label style="font-weight: 600; margin-bottom: 8px;">Years of Service</label>
+                                        <input type="number" class="form-control" placeholder="Enter years">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label style="font-weight: 600; margin-bottom: 8px;">Additional Months</label>
+                                        <input type="number" class="form-control" placeholder="0-11 months">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label style="font-weight: 600; margin-bottom: 8px;">Final Annual Salary (XCD)</label>
+                                        <input type="text" class="form-control" placeholder="Enter your final annual salary">
+                                    </div>
+                                </div>
+                                <div style="margin-top: 25px;">
+                                    <button class="btn btn-primary me-2" style="background: #bd2828; border: none; padding: 12px 30px;">Calculate Pension</button>
+                                    <button class="btn btn-secondary" style="padding: 12px 30px;">Reset</button>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                `,
             };
 
-            // Return template if exists, otherwise generic fallback
+            // Return template if exists, otherwise create a simple layout
             if (templates[blockName]) {
                 return templates[blockName]();
             }
 
-            // Generic fallback for blocks without specific templates
+            // Generic fallback WITH DESIGN (no JSON!)
             return `
-                <section style="padding: 60px 0; background: #f8f9fa;">
+                <section style="padding: 80px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
                     <div class="container">
                         <div class="text-center">
-                            <h3>${blockName}</h3>
-                            <p>Custom block with default content. Edit in the page builder.</p>
-                            <pre style="text-align: left; background: #fff; padding: 20px; border-radius: 8px; font-size: 12px; max-height: 200px; overflow: auto;">${JSON.stringify(fields, null, 2)}</pre>
+                            <i class="fas fa-cube fa-4x mb-4" style="opacity: 0.8;"></i>
+                            <h2 style="font-size: 36px; font-weight: bold; margin-bottom: 20px;">${blockName}</h2>
+                            <p style="font-size: 18px; opacity: 0.9; max-width: 600px; margin: 0 auto;">
+                                This is a custom block with default styling. Click to edit any text, add your content, and customize the design using the page builder tools.
+                            </p>
+                            <div style="margin-top: 40px;">
+                                <button class="btn btn-light btn-lg">Edit This Block</button>
+                            </div>
                         </div>
                     </div>
                 </section>
