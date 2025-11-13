@@ -16,6 +16,7 @@
             this.editor = editor;
             this.blocks = [];
             this.apiEndpoint = '/admin/custom-blocks/list';
+            this.debug = true; // Enable debug mode
             this.init();
         }
 
@@ -23,14 +24,28 @@
          * Initialize the loader
          */
         async init() {
-            console.log('🚀 Dynamic Blocks Loader: Initializing...');
+            this.log('🚀 Dynamic Blocks Loader: Initializing...');
+            this.log('Editor instance:', this.editor);
 
             try {
                 await this.loadBlocks();
                 this.registerBlocks();
-                console.log(`✅ Dynamic Blocks Loader: Successfully loaded ${this.blocks.length} blocks`);
+                this.log(`✅ Dynamic Blocks Loader: Successfully loaded ${this.blocks.length} blocks`);
+
+                // Show success notification
+                this.showNotification(`Loaded ${this.blocks.length} custom blocks`, 'success');
             } catch (error) {
                 console.error('❌ Dynamic Blocks Loader: Failed to initialize', error);
+                this.showNotification('Failed to load custom blocks: ' + error.message, 'error');
+            }
+        }
+
+        /**
+         * Debug logging
+         */
+        log(...args) {
+            if (this.debug) {
+                console.log('[DynamicBlocks]', ...args);
             }
         }
 
@@ -38,15 +53,26 @@
          * Load blocks from API
          */
         async loadBlocks() {
+            this.log('📡 Fetching blocks from:', this.apiEndpoint);
+
             try {
                 const response = await fetch(this.apiEndpoint);
+
+                this.log('Response status:', response.status);
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
                 const data = await response.json();
+                this.log('API Response:', data);
 
                 if (data.success && data.blocks) {
                     this.blocks = data.blocks;
-                    console.log(`📦 Loaded ${this.blocks.length} custom blocks`);
+                    this.log(`📦 Loaded ${this.blocks.length} custom blocks:`, this.blocks);
                 } else {
-                    console.warn('⚠️ No blocks returned from API');
+                    console.warn('⚠️ No blocks returned from API or success=false');
+                    this.log('API returned:', data);
                     this.blocks = [];
                 }
             } catch (error) {
@@ -56,18 +82,56 @@
         }
 
         /**
+         * Show notification to user
+         */
+        showNotification(message, type = 'info') {
+            // Try to use editor notification if available
+            if (this.editor && this.editor.runCommand) {
+                try {
+                    this.editor.runCommand('core:canvas-clear'); // Dummy command to check if commands work
+                } catch (e) {
+                    // Editor commands may not be available yet
+                }
+            }
+
+            // Fallback to console
+            const emoji = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+            console.log(`${emoji} ${message}`);
+
+            // Try to show in UI if possible
+            if (typeof window !== 'undefined' && window.alert) {
+                // Don't actually alert, just log for now
+                this.log('Notification:', message);
+            }
+        }
+
+        /**
          * Register all blocks with GrapesJS
          */
         registerBlocks() {
+            if (!this.editor || !this.editor.BlockManager) {
+                console.error('❌ GrapesJS editor or BlockManager not available!');
+                return;
+            }
+
             const blockManager = this.editor.BlockManager;
+            this.log('📝 Registering blocks with GrapesJS BlockManager...');
+
+            let successCount = 0;
+            let errorCount = 0;
 
             this.blocks.forEach(block => {
                 try {
                     this.registerBlock(block);
+                    successCount++;
+                    this.log(`✓ Registered: ${block.name}`);
                 } catch (error) {
-                    console.error(`Failed to register block: ${block.name}`, error);
+                    errorCount++;
+                    console.error(`✗ Failed to register block: ${block.name}`, error);
                 }
             });
+
+            this.log(`Registration complete: ${successCount} succeeded, ${errorCount} failed`);
         }
 
         /**
@@ -75,30 +139,58 @@
          */
         registerBlock(block) {
             const blockManager = this.editor.BlockManager;
-            const componentsManager = this.editor.DomComponents;
 
             // Create unique block ID
             const blockId = `custom-block-${block.id}`;
 
+            this.log(`Registering block: ${blockId}`, block);
+
             // Prepare block content
             const blockContent = this.prepareBlockContent(block);
 
-            // Register block in BlockManager
-            blockManager.add(blockId, {
-                label: block.name,
-                category: this.getCategoryLabel(block.category),
-                attributes: { class: 'gjs-block-custom' },
+            // Create block configuration
+            const blockConfig = {
+                label: block.name || 'Untitled Block',
+                category: {
+                    id: block.category || 'custom',
+                    label: this.getCategoryLabel(block.category),
+                    open: true
+                },
+                attributes: {
+                    class: 'gjs-block-custom',
+                    title: block.description || block.name
+                },
                 content: blockContent,
-                media: block.thumbnail || this.getDefaultIcon(block.icon, block.color),
-            });
+                media: this.getBlockMedia(block),
+            };
+
+            this.log(`Block config for ${blockId}:`, blockConfig);
+
+            // Register block in BlockManager
+            blockManager.add(blockId, blockConfig);
 
             // Register custom component type if needed
             if (block.js_scripts || block.traits_config) {
                 this.registerComponentType(block);
             }
+        }
 
-            // Track usage when block is added
-            this.trackBlockUsage(block.id);
+        /**
+         * Get block media (icon/thumbnail)
+         */
+        getBlockMedia(block) {
+            // If thumbnail exists, use it
+            if (block.thumbnail) {
+                return `<img src="${block.thumbnail}" alt="${block.name}" style="width:100%;height:100%;object-fit:cover;" />`;
+            }
+
+            // Otherwise use icon with color
+            const color = block.color || '#3498db';
+            const icon = block.icon || 'fa-cube';
+
+            return `<div style="display:flex;align-items:center;justify-content:center;width:100%;height:100%;background:${color}15;">
+                <i class="fas ${icon}" style="font-size:32px;color:${color};"></i>
+            </div>`;
         }
 
         /**
@@ -346,14 +438,26 @@
     }
 
     // Auto-initialize when editor is available
+    let initAttempts = 0;
+    const maxAttempts = 20; // Try for 10 seconds (20 * 500ms)
+
     function initDynamicBlocks() {
+        initAttempts++;
+
         if (window.editor) {
             console.log('🎨 GrapesJS editor detected, loading dynamic blocks...');
+            console.log('Editor object:', window.editor);
             window.dynamicBlocksLoader = new DynamicBlocksLoader(window.editor);
         } else {
-            console.log('⏳ Waiting for GrapesJS editor...');
-            // Retry after a short delay
-            setTimeout(initDynamicBlocks, 500);
+            if (initAttempts < maxAttempts) {
+                console.log(`⏳ Waiting for GrapesJS editor... (attempt ${initAttempts}/${maxAttempts})`);
+                // Retry after a short delay
+                setTimeout(initDynamicBlocks, 500);
+            } else {
+                console.error('❌ GrapesJS editor not found after ' + maxAttempts + ' attempts');
+                console.error('Make sure you have: window.editor = grapesjs.init({ ... });');
+                console.error('You can manually initialize with: new DynamicBlocksLoader(yourEditor);');
+            }
         }
     }
 
