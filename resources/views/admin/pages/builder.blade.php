@@ -660,6 +660,9 @@
     <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
     <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 
+    <!-- Dynamic Database-Driven Blocks Loader -->
+    <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
+
     <script>
         // Initialize GrapesJS and expose globally for treasury-blocks.js
         window.editor = grapesjs.init({
