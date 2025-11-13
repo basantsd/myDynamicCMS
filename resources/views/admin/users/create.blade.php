@@ -116,6 +116,36 @@
                     <hr>
 
                     <div class="mb-3">
+                        <label class="form-label">Additional Roles (Optional)</label>
+                        @if(isset($roles) && $roles->count() > 0)
+                        <div class="border rounded p-3" style="max-height: 200px; overflow-y: auto;">
+                            @foreach($roles as $roleItem)
+                            <div class="form-check mb-2">
+                                <input
+                                    class="form-check-input"
+                                    type="checkbox"
+                                    name="roles[]"
+                                    value="{{ $roleItem->id }}"
+                                    id="role_{{ $roleItem->id }}"
+                                    {{ in_array($roleItem->id, old('roles', [])) ? 'checked' : '' }}
+                                >
+                                <label class="form-check-label" for="role_{{ $roleItem->id }}">
+                                    <strong>{{ $roleItem->display_name }}</strong>
+                                    <br>
+                                    <small class="text-muted">{{ $roleItem->description }}</small>
+                                </label>
+                            </div>
+                            @endforeach
+                        </div>
+                        <small class="text-muted mt-2 d-block">Assign additional roles for granular permissions</small>
+                        @else
+                        <p class="text-muted small mb-0">No roles available</p>
+                        @endif
+                    </div>
+
+                    <hr>
+
+                    <div class="mb-3">
                         <div class="form-check form-switch">
                             <input
                                 class="form-check-input"

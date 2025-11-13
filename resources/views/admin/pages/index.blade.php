@@ -10,9 +10,11 @@
             <h1>Pages</h1>
             <p>Manage your website pages and content</p>
         </div>
+        @permission('pages.create')
         <a href="{{ route('admin.pages.create') }}" class="btn btn-primary">
             <i class="fas fa-plus me-2"></i> Create New Page
         </a>
+        @endpermission
     </div>
 </div>
 
@@ -89,12 +91,16 @@
                                 <a href="{{ route('page.show', $page->slug) }}" target="_blank" class="btn btn-outline-secondary" title="View">
                                     <i class="fas fa-eye"></i>
                                 </a>
+                                @permission('pages.edit')
                                 <a href="{{ route('admin.pages.edit', $page->id) }}" class="btn btn-outline-primary" title="Edit">
                                     <i class="fas fa-edit"></i>
                                 </a>
+                                @endpermission
+                                @permission('pages.delete')
                                 <button type="button" class="btn btn-outline-danger" onclick="deletePage({{ $page->id }})" title="Delete">
                                     <i class="fas fa-trash"></i>
                                 </button>
+                                @endpermission
                             </div>
                         </td>
                     </tr>

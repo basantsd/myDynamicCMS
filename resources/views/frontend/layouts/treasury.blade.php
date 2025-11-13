@@ -306,6 +306,9 @@
         });
     </script>
 
+    <!-- Form Handler for Dynamic Forms -->
+    <script src="{{ asset('js/form-handler.js') }}"></script>
+
     @stack('scripts')
 </body>
 </html>

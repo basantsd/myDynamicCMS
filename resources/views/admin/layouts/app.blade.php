@@ -306,6 +306,48 @@
             padding: 15px 20px;
         }
 
+        /* Pagination Styles */
+        .pagination {
+            gap: 4px;
+        }
+
+        .pagination .page-link {
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            color: #475569;
+            font-weight: 500;
+            padding: 8px 14px;
+            transition: all 0.3s ease;
+            margin: 0;
+        }
+
+        .pagination .page-link:hover {
+            background: #f8f9fa;
+            border-color: #3b82f6;
+            color: #3b82f6;
+            transform: translateY(-2px);
+        }
+
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border-color: #3b82f6;
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .pagination .page-item.disabled .page-link {
+            background: #f8f9fa;
+            border-color: #e2e8f0;
+            color: #cbd5e1;
+        }
+
+        .card-footer {
+            background: #fff;
+            border-top: 1px solid #e2e8f0;
+            padding: 20px 24px;
+            border-radius: 0 0 12px 12px !important;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
@@ -338,50 +380,76 @@
                     <span>Dashboard</span>
                 </a>
             </li>
+
+            @permission('pages.view')
             <li>
                 <a href="{{ route('admin.pages.index') }}" class="{{ request()->routeIs('admin.pages.*') ? 'active' : '' }}">
                     <i class="fas fa-file-alt"></i>
                     <span>Pages</span>
                 </a>
             </li>
+            @endpermission
+
+            @permission('menus.view')
             <li>
                 <a href="{{ route('admin.menus.index') }}" class="{{ request()->routeIs('admin.menus.*') ? 'active' : '' }}">
                     <i class="fas fa-bars"></i>
                     <span>Menus</span>
                 </a>
             </li>
+            @endpermission
+
+            @permission('media.view')
             <li>
                 <a href="{{ route('admin.media.index') }}" class="{{ request()->routeIs('admin.media.*') ? 'active' : '' }}">
                     <i class="fas fa-image"></i>
                     <span>Media Library</span>
                 </a>
             </li>
+            @endpermission
+
+            @permission('blocks.view')
             <li>
                 <a href="{{ route('admin.blocks.index') }}" class="{{ request()->routeIs('admin.blocks.*') ? 'active' : '' }}">
                     <i class="fas fa-cube"></i>
                     <span>Custom Blocks</span>
                 </a>
             </li>
+            @endpermission
+
+            @permission('forms.view')
             <li>
                 <a href="{{ route('admin.form-submissions.index') }}" class="{{ request()->routeIs('admin.form-submissions.*') ? 'active' : '' }}">
                     <i class="fas fa-clipboard-list"></i>
                     <span>Form Submissions</span>
                 </a>
             </li>
+            @endpermission
+
+            @permission('settings.view')
             <li>
                 <a href="{{ route('admin.settings.index') }}" class="{{ request()->routeIs('admin.settings.*') ? 'active' : '' }}">
                     <i class="fas fa-cog"></i>
                     <span>Settings</span>
                 </a>
             </li>
-            @if(auth()->user()->hasPermission('users.view'))
+            @endpermission
+
+            @admin
             <li>
                 <a href="{{ route('admin.users.index') }}" class="{{ request()->routeIs('admin.users.*') ? 'active' : '' }}">
                     <i class="fas fa-users"></i>
                     <span>Users</span>
                 </a>
             </li>
-            @endif
+            <li>
+                <a href="{{ route('admin.roles.index') }}" class="{{ request()->routeIs('admin.roles.*') ? 'active' : '' }}">
+                    <i class="fas fa-user-shield"></i>
+                    <span>Roles & Permissions</span>
+                </a>
+            </li>
+            @endadmin
+
             <li>
                 <a href="{{ route('home') }}" target="_blank">
                     <i class="fas fa-external-link-alt"></i>

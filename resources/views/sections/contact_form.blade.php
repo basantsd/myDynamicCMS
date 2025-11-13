@@ -14,8 +14,13 @@
 
         <div class="row">
             <div class="col-lg-8 mx-auto">
-                <form action="{{ route('contact.submit') }}" method="POST" class="contact-form">
-                    @csrf
+                <form
+                    class="contact-form"
+                    data-form-type="submission"
+                    data-form-name="Contact Form"
+                    data-page-id="{{ $page->id ?? '' }}"
+                    data-section-id="{{ $section->id ?? '' }}"
+                >
                     <div class="row">
                         <div class="col-md-6 form-group">
                             <input type="text" class="form-control" name="name" placeholder="Your Name *" required>
