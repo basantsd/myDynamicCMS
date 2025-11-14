@@ -762,6 +762,33 @@
             BannerFormLoader.init(editor);
         }
 
+        // Load existing content after editor is fully initialized
+        editor.on('load', function() {
+            @if($page->builder_data)
+                editor.setComponents({!! json_encode($page->builder_data['components'] ?? []) !!});
+                editor.setStyle({!! json_encode($page->builder_data['styles'] ?? []) !!});
+            @elseif($page->builder_html)
+                editor.setComponents(`{!! addslashes($page->builder_html) !!}`);
+                @if($page->builder_css)
+                    editor.setStyle(`{!! addslashes($page->builder_css) !!}`);
+                @endif
+            @else
+                // Load default starter template only if no content exists
+                editor.setComponents(`
+                    <div class="container" style="padding: 40px 20px;">
+                        <div class="row">
+                            <div class="col-12 text-center">
+                                <h1>{{ $page->title }}</h1>
+                                <p>Start building your page by dragging blocks from the left panel</p>
+                            </div>
+                        </div>
+                    </div>
+                `);
+            @endif
+
+            console.log('✅ Page content loaded successfully');
+        });
+
         // Tab Switching Functionality
         document.querySelectorAll('.properties-tab').forEach(tab => {
             tab.addEventListener('click', function() {
@@ -1047,30 +1074,6 @@
 
             component.set('toolbar', defaultToolbar);
         });
-
-        // Load existing content if available
-        @if($page->builder_data)
-            editor.setComponents({!! json_encode($page->builder_data['components'] ?? []) !!});
-            editor.setStyle({!! json_encode($page->builder_data['styles'] ?? []) !!});
-        @elseif($page->builder_html)
-            editor.setComponents(`{!! addslashes($page->builder_html) !!}`);
-            @if($page->builder_css)
-                editor.setStyle(`{!! addslashes($page->builder_css) !!}`);
-            @endif
-        @else
-            // Load default starter template
-            editor.setComponents(`
-                <div class="container" style="padding: 40px 20px;">
-                    <div class="row">
-                        <div class="col-12 text-center">
-                            <h1>{{ $page->title }}</h1>
-                            <p>Start building your page by dragging blocks from the left panel</p>
-                        </div>
-                    </div>
-                </div>
-            `);
-        @endif
-
 
         // Save function
         function savePage() {
