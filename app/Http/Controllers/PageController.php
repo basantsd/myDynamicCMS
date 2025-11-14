@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\PageSection;
+use App\Models\Template;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -90,7 +91,8 @@ class PageController extends Controller
     public function builder($id)
     {
         $page = Page::findOrFail($id);
-        return view('admin.pages.builder-enhanced', compact('page'));
+        $templates = Template::active()->ordered()->get();
+        return view('admin.pages.builder', compact('page', 'templates'));
     }
 
     public function builderSave(Request $request, $id)

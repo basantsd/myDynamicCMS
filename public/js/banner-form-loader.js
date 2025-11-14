@@ -55,24 +55,24 @@
         addBannerBlock: function(banner) {
             const blockId = `banner-${banner.id}`;
 
-            // Get icon based on banner type
+            // Get FontAwesome icon based on banner type
             const icons = {
-                'hero': '🎯',
-                'promotional': '🎉',
-                'image': '🖼️',
-                'video': '🎥',
-                'slider': '🎢'
+                'hero': 'fa-rocket',
+                'promotional': 'fa-bullhorn',
+                'image': 'fa-image',
+                'video': 'fa-video',
+                'slider': 'fa-images'
             };
-            const icon = icons[banner.banner_type] || '🎯';
+            const iconClass = icons[banner.banner_type] || 'fa-flag';
 
             this.editor.BlockManager.add(blockId, {
-                label: `${icon} ${banner.name}`,
-                category: '🎯 Banners',
-                content: banner.html,
-                media: `<div style="padding: 10px; text-align: center;">
-                    <div style="font-size: 24px;">${icon}</div>
-                    <div style="font-size: 10px; margin-top: 5px;">${banner.banner_type}</div>
+                label: `<div style="text-align: center; padding: 10px;">
+                    <i class="fas ${iconClass}" style="font-size: 32px; color: #10b981; margin-bottom: 8px;"></i>
+                    <div style="font-size: 12px; font-weight: 500;">${banner.name}</div>
+                    <div style="font-size: 10px; color: #666; margin-top: 4px;">${banner.banner_type}</div>
                 </div>`,
+                category: 'Banners',
+                content: banner.html,
                 attributes: {
                     title: `${banner.title} - ${banner.banner_type} banner`,
                     'data-banner-id': banner.id
@@ -116,22 +116,22 @@
         addFormBlock: function(form) {
             const blockId = `form-${form.id}`;
 
-            // Get icon based on form type
+            // Get FontAwesome icon based on form type
             const icons = {
-                'submission': '📝',
-                'calculation': '🧮',
-                'action': '⚡'
+                'submission': 'fa-file-alt',
+                'calculation': 'fa-calculator',
+                'action': 'fa-bolt'
             };
-            const icon = icons[form.form_type] || '📝';
+            const iconClass = icons[form.form_type] || 'fa-wpforms';
 
             this.editor.BlockManager.add(blockId, {
-                label: `${icon} ${form.name}`,
-                category: '📝 Forms',
-                content: form.html,
-                media: `<div style="padding: 10px; text-align: center;">
-                    <div style="font-size: 24px;">${icon}</div>
-                    <div style="font-size: 10px; margin-top: 5px;">${form.form_type}</div>
+                label: `<div style="text-align: center; padding: 10px;">
+                    <i class="fas ${iconClass}" style="font-size: 32px; color: #f59e0b; margin-bottom: 8px;"></i>
+                    <div style="font-size: 12px; font-weight: 500;">${form.name}</div>
+                    <div style="font-size: 10px; color: #666; margin-top: 4px;">${form.form_type}</div>
                 </div>`,
+                category: 'Forms',
+                content: form.html,
                 attributes: {
                     title: `${form.title} - ${form.form_type} form`,
                     'data-form-id': form.id

@@ -17,6 +17,7 @@ class DatabaseSeeder extends Seeder
             MenuSeeder::class,      // Then create menus with page references
             BannerSeeder::class,    // Create sample banners
             FormSeeder::class,      // Create sample forms
+            TemplateSeeder::class,  // Create page templates
         ]);
     }
 }

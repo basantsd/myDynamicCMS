@@ -558,41 +558,15 @@
                         <div class="template-dropdown-header">
                             <i class="bi bi-layout-text-sidebar"></i> Choose Template
                         </div>
-                        <div class="template-item" onclick="loadTemplate('blank')">
-                            <i class="bi bi-file-earmark"></i>
+                        @foreach($templates as $template)
+                        <div class="template-item" onclick='loadTemplateFromDB(@json($template->html_content))'>
+                            <i class="bi bi-{{ $template->category == 'home' ? 'house-door' : ($template->category == 'about' ? 'person-badge' : ($template->category == 'services' ? 'grid-3x3' : ($template->category == 'contact' ? 'envelope' : ($template->category == 'blog' ? 'newspaper' : ($template->category == 'portfolio' ? 'images' : ($template->category == 'pricing' ? 'tag' : ($template->category == 'landing' ? 'rocket-takeoff' : 'file-earmark')))))))}}"></i>
                             <div class="template-item-content">
-                                <h6>Blank Page</h6>
-                                <p>Start from scratch</p>
+                                <h6>{{ $template->name }}</h6>
+                                <p>{{ $template->description }}</p>
                             </div>
                         </div>
-                        <div class="template-item" onclick="loadTemplate('home')">
-                            <i class="bi bi-house-door"></i>
-                            <div class="template-item-content">
-                                <h6>Home Page</h6>
-                                <p>Complete homepage with hero, values, and services</p>
-                            </div>
-                        </div>
-                        <div class="template-item" onclick="loadTemplate('about')">
-                            <i class="bi bi-person-badge"></i>
-                            <div class="template-item-content">
-                                <h6>About Us</h6>
-                                <p>Mission, vision, team, and mandate</p>
-                            </div>
-                        </div>
-                        <div class="template-item" onclick="loadTemplate('services')">
-                            <i class="bi bi-grid-3x3"></i>
-                            <div class="template-item-content">
-                                <h6>Services Page</h6>
-                                <p>Professional services grid with 6 services</p>
-                            </div>
-                        </div>
-                        <div class="template-item" onclick="loadTemplate('contact')">
-                            <i class="bi bi-envelope"></i>
-                            <div class="template-item-content">
-                                <h6>Contact Page</h6>
-                                <p>Contact form with office information</p>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
 
@@ -1268,6 +1242,17 @@
 
             editor.setComponents(templates[templateName] || templates.blank);
             document.getElementById('templateDropdown').classList.remove('active');
+        }
+
+        // Load Template from Database
+        function loadTemplateFromDB(htmlContent) {
+            if (!confirm('This will replace your current page content. Continue?')) {
+                return;
+            }
+
+            editor.setComponents(htmlContent);
+            document.getElementById('templateDropdown').classList.remove('active');
+            console.log('✅ Template loaded from database');
         }
 
         // Add Move Section Commands
