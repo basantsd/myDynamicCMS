@@ -35,25 +35,68 @@
                         @enderror
                     </div>
 
-                    <div class="mb-3">
+                    <div class="mb-4">
                         <label for="form_type" class="form-label">Form Type <span class="text-danger">*</span></label>
                         <select class="form-select @error('form_type') is-invalid @enderror" id="form_type" name="form_type" required>
-                            <option value="submission" {{ old('form_type') == 'submission' ? 'selected' : '' }}>Submission Form</option>
-                            <option value="calculation" {{ old('form_type') == 'calculation' ? 'selected' : '' }}>Calculation Form</option>
-                            <option value="action" {{ old('form_type') == 'action' ? 'selected' : '' }}>Action Form</option>
+                            <option value="">-- Select Form Type --</option>
+                            <option value="submission" {{ old('form_type') == 'submission' ? 'selected' : '' }}>
+                                Submission Form - Collects and saves user data
+                            </option>
+                            <option value="calculation" {{ old('form_type') == 'calculation' ? 'selected' : '' }}>
+                                Calculation Form - Performs client-side calculations
+                            </option>
+                            <option value="action" {{ old('form_type') == 'action' ? 'selected' : '' }}>
+                                Action Form - Triggers specific actions
+                            </option>
                         </select>
                         @error('form_type')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
+
+                        <!-- Form Type Descriptions -->
+                        <div id="form-type-help" class="mt-3">
+                            <div id="help-submission" class="alert alert-info" style="display:none;">
+                                <strong><i class="fas fa-paper-plane me-2"></i>Submission Form</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Purpose:</strong> Collect user data and save to database</li>
+                                    <li><strong>Examples:</strong> Contact forms, registration, feedback, surveys</li>
+                                    <li><strong>Behavior:</strong> Dynamic - Data is submitted to server and saved</li>
+                                    <li><strong>Features:</strong> Email notifications, auto-responses, data export</li>
+                                </ul>
+                            </div>
+                            <div id="help-calculation" class="alert alert-success" style="display:none;">
+                                <strong><i class="fas fa-calculator me-2"></i>Calculation Form</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Purpose:</strong> Perform calculations and show results instantly</li>
+                                    <li><strong>Examples:</strong> Loan calculator, BMI calculator, price estimator</li>
+                                    <li><strong>Behavior:</strong> Static - Works entirely in browser, no data saved</li>
+                                    <li><strong>Features:</strong> Real-time results, custom formulas, no database storage</li>
+                                </ul>
+                            </div>
+                            <div id="help-action" class="alert alert-warning" style="display:none;">
+                                <strong><i class="fas fa-bolt me-2"></i>Action Form</strong>
+                                <ul class="mb-0 mt-2">
+                                    <li><strong>Purpose:</strong> Trigger specific actions or processes</li>
+                                    <li><strong>Examples:</strong> API calls, downloads, external integrations</li>
+                                    <li><strong>Behavior:</strong> Can be static or dynamic based on requirements</li>
+                                    <li><strong>Features:</strong> Custom actions, API integration, event triggers</li>
+                                </ul>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="mb-3">
                         <label for="type" class="form-label">Form Behavior <span class="text-danger">*</span></label>
                         <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" required>
-                            <option value="dynamic" {{ old('type') == 'dynamic' ? 'selected' : '' }}>Dynamic (Saves data to database)</option>
-                            <option value="static" {{ old('type') == 'static' ? 'selected' : '' }}>Static (Client-side only, calculators)</option>
+                            <option value="">-- Auto-selected based on form type --</option>
+                            <option value="dynamic" {{ old('type') == 'dynamic' ? 'selected' : '' }}>
+                                Dynamic - Saves data to database
+                            </option>
+                            <option value="static" {{ old('type') == 'static' ? 'selected' : '' }}>
+                                Static - Client-side only (no database)
+                            </option>
                         </select>
-                        <small class="text-muted">Static forms work entirely client-side without saving data</small>
+                        <small class="text-muted" id="type-description">This will be automatically set based on your form type selection</small>
                         @error('type')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
@@ -167,4 +210,81 @@
         </div>
     </div>
 </form>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const formTypeSelect = document.getElementById('form_type');
+    const typeSelect = document.getElementById('type');
+    const typeDescription = document.getElementById('type-description');
+
+    // Form type configurations
+    const formTypeConfig = {
+        'submission': {
+            type: 'dynamic',
+            description: 'Submission forms always save data to the database (Dynamic)',
+            helpId: 'help-submission'
+        },
+        'calculation': {
+            type: 'static',
+            description: 'Calculation forms work client-side only, no data is saved (Static)',
+            helpId: 'help-calculation'
+        },
+        'action': {
+            type: 'dynamic',
+            description: 'Action forms can be dynamic or static - choose based on your needs',
+            helpId: 'help-action'
+        }
+    };
+
+    function updateFormBehavior() {
+        const selectedType = formTypeSelect.value;
+
+        // Hide all help texts
+        document.querySelectorAll('#form-type-help .alert').forEach(el => {
+            el.style.display = 'none';
+        });
+
+        if (selectedType && formTypeConfig[selectedType]) {
+            const config = formTypeConfig[selectedType];
+
+            // Auto-select the appropriate type
+            typeSelect.value = config.type;
+
+            // Update description
+            typeDescription.textContent = config.description;
+
+            // Show relevant help text
+            const helpElement = document.getElementById(config.helpId);
+            if (helpElement) {
+                helpElement.style.display = 'block';
+            }
+
+            // For calculation forms, disable type selection (must be static)
+            if (selectedType === 'calculation') {
+                typeSelect.disabled = true;
+                typeSelect.style.opacity = '0.6';
+            } else if (selectedType === 'submission') {
+                // For submission forms, disable type selection (must be dynamic)
+                typeSelect.disabled = true;
+                typeSelect.style.opacity = '0.6';
+            } else {
+                // For action forms, allow manual selection
+                typeSelect.disabled = false;
+                typeSelect.style.opacity = '1';
+            }
+        } else {
+            typeSelect.value = '';
+            typeDescription.textContent = 'This will be automatically set based on your form type selection';
+            typeSelect.disabled = false;
+            typeSelect.style.opacity = '1';
+        }
+    }
+
+    // Update on page load
+    updateFormBehavior();
+
+    // Update when form type changes
+    formTypeSelect.addEventListener('change', updateFormBehavior);
+});
+</script>
 @endsection
