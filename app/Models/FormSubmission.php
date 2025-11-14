@@ -141,4 +141,40 @@ class FormSubmission extends Model
 
         return $this->form_name ?? 'Unknown Form';
     }
+
+    /**
+     * Get cleaned form data (without technical fields)
+     */
+    public function getCleanedDataAttribute(): array
+    {
+        $data = $this->formatted_data;
+
+        // Remove technical/hidden fields
+        $fieldsToRemove = ['_token', 'form_id', '_method', 'csrf_token'];
+
+        foreach ($fieldsToRemove as $field) {
+            unset($data[$field]);
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get form data with proper labels
+     */
+    public function getLabeledDataAttribute(): array
+    {
+        $cleanedData = $this->cleaned_data;
+        $labeledData = [];
+
+        foreach ($cleanedData as $key => $value) {
+            // Convert snake_case and camelCase to Title Case
+            $label = str_replace('_', ' ', $key);
+            $label = ucwords(strtolower($label));
+
+            $labeledData[$label] = $value;
+        }
+
+        return $labeledData;
+    }
 }

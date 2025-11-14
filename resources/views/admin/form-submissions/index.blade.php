@@ -241,6 +241,8 @@ function viewSubmission(id) {
         .then(data => {
             if (data.success) {
                 const submission = data.submission;
+                const labeledData = data.labeled_data;
+
                 let html = `
                     <div class="row mb-3">
                         <div class="col-md-6">
@@ -259,14 +261,42 @@ function viewSubmission(id) {
                         </div>
                     </div>
                     <hr>
-                    <h6>Form Data:</h6>
-                    <pre class="bg-light p-3 rounded">${JSON.stringify(submission.form_data, null, 2)}</pre>
+                    <h6 class="mb-3">Submitted Information:</h6>
+                    <div class="table-responsive">
+                        <table class="table table-bordered table-striped">
+                            <tbody>
                 `;
 
-                if (submission.calculated_result) {
+                // Display labeled data
+                for (const [label, value] of Object.entries(labeledData)) {
+                    let displayValue = value;
+
+                    // Handle arrays/objects
+                    if (typeof value === 'object' && value !== null) {
+                        displayValue = JSON.stringify(value, null, 2);
+                    }
+
                     html += `
-                        <h6>Calculated Result:</h6>
-                        <pre class="bg-light p-3 rounded">${JSON.stringify(submission.calculated_result, null, 2)}</pre>
+                        <tr>
+                            <td style="width: 30%; background-color: #f8f9fa;"><strong>${label}</strong></td>
+                            <td style="width: 70%;">${displayValue}</td>
+                        </tr>
+                    `;
+                }
+
+                html += `
+                            </tbody>
+                        </table>
+                    </div>
+                `;
+
+                if (submission.calculated_result && Object.keys(submission.calculated_result).length > 0) {
+                    html += `
+                        <hr>
+                        <h6 class="mb-3">Calculated Result:</h6>
+                        <div class="alert alert-info">
+                            <pre class="mb-0">${JSON.stringify(submission.calculated_result, null, 2)}</pre>
+                        </div>
                     `;
                 }
 

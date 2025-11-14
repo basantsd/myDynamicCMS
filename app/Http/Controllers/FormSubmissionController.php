@@ -76,6 +76,7 @@ class FormSubmissionController extends Controller
             'success' => true,
             'submission' => $submission,
             'formatted_data' => $submission->formatted_data,
+            'labeled_data' => $submission->labeled_data,
         ]);
     }
 
