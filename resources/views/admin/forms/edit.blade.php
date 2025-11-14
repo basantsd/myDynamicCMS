@@ -135,6 +135,65 @@
                         <textarea class="form-control d-none" id="fields-json" name="fields" required>{{ old('fields', json_encode($form->fields)) }}</textarea>
                     </div>
 
+                    <!-- Calculation Configuration (Only for Calculation Forms) -->
+                    <div id="calculation-config-section" class="mb-3" style="display: {{ $form->form_type === 'calculation' ? 'block' : 'none' }};">
+                        <label class="form-label">Calculation Configuration</label>
+                        <div class="alert alert-info">
+                            <i class="fas fa-calculator me-2"></i>
+                            <strong>How Calculations Work:</strong>
+                            <ol class="mb-0 mt-2">
+                                <li>Add number fields to your form (e.g., principal, rate, years)</li>
+                                <li>Add a result field (number field) to show the calculation result</li>
+                                <li>Configure the formula below using field names</li>
+                                <li>Calculation happens instantly in the browser as users type</li>
+                            </ol>
+                        </div>
+
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Calculation Type</label>
+                                    <select class="form-select" id="calculation_type">
+                                        <option value="custom">Custom Formula (JavaScript)</option>
+                                        <option value="sum">Sum</option>
+                                        <option value="average">Average</option>
+                                        <option value="multiply">Multiply</option>
+                                    </select>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Result Field Name</label>
+                                    <input type="text" class="form-control" id="result_field" placeholder="e.g., total, monthly_payment, bmi" value="result">
+                                    <small class="text-muted">The field where the result will be displayed (must be a number field)</small>
+                                </div>
+
+                                <div class="mb-3" id="custom-formula-section">
+                                    <label class="form-label">Custom Formula</label>
+                                    <textarea class="form-control font-monospace" id="custom_formula" rows="4" placeholder="Enter JavaScript formula using field names&#10;&#10;Example for loan calculator:&#10;(principal * rate * Math.pow(1 + rate, years)) / (Math.pow(1 + rate, years) - 1)&#10;&#10;Example for BMI:&#10;weight / ((height / 100) * (height / 100))"></textarea>
+                                    <small class="text-muted">Use field names directly in your formula. Available: Math functions, operators (+, -, *, /, %, **)</small>
+                                </div>
+
+                                <div class="mb-3" id="fields-to-calculate-section" style="display: none;">
+                                    <label class="form-label">Fields to Calculate</label>
+                                    <input type="text" class="form-control" id="fields_to_calculate" placeholder="e.g., field1, field2, field3">
+                                    <small class="text-muted">Comma-separated list of number field names</small>
+                                </div>
+
+                                <div class="alert alert-warning">
+                                    <strong><i class="fas fa-lightbulb me-2"></i>Formula Examples:</strong>
+                                    <ul class="mb-0 mt-2">
+                                        <li><strong>Loan Payment:</strong> <code>(principal * (rate/100/12) * Math.pow(1 + (rate/100/12), months)) / (Math.pow(1 + (rate/100/12), months) - 1)</code></li>
+                                        <li><strong>BMI Calculator:</strong> <code>weight / Math.pow(height / 100, 2)</code></li>
+                                        <li><strong>Price with Tax:</strong> <code>price * (1 + tax/100)</code></li>
+                                        <li><strong>Percentage:</strong> <code>(value / total) * 100</code></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- Hidden field for calculation_config JSON -->
+                        <textarea class="d-none" id="calculation_config" name="calculation_config">{{ old('calculation_config', json_encode($form->calculation_config ?? [])) }}</textarea>
+                    </div>
+
                     <div class="mb-3">
                         <label for="submit_button_text" class="form-label">Submit Button Text</label>
                         <input type="text" class="form-control @error('submit_button_text') is-invalid @enderror" id="submit_button_text" name="submit_button_text" value="{{ old('submit_button_text', $form->submit_button_text) }}">
@@ -246,6 +305,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateFormBehavior() {
         const selectedType = formTypeSelect.value;
+        const calculationSection = document.getElementById('calculation-config-section');
 
         // Hide all help texts
         document.querySelectorAll('#form-type-help .alert').forEach(el => {
@@ -267,20 +327,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 helpElement.style.display = 'block';
             }
 
-            // For calculation forms, disable type selection (must be static)
+            // Show/hide calculation config based on form type
             if (selectedType === 'calculation') {
-                typeSelect.disabled = true;
-                typeSelect.style.opacity = '0.6';
-            } else if (selectedType === 'submission') {
-                // For submission forms, disable type selection (must be dynamic)
+                calculationSection.style.display = 'block';
                 typeSelect.disabled = true;
                 typeSelect.style.opacity = '0.6';
             } else {
-                // For action forms, allow manual selection
-                typeSelect.disabled = false;
-                typeSelect.style.opacity = '1';
+                calculationSection.style.display = 'none';
+                if (selectedType === 'submission') {
+                    typeSelect.disabled = true;
+                    typeSelect.style.opacity = '0.6';
+                } else {
+                    typeSelect.disabled = false;
+                    typeSelect.style.opacity = '1';
+                }
             }
         } else {
+            calculationSection.style.display = 'none';
             typeSelect.value = '';
             typeDescription.textContent = 'This will be automatically set based on your form type selection';
             typeSelect.disabled = false;
@@ -296,7 +359,87 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Load existing fields from JSON
     loadFieldsFromJSON();
+
+    // Calculation Configuration Handlers
+    setupCalculationConfig();
+    loadCalculationConfig();
 });
+
+function setupCalculationConfig() {
+    const calculationType = document.getElementById('calculation_type');
+    const customFormulaSection = document.getElementById('custom-formula-section');
+    const fieldsToCalculateSection = document.getElementById('fields-to-calculate-section');
+    const resultField = document.getElementById('result_field');
+    const customFormula = document.getElementById('custom_formula');
+    const fieldsToCalculate = document.getElementById('fields_to_calculate');
+
+    // Handle calculation type change
+    calculationType.addEventListener('change', function() {
+        if (this.value === 'custom') {
+            customFormulaSection.style.display = 'block';
+            fieldsToCalculateSection.style.display = 'none';
+        } else {
+            customFormulaSection.style.display = 'none';
+            fieldsToCalculateSection.style.display = 'block';
+        }
+        updateCalculationConfig();
+    });
+
+    // Update config on any change
+    [resultField, customFormula, fieldsToCalculate].forEach(el => {
+        el.addEventListener('input', updateCalculationConfig);
+    });
+
+    function updateCalculationConfig() {
+        const config = {
+            calculation_type: calculationType.value,
+            result_field: resultField.value,
+        };
+
+        if (calculationType.value === 'custom') {
+            config.custom_formula = customFormula.value;
+        } else {
+            const fields = fieldsToCalculate.value.split(',').map(f => f.trim()).filter(f => f);
+            config.fields_to_calculate = fields;
+        }
+
+        document.getElementById('calculation_config').value = JSON.stringify(config);
+    }
+
+    // Initial update
+    updateCalculationConfig();
+}
+
+function loadCalculationConfig() {
+    const configJson = document.getElementById('calculation_config').value;
+    try {
+        const config = JSON.parse(configJson);
+        if (config && Object.keys(config).length > 0) {
+            // Set calculation type
+            if (config.calculation_type) {
+                document.getElementById('calculation_type').value = config.calculation_type;
+            }
+
+            // Set result field
+            if (config.result_field) {
+                document.getElementById('result_field').value = config.result_field;
+            }
+
+            // Set formula or fields
+            if (config.calculation_type === 'custom' && config.custom_formula) {
+                document.getElementById('custom_formula').value = config.custom_formula;
+                document.getElementById('custom-formula-section').style.display = 'block';
+                document.getElementById('fields-to-calculate-section').style.display = 'none';
+            } else if (config.fields_to_calculate) {
+                document.getElementById('fields_to_calculate').value = config.fields_to_calculate.join(', ');
+                document.getElementById('custom-formula-section').style.display = 'none';
+                document.getElementById('fields-to-calculate-section').style.display = 'block';
+            }
+        }
+    } catch (e) {
+        console.error('Error loading calculation config:', e);
+    }
+}
 
 // Field Builder Functions
 let fieldCounter = 0;
