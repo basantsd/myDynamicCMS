@@ -3,7 +3,6 @@
 use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\AuthController;
-use App\Http\Controllers\CustomBlockController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FormSubmissionController;
 use App\Http\Controllers\FrontendController;
@@ -74,31 +73,6 @@ Route::prefix('admin')->group(function () {
         });
         Route::middleware(['permission:forms.delete'])->group(function () {
             Route::delete('/form-submissions/{id}', [FormSubmissionController::class, 'destroy'])->name('admin.form-submissions.destroy');
-        });
-
-        // Custom Blocks Management - Permission Protected
-        Route::middleware(['permission:blocks.view'])->group(function () {
-            Route::get('/custom-blocks', [CustomBlockController::class, 'index'])->name('admin.blocks.index');
-            Route::get('/custom-blocks/list', [CustomBlockController::class, 'list'])->name('admin.blocks.list');
-            Route::get('/custom-blocks/search', [CustomBlockController::class, 'search'])->name('admin.blocks.search');
-            Route::get('/custom-blocks/category/{category}', [CustomBlockController::class, 'byCategory'])->name('admin.blocks.by-category');
-            Route::get('/custom-blocks/stats/overview', [CustomBlockController::class, 'statistics'])->name('admin.blocks.statistics');
-            Route::get('/custom-blocks/{id}', [CustomBlockController::class, 'show'])->name('admin.blocks.show');
-        });
-        Route::middleware(['permission:blocks.create'])->group(function () {
-            Route::get('/custom-blocks/create', [CustomBlockController::class, 'create'])->name('admin.blocks.create');
-            Route::post('/custom-blocks', [CustomBlockController::class, 'store'])->name('admin.blocks.store');
-            Route::post('/custom-blocks/{id}/duplicate', [CustomBlockController::class, 'duplicate'])->name('admin.blocks.duplicate');
-            Route::post('/custom-blocks/track-usage', [CustomBlockController::class, 'trackUsage'])->name('admin.blocks.track-usage');
-            Route::post('/custom-blocks/upload-preview', [CustomBlockController::class, 'uploadPreview'])->name('admin.blocks.upload-preview');
-        });
-        Route::middleware(['permission:blocks.edit'])->group(function () {
-            Route::get('/custom-blocks/{id}/edit', [CustomBlockController::class, 'edit'])->name('admin.blocks.edit');
-            Route::put('/custom-blocks/{id}', [CustomBlockController::class, 'update'])->name('admin.blocks.update');
-            Route::post('/custom-blocks/{id}/toggle', [CustomBlockController::class, 'toggleActive'])->name('admin.blocks.toggle');
-        });
-        Route::middleware(['permission:blocks.delete'])->group(function () {
-            Route::delete('/custom-blocks/{id}', [CustomBlockController::class, 'destroy'])->name('admin.blocks.destroy');
         });
 
         // Banners Management - Permission Protected

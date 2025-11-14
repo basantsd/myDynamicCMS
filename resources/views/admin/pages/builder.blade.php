@@ -1141,7 +1141,7 @@
         });
     </script>
 
-    <!-- Load Treasury Custom Blocks -->
-    <script src="{{ asset('assets/js/treasury-blocks.js') }}"></script>
+    <!-- Load HTML Elements Blocks -->
+    <script src="{{ asset('js/html-elements-blocks.js') }}"></script>
 </body>
 </html>

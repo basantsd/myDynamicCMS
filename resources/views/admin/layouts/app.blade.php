@@ -408,11 +408,20 @@
             </li>
             @endpermission
 
-            @permission('blocks.view')
+            @permission('pages.view')
             <li>
-                <a href="{{ route('admin.blocks.index') }}" class="{{ request()->routeIs('admin.blocks.*') ? 'active' : '' }}">
-                    <i class="fas fa-cube"></i>
-                    <span>Custom Blocks</span>
+                <a href="{{ route('admin.banners.index') }}" class="{{ request()->routeIs('admin.banners.*') ? 'active' : '' }}">
+                    <i class="fas fa-image"></i>
+                    <span>Banners</span>
+                </a>
+            </li>
+            @endpermission
+
+            @permission('forms.view')
+            <li>
+                <a href="{{ route('admin.forms.index') }}" class="{{ request()->routeIs('admin.forms.*') && !request()->routeIs('admin.form-submissions.*') ? 'active' : '' }}">
+                    <i class="fas fa-wpforms"></i>
+                    <span>Forms</span>
                 </a>
             </li>
             @endpermission
