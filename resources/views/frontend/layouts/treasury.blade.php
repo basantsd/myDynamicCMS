@@ -9,6 +9,7 @@
     <meta name="description" content="@yield('meta_description', $settings['site_description'] ?? 'Accountant General\'s Department')" />
     <meta name="keywords" content="@yield('meta_keywords', $settings['site_keywords'] ?? 'Accountant General\'s Department, St. Kitts, Nevis, Treasury')" />
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="csrf-token" content="{{ csrf_token() }}" />
 
     <!-- Fonts and Icons -->
     <link href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" rel="stylesheet" />
@@ -309,6 +310,40 @@
 
     <!-- Form Handler for Dynamic Forms -->
     <script src="{{ asset('js/form-handler.js') }}"></script>
+
+    <!-- CSRF Token Auto-Injector for All Forms -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Get CSRF token from meta tag
+            const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+
+            if (csrfToken) {
+                // Find all forms on the page
+                const forms = document.querySelectorAll('form');
+
+                forms.forEach(function(form) {
+                    // Check if form already has a CSRF token field
+                    let tokenField = form.querySelector('input[name="_token"]');
+
+                    if (!tokenField) {
+                        // Create and add CSRF token field if it doesn't exist
+                        tokenField = document.createElement('input');
+                        tokenField.type = 'hidden';
+                        tokenField.name = '_token';
+                        tokenField.value = csrfToken;
+                        form.insertBefore(tokenField, form.firstChild);
+                    } else {
+                        // Update existing token field with fresh token
+                        tokenField.value = csrfToken;
+                    }
+                });
+
+                console.log('✅ CSRF tokens set for ' + forms.length + ' forms');
+            } else {
+                console.warn('⚠️ CSRF token meta tag not found');
+            }
+        });
+    </script>
 
     @stack('scripts')
 </body>

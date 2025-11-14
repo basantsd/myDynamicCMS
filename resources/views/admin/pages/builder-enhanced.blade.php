@@ -543,10 +543,6 @@
                             <i class="bi bi-grid-3x3-gap"></i><br>
                             Elements
                         </button>
-                        <button class="blocks-tab" data-tab="custom">
-                            <i class="bi bi-puzzle"></i><br>
-                            Custom Blocks
-                        </button>
                         <button class="blocks-tab" data-tab="templates">
                             <i class="bi bi-file-earmark-text"></i><br>
                             Templates
@@ -559,11 +555,6 @@
                 <div class="blocks-container">
                     <!-- GrapesJS Blocks Tab -->
                     <div class="blocks-tab-content active" id="grapesjs-blocks"></div>
-
-                    <!-- Custom Blocks Tab -->
-                    <div class="blocks-tab-content" id="custom-blocks">
-                        <div id="customBlocksList"></div>
-                    </div>
 
                     <!-- Templates Tab -->
                     <div class="blocks-tab-content" id="templates-blocks">
@@ -1010,6 +1001,7 @@
             });
         }
 
+        {{-- DISABLED: Custom Block Modal and Related Functions (Custom blocks removed)
         // Open Custom Block Modal
         function openCustomBlockModal(block) {
             currentCustomBlock = block;
@@ -2310,6 +2302,7 @@
                 </section>
             `;
         }
+        --}}
 
         // Tab Switching for Blocks Panel
         document.querySelectorAll('.blocks-tab').forEach(tab => {
