@@ -660,8 +660,8 @@
     <script src="https://unpkg.com/grapesjs-preset-webpage"></script>
     <script src="https://unpkg.com/grapesjs-blocks-basic"></script>
 
-    <!-- Dynamic Database-Driven Blocks Loader -->
-    <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
+    <!-- Dynamic Database-Driven Blocks Loader - DISABLED (Custom blocks removed) -->
+    <!-- <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script> -->
 
     <!-- Banner and Form Loader -->
     <script src="{{ asset('js/banner-form-loader.js') }}"></script>
