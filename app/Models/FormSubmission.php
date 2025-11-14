@@ -4,87 +4,37 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class FormSubmission extends Model
 {
     use HasFactory;
 
     protected $fillable = [
-        'page_id',
-        'page_section_id',
-        'form_name',
-        'form_type',
-        'form_data',
-        'calculated_result',
+        'form_id',
+        'data',
         'ip_address',
         'user_agent',
-        'submitted_at',
+        'user_id',
     ];
 
     protected $casts = [
-        'form_data' => 'array',
-        'calculated_result' => 'array',
-        'submitted_at' => 'datetime',
+        'data' => 'array',
     ];
 
-    // Form type constants
-    const TYPE_SUBMISSION = 'submission';
-    const TYPE_CALCULATION = 'calculation';
-    const TYPE_ACTION = 'action';
-
     /**
-     * Get the page that owns the submission
+     * Get the form that owns the submission
      */
-    public function page()
+    public function form(): BelongsTo
     {
-        return $this->belongsTo(Page::class);
+        return $this->belongsTo(Form::class);
     }
 
     /**
-     * Get the page section that owns the submission
+     * Get the user who submitted the form
      */
-    public function pageSection()
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(PageSection::class);
-    }
-
-    /**
-     * Scope for submission-based forms
-     */
-    public function scopeSubmissionType($query)
-    {
-        return $query->where('form_type', self::TYPE_SUBMISSION);
-    }
-
-    /**
-     * Scope for calculation-based forms
-     */
-    public function scopeCalculationType($query)
-    {
-        return $query->where('form_type', self::TYPE_CALCULATION);
-    }
-
-    /**
-     * Scope for action-based forms
-     */
-    public function scopeActionType($query)
-    {
-        return $query->where('form_type', self::TYPE_ACTION);
-    }
-
-    /**
-     * Scope for filtering by form name
-     */
-    public function scopeByFormName($query, $formName)
-    {
-        return $query->where('form_name', $formName);
-    }
-
-    /**
-     * Get submissions by date range
-     */
-    public function scopeDateRange($query, $startDate, $endDate)
-    {
-        return $query->whereBetween('submitted_at', [$startDate, $endDate]);
+        return $this->belongsTo(User::class);
     }
 }
