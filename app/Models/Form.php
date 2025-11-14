@@ -301,44 +301,129 @@ class Form extends Model
     private function generateCalculationScript(): string
     {
         $config = $this->calculation_config;
-        $formula = $config['custom_formula'] ?? '';
-        $resultField = $config['result_field'] ?? 'result';
-        $calculationType = $config['calculation_type'] ?? 'custom';
+        if (!$config || empty($config)) {
+            return '';
+        }
 
-        if ($calculationType === 'sum') {
-            $fields = $config['fields_to_calculate'] ?? [];
-            $formula = implode(' + ', array_map(fn($f) => "parseFloat(field_{$f}.value || 0)", $fields));
-        } elseif ($calculationType === 'average') {
-            $fields = $config['fields_to_calculate'] ?? [];
-            $sum = implode(' + ', array_map(fn($f) => "parseFloat(field_{$f}.value || 0)", $fields));
-            $formula = "({$sum}) / " . count($fields);
+        $resultFieldName = $config['result_field'] ?? 'result';
+        $calculationType = $config['calculation_type'] ?? 'custom';
+        $customFormula = $config['custom_formula'] ?? '';
+        $fieldsToCalculate = $config['fields_to_calculate'] ?? [];
+
+        // Build field name to variable mapping
+        $fieldNames = [];
+        foreach ($this->fields as $field) {
+            if ($field['type'] === 'number') {
+                $fieldNames[] = $field['name'];
+            }
         }
 
         return <<<HTML
         <script>
         document.addEventListener('DOMContentLoaded', function() {
             const form = document.getElementById('form-{$this->id}');
-            const calculationFields = form.querySelectorAll('.calculation-field');
-            const resultField = form.querySelector('[name="{$resultField}"]');
+            const resultField = form.querySelector('[name="{$resultFieldName}"]');
+
+            // Make result field readonly
+            if (resultField) {
+                resultField.readOnly = true;
+                resultField.style.backgroundColor = '#e9ecef';
+                resultField.style.fontWeight = 'bold';
+                resultField.style.fontSize = '1.2em';
+            }
+
+            // Get all number input fields
+            const numberFields = form.querySelectorAll('input[type="number"]');
 
             function calculate() {
                 try {
-                    const result = {$formula};
-                    if (resultField) {
+                    // Get field values by name
+                    const fieldValues = {};
+                    numberFields.forEach(field => {
+                        const name = field.name;
+                        const value = parseFloat(field.value) || 0;
+                        fieldValues[name] = value;
+                        // Also set as variable for formula
+                        window[name] = value;
+                    });
+
+                    let result = 0;
+
+                    // Calculate based on type
+                    if ('{$calculationType}' === 'custom') {
+                        // Use custom formula
+                        const formula = `{$customFormula}`;
+                        if (formula) {
+                            // Create variables from field names for easy formula usage
+                            const fieldVars = Object.keys(fieldValues).map(name =>
+                                `const ${name} = ${fieldValues[name]};`
+                            ).join(' ');
+
+                            // Evaluate formula
+                            result = eval(fieldVars + ' (' + formula + ')');
+                        }
+                    } else if ('{$calculationType}' === 'sum') {
+                        // Sum specified fields
+                        const fieldsToSum = {$this->escapeJs(json_encode($fieldsToCalculate))};
+                        result = fieldsToSum.reduce((sum, fieldName) => {
+                            return sum + (fieldValues[fieldName] || 0);
+                        }, 0);
+                    } else if ('{$calculationType}' === 'average') {
+                        // Average specified fields
+                        const fieldsToAvg = {$this->escapeJs(json_encode($fieldsToCalculate))};
+                        const sum = fieldsToAvg.reduce((sum, fieldName) => {
+                            return sum + (fieldValues[fieldName] || 0);
+                        }, 0);
+                        result = fieldsToAvg.length > 0 ? sum / fieldsToAvg.length : 0;
+                    } else if ('{$calculationType}' === 'multiply') {
+                        // Multiply specified fields
+                        const fieldsToMultiply = {$this->escapeJs(json_encode($fieldsToCalculate))};
+                        result = fieldsToMultiply.reduce((product, fieldName) => {
+                            return product * (fieldValues[fieldName] || 1);
+                        }, 1);
+                    }
+
+                    // Display result
+                    if (resultField && !isNaN(result) && isFinite(result)) {
                         resultField.value = result.toFixed(2);
+
+                        // Show result in a nice alert below the form
+                        const resultDiv = document.getElementById('form-{$this->id}-result');
+                        if (resultDiv && result !== 0) {
+                            resultDiv.className = 'alert alert-success mt-3';
+                            resultDiv.style.display = 'block';
+                            resultDiv.innerHTML = '<strong><i class="fas fa-check-circle me-2"></i>Result:</strong> ' + result.toFixed(2);
+                        }
                     }
                 } catch (e) {
                     console.error('Calculation error:', e);
+                    if (resultField) {
+                        resultField.value = 'Error';
+                    }
                 }
             }
 
-            calculationFields.forEach(field => {
+            // Attach event listeners to all number fields
+            numberFields.forEach(field => {
                 field.addEventListener('input', calculate);
             });
 
-            calculate(); // Initial calculation
+            // Prevent form submission for calculation forms
+            form.addEventListener('submit', function(e) {
+                e.preventDefault();
+                calculate();
+                return false;
+            });
+
+            // Initial calculation
+            calculate();
         });
         </script>
         HTML;
+    }
+
+    private function escapeJs($json)
+    {
+        return str_replace("'", "\\'", $json);
     }
 }
