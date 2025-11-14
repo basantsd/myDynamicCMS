@@ -59,7 +59,7 @@ class CustomBlockController extends Controller
                 ->orderBy('usage_count', 'desc')
                 ->get();
 
-            // Parse JSON fields
+            // Parse JSON fields - handle both string and array (from casts)
             $blocks = $blocks->map(function ($block) {
                 return [
                     'id' => $block->id,
@@ -72,15 +72,17 @@ class CustomBlockController extends Controller
                     'html_template' => $block->html_template,
                     'css_styles' => $block->css_styles,
                     'js_scripts' => $block->js_scripts,
-                    'schema' => json_decode($block->schema, true),
-                    'traits_config' => json_decode($block->traits_config, true),
-                    'dependencies' => json_decode($block->dependencies, true),
-                    'default_values' => json_decode($block->default_values, true),
-                    'tags' => json_decode($block->tags, true),
-                    'advanced_features' => json_decode($block->advanced_features, true),
-                    'action_settings' => json_decode($block->action_settings, true),
+                    'schema' => is_string($block->schema) ? json_decode($block->schema, true) : $block->schema,
+                    'traits_config' => is_string($block->traits_config) ? json_decode($block->traits_config, true) : $block->traits_config,
+                    'dependencies' => is_string($block->dependencies) ? json_decode($block->dependencies, true) : $block->dependencies,
+                    'default_values' => is_string($block->default_values) ? json_decode($block->default_values, true) : $block->default_values,
+                    'tags' => is_string($block->tags) ? json_decode($block->tags, true) : $block->tags,
+                    'advanced_features' => is_string($block->advanced_features) ? json_decode($block->advanced_features, true) : $block->advanced_features,
+                    'action_settings' => is_string($block->action_settings) ? json_decode($block->action_settings, true) : $block->action_settings,
                     'form_table_name' => $block->form_table_name,
                     'block_version' => $block->block_version,
+                    'author' => $block->author,
+                    'thumbnail' => $block->thumbnail,
                     'usage_count' => $block->usage_count,
                 ];
             });

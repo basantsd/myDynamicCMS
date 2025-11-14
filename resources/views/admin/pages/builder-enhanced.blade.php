@@ -826,6 +826,9 @@
     <!-- Enhanced Editable Blocks Script -->
     <script src="{{ asset('js/grapes-enhanced-blocks.js') }}"></script>
 
+    <!-- Dynamic Database-Driven Blocks Loader -->
+    <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
+
     <script>
         // Initialize GrapesJS with FREE Professional Plugins
         window.editor = grapesjs.init({

@@ -21,6 +21,15 @@ class CustomBlock extends Model
         'action_settings',
         'default_values',
         'form_table_name',
+        'html_template',
+        'css_styles',
+        'js_scripts',
+        'traits_config',
+        'dependencies',
+        'block_version',
+        'author',
+        'tags',
+        'thumbnail',
         'is_active',
         'usage_count',
     ];
@@ -30,6 +39,9 @@ class CustomBlock extends Model
         'advanced_features' => 'array',
         'action_settings' => 'array',
         'default_values' => 'array',
+        'traits_config' => 'array',
+        'dependencies' => 'array',
+        'tags' => 'array',
         'is_active' => 'boolean',
         'usage_count' => 'integer',
     ];
@@ -118,5 +130,21 @@ class CustomBlock extends Model
     public function sections()
     {
         return $this->hasMany(PageSection::class, 'custom_block_id');
+    }
+
+    /**
+     * Get block usage records
+     */
+    public function usageRecords()
+    {
+        return $this->hasMany(CustomBlockUsage::class, 'block_id');
+    }
+
+    /**
+     * Get block variants
+     */
+    public function variants()
+    {
+        return $this->hasMany(CustomBlockVariant::class, 'block_id');
     }
 }
