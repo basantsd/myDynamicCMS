@@ -764,16 +764,42 @@
 
         // Load existing content after editor is fully initialized
         editor.on('load', function() {
+            console.log('🔄 Loading page content...');
+
             @if($page->builder_data)
-                editor.setComponents({!! json_encode($page->builder_data['components'] ?? []) !!});
-                editor.setStyle({!! json_encode($page->builder_data['styles'] ?? []) !!});
+                try {
+                    const projectData = {!! json_encode($page->builder_data) !!};
+                    console.log('📦 Project data from database:', projectData);
+
+                    // Load project data which properly restores components and styles
+                    if (projectData && (projectData.pages || projectData.assets || projectData.styles)) {
+                        editor.loadProjectData(projectData);
+                        console.log('✅ Loaded project data successfully');
+                    } else if (projectData.components || projectData.styles) {
+                        // Fallback for old data structure
+                        if (projectData.components) {
+                            editor.setComponents(projectData.components);
+                        }
+                        if (projectData.styles) {
+                            editor.setStyle(projectData.styles);
+                        }
+                        console.log('✅ Loaded components and styles (legacy format)');
+                    } else {
+                        console.warn('⚠️ Invalid project data structure');
+                    }
+                } catch (error) {
+                    console.error('❌ Error loading project data:', error);
+                }
             @elseif($page->builder_html)
+                console.log('📄 Loading from HTML...');
                 editor.setComponents(`{!! addslashes($page->builder_html) !!}`);
                 @if($page->builder_css)
                     editor.setStyle(`{!! addslashes($page->builder_css) !!}`);
                 @endif
+                console.log('✅ Loaded HTML content');
             @else
                 // Load default starter template only if no content exists
+                console.log('🆕 Loading default template...');
                 editor.setComponents(`
                     <div class="container" style="padding: 40px 20px;">
                         <div class="row">
@@ -784,6 +810,7 @@
                         </div>
                     </div>
                 `);
+                console.log('✅ Loaded default template');
             @endif
 
             console.log('✅ Page content loaded successfully');
@@ -1083,8 +1110,11 @@
 
             const html = editor.getHtml();
             const css = editor.getCss();
-            const components = editor.getComponents();
-            const styles = editor.getStyle();
+
+            // Get project data which includes properly serialized components and styles
+            const projectData = editor.getProjectData();
+
+            console.log('💾 Saving page data:', projectData);
 
             fetch('{{ route("admin.pages.builder.save", $page->id) }}', {
                 method: 'POST',
@@ -1095,10 +1125,7 @@
                 body: JSON.stringify({
                     builder_html: html,
                     builder_css: css,
-                    builder_data: {
-                        components: components,
-                        styles: styles
-                    },
+                    builder_data: projectData,
                     use_builder: true
                 })
             })
