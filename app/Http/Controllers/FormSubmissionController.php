@@ -103,6 +103,13 @@ class FormSubmissionController extends Controller
         $calculatedResult = null;
         if ($request->form_type === 'calculation') {
             $calculatedResult = $this->processCalculation($request->form_data);
+
+            // Return calculation result without saving to database
+            return response()->json([
+                'success' => true,
+                'message' => 'Calculation completed',
+                'calculated_result' => $calculatedResult,
+            ]);
         }
 
         // Process action-based forms
@@ -111,22 +118,32 @@ class FormSubmissionController extends Controller
             $calculatedResult = $actionResult;
         }
 
-        $submission = FormSubmission::create([
-            'page_id' => $request->page_id,
-            'page_section_id' => $request->page_section_id,
-            'form_name' => $request->form_name,
-            'form_type' => $request->form_type,
-            'form_data' => $request->form_data,
-            'calculated_result' => $calculatedResult,
-            'ip_address' => $request->ip(),
-            'user_agent' => $request->userAgent(),
-            'submitted_at' => now(),
-        ]);
+        // Only save submission-type forms
+        if ($request->form_type === 'submission') {
+            $submission = FormSubmission::create([
+                'page_id' => $request->page_id,
+                'page_section_id' => $request->page_section_id,
+                'form_name' => $request->form_name,
+                'form_type' => $request->form_type,
+                'form_data' => $request->form_data,
+                'calculated_result' => $calculatedResult,
+                'ip_address' => $request->ip(),
+                'user_agent' => $request->userAgent(),
+                'submitted_at' => now(),
+            ]);
 
+            return response()->json([
+                'success' => true,
+                'message' => 'Form submitted successfully',
+                'submission' => $submission,
+                'calculated_result' => $calculatedResult,
+            ]);
+        }
+
+        // For action-type forms, return success without saving
         return response()->json([
             'success' => true,
-            'message' => 'Form submitted successfully',
-            'submission' => $submission,
+            'message' => 'Action completed successfully',
             'calculated_result' => $calculatedResult,
         ]);
     }
