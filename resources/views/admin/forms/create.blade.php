@@ -121,13 +121,17 @@
 
                     <div class="mb-3">
                         <label class="form-label">Form Fields <span class="text-danger">*</span></label>
-                        <div id="form-fields-container">
-                            <div class="alert alert-info">
-                                <i class="fas fa-info-circle me-2"></i>
-                                Form fields configuration will be added here. Use JSON format for now:
-                            </div>
-                            <textarea class="form-control font-monospace" name="fields" rows="10" required>{{ old('fields', '[{"name":"email","type":"email","label":"Email Address","required":true}]') }}</textarea>
+                        <div class="d-flex justify-content-between align-items-center mb-2">
+                            <small class="text-muted">Add and configure form fields</small>
+                            <button type="button" class="btn btn-sm btn-primary" onclick="addField()">
+                                <i class="fas fa-plus me-1"></i> Add Field
+                            </button>
                         </div>
+                        <div id="fields-list" class="mb-3">
+                            <!-- Fields will be added here dynamically -->
+                        </div>
+                        <!-- Hidden textarea for JSON storage -->
+                        <textarea class="form-control d-none" id="fields-json" name="fields" required>{{ old('fields', '[]') }}</textarea>
                     </div>
 
                     <div class="mb-3">
@@ -285,6 +289,193 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Update when form type changes
     formTypeSelect.addEventListener('change', updateFormBehavior);
+
+    // Load existing fields from JSON
+    loadFieldsFromJSON();
+});
+
+// Field Builder Functions
+let fieldCounter = 0;
+
+function loadFieldsFromJSON() {
+    const fieldsJson = document.getElementById('fields-json').value;
+    try {
+        const fields = JSON.parse(fieldsJson);
+        if (Array.isArray(fields) && fields.length > 0) {
+            fields.forEach(field => addField(field));
+        } else {
+            // Add a default field if none exist
+            addField({ name: 'email', type: 'email', label: 'Email Address', required: true });
+        }
+    } catch (e) {
+        // Add a default field on error
+        addField({ name: 'email', type: 'email', label: 'Email Address', required: true });
+    }
+}
+
+function addField(fieldData = null) {
+    fieldCounter++;
+    const fieldId = `field-${fieldCounter}`;
+
+    const fieldHtml = `
+        <div class="card mb-3 field-item" id="${fieldId}" data-field-id="${fieldCounter}">
+            <div class="card-header d-flex justify-content-between align-items-center" style="background-color: #f8f9fa;">
+                <h6 class="mb-0">
+                    <i class="fas fa-grip-vertical me-2 text-muted" style="cursor: move;"></i>
+                    <span class="field-label-display">${fieldData?.label || 'New Field'}</span>
+                </h6>
+                <div>
+                    <button type="button" class="btn btn-sm btn-outline-primary" onclick="toggleFieldDetails('${fieldId}')">
+                        <i class="fas fa-edit"></i>
+                    </button>
+                    <button type="button" class="btn btn-sm btn-outline-danger" onclick="removeField('${fieldId}')">
+                        <i class="fas fa-trash"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="card-body field-details" style="display: ${fieldData ? 'block' : 'none'};">
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Field Name <small class="text-danger">*</small></label>
+                        <input type="text" class="form-control field-name" value="${fieldData?.name || ''}" placeholder="e.g., email, full_name" required>
+                        <small class="text-muted">Use lowercase, no spaces (use underscores)</small>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Field Type <small class="text-danger">*</small></label>
+                        <select class="form-select field-type" required>
+                            <option value="text" ${fieldData?.type === 'text' ? 'selected' : ''}>Text</option>
+                            <option value="email" ${fieldData?.type === 'email' ? 'selected' : ''}>Email</option>
+                            <option value="number" ${fieldData?.type === 'number' ? 'selected' : ''}>Number</option>
+                            <option value="tel" ${fieldData?.type === 'tel' ? 'selected' : ''}>Phone</option>
+                            <option value="url" ${fieldData?.type === 'url' ? 'selected' : ''}>URL</option>
+                            <option value="textarea" ${fieldData?.type === 'textarea' ? 'selected' : ''}>Textarea</option>
+                            <option value="select" ${fieldData?.type === 'select' ? 'selected' : ''}>Dropdown</option>
+                            <option value="radio" ${fieldData?.type === 'radio' ? 'selected' : ''}>Radio Buttons</option>
+                            <option value="checkbox" ${fieldData?.type === 'checkbox' ? 'selected' : ''}>Checkbox</option>
+                            <option value="date" ${fieldData?.type === 'date' ? 'selected' : ''}>Date</option>
+                            <option value="file" ${fieldData?.type === 'file' ? 'selected' : ''}>File Upload</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Label <small class="text-danger">*</small></label>
+                        <input type="text" class="form-control field-label" value="${fieldData?.label || ''}" placeholder="e.g., Email Address" required>
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Placeholder</label>
+                        <input type="text" class="form-control field-placeholder" value="${fieldData?.placeholder || ''}" placeholder="e.g., Enter your email">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Default Value</label>
+                        <input type="text" class="form-control field-default" value="${fieldData?.default_value || ''}" placeholder="Optional default value">
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label">Help Text</label>
+                        <input type="text" class="form-control field-help" value="${fieldData?.help_text || ''}" placeholder="Optional help text">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12 mb-3 field-options-container" style="display: ${['select', 'radio'].includes(fieldData?.type) ? 'block' : 'none'};">
+                        <label class="form-label">Options (comma-separated)</label>
+                        <input type="text" class="form-control field-options" value="${fieldData?.options?.join(', ') || ''}" placeholder="e.g., Option 1, Option 2, Option 3">
+                        <small class="text-muted">For dropdown and radio fields</small>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-check">
+                            <input class="form-check-input field-required" type="checkbox" ${fieldData?.required ? 'checked' : ''}>
+                            <label class="form-check-label">Required Field</label>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label">Validation Rules</label>
+                        <input type="text" class="form-control field-validation" value="${fieldData?.validation || ''}" placeholder="e.g., required|email|max:255">
+                        <small class="text-muted">Laravel validation rules</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+
+    document.getElementById('fields-list').insertAdjacentHTML('beforeend', fieldHtml);
+
+    // Add event listener for field type change
+    const fieldElement = document.getElementById(fieldId);
+    const typeSelect = fieldElement.querySelector('.field-type');
+    typeSelect.addEventListener('change', function() {
+        const optionsContainer = fieldElement.querySelector('.field-options-container');
+        if (['select', 'radio'].includes(this.value)) {
+            optionsContainer.style.display = 'block';
+        } else {
+            optionsContainer.style.display = 'none';
+        }
+    });
+
+    // Add event listener for label change to update display
+    const labelInput = fieldElement.querySelector('.field-label');
+    labelInput.addEventListener('input', function() {
+        fieldElement.querySelector('.field-label-display').textContent = this.value || 'New Field';
+    });
+
+    updateFieldsJSON();
+}
+
+function toggleFieldDetails(fieldId) {
+    const field = document.getElementById(fieldId);
+    const details = field.querySelector('.field-details');
+    details.style.display = details.style.display === 'none' ? 'block' : 'none';
+}
+
+function removeField(fieldId) {
+    if (confirm('Are you sure you want to remove this field?')) {
+        document.getElementById(fieldId).remove();
+        updateFieldsJSON();
+    }
+}
+
+function updateFieldsJSON() {
+    const fields = [];
+    document.querySelectorAll('.field-item').forEach(fieldElement => {
+        const field = {
+            name: fieldElement.querySelector('.field-name').value,
+            type: fieldElement.querySelector('.field-type').value,
+            label: fieldElement.querySelector('.field-label').value,
+            placeholder: fieldElement.querySelector('.field-placeholder').value,
+            default_value: fieldElement.querySelector('.field-default').value,
+            help_text: fieldElement.querySelector('.field-help').value,
+            required: fieldElement.querySelector('.field-required').checked,
+            validation: fieldElement.querySelector('.field-validation').value
+        };
+
+        // Add options for select/radio fields
+        const optionsValue = fieldElement.querySelector('.field-options').value;
+        if (optionsValue && ['select', 'radio'].includes(field.type)) {
+            field.options = optionsValue.split(',').map(opt => opt.trim()).filter(opt => opt);
+        }
+
+        // Only add if name and label are filled
+        if (field.name && field.label) {
+            fields.push(field);
+        }
+    });
+
+    document.getElementById('fields-json').value = JSON.stringify(fields);
+}
+
+// Update JSON before form submission
+document.querySelector('form').addEventListener('submit', function(e) {
+    updateFieldsJSON();
+});
+
+// Add event listeners to update JSON when fields change
+document.addEventListener('input', function(e) {
+    if (e.target.closest('.field-item')) {
+        updateFieldsJSON();
+    }
 });
 </script>
 @endsection
