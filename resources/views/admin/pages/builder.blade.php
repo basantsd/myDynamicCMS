@@ -565,32 +565,32 @@
                                 <p>Start from scratch</p>
                             </div>
                         </div>
-                        <div class="template-item" onclick="loadTemplate('hero')">
-                            <i class="bi bi-card-image"></i>
+                        <div class="template-item" onclick="loadTemplate('home')">
+                            <i class="bi bi-house-door"></i>
                             <div class="template-item-content">
-                                <h6>Hero Landing</h6>
-                                <p>Hero section with CTA</p>
-                            </div>
-                        </div>
-                        <div class="template-item" onclick="loadTemplate('services')">
-                            <i class="bi bi-grid-3x3"></i>
-                            <div class="template-item-content">
-                                <h6>Services Page</h6>
-                                <p>Service grid layout</p>
+                                <h6>Home Page</h6>
+                                <p>Complete homepage with hero, values, and services</p>
                             </div>
                         </div>
                         <div class="template-item" onclick="loadTemplate('about')">
                             <i class="bi bi-person-badge"></i>
                             <div class="template-item-content">
                                 <h6>About Us</h6>
-                                <p>Team and mission</p>
+                                <p>Mission, vision, team, and mandate</p>
+                            </div>
+                        </div>
+                        <div class="template-item" onclick="loadTemplate('services')">
+                            <i class="bi bi-grid-3x3"></i>
+                            <div class="template-item-content">
+                                <h6>Services Page</h6>
+                                <p>Professional services grid with 6 services</p>
                             </div>
                         </div>
                         <div class="template-item" onclick="loadTemplate('contact')">
                             <i class="bi bi-envelope"></i>
                             <div class="template-item-content">
                                 <h6>Contact Page</h6>
-                                <p>Form and info</p>
+                                <p>Contact form with office information</p>
                             </div>
                         </div>
                     </div>
@@ -923,53 +923,89 @@
                 blank: `
                     <div class="container" style="padding: 40px 20px;">
                         <div class="row">
-                            <div class="col-12">
+                            <div class="col-12 text-center">
                                 <h1>Start Building</h1>
                                 <p>Drag blocks from the left panel to create your page</p>
                             </div>
                         </div>
                     </div>
                 `,
-                hero: `
-                    <section class="hero-wrapper" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 100px 0; color: white;">
+                home: `
+                    <!-- Hero Carousel Section -->
+                    <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
+                        <div class="carousel-indicators">
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="0" class="active"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="1"></button>
+                            <button type="button" data-bs-target="#heroCarousel" data-bs-slide-to="2"></button>
+                        </div>
+                        <div class="carousel-inner">
+                            <div class="carousel-item active" style="background-image: url('/assets/img/hero/hero_bg_1_1.jpg'); min-height: 500px; background-size: cover; background-position: center;">
+                                <div class="carousel-caption">
+                                    <h1>Welcome to Our Organization</h1>
+                                    <h5>Serving with Excellence</h5>
+                                    <p>Your trusted partner in delivering quality services</p>
+                                    <a href="#" class="btn btn-red">Learn More <i class="fas fa-arrow-right ms-2"></i></a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Core Values Section -->
+                    <section class="core-values-section" style="padding: 80px 0; background: #f8f9fa;">
                         <div class="container">
-                            <div class="row align-items-center">
-                                <div class="col-lg-7">
-                                    <h1 style="font-size: 48px; margin-bottom: 20px;">Welcome to Our Site</h1>
-                                    <p style="font-size: 18px; margin-bottom: 30px;">Create amazing experiences for your visitors</p>
-                                    <a href="#" class="btn btn-light" style="padding: 12px 30px; border-radius: 6px; text-decoration: none;">Get Started</a>
+                            <h2 class="section-title text-center mb-4">Our Core Values</h2>
+                            <p class="section-subtitle text-center mb-5">Guiding principles that define how we serve</p>
+                            <div class="row justify-content-center">
+                                <div class="col-md-4 mb-4">
+                                    <div class="text-center p-4" style="background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-shield-alt" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Transparency</h5>
+                                        <p>Open and clear communication in all operations</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="text-center p-4" style="background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-user-tie" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Professionalism</h5>
+                                        <p>Delivering services with expertise and integrity</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="text-center p-4" style="background: white; border-radius: 10px; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-heart" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Excellence</h5>
+                                        <p>Commitment to the highest standards of service</p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </section>
-                `,
-                services: `
-                    <section style="padding: 80px 0;">
+
+                    <!-- Quick Access Section -->
+                    <section class="quick-access-section" style="padding: 80px 0;">
                         <div class="container">
-                            <div class="text-center mb-5">
-                                <h2>Our Services</h2>
-                                <p>What we offer</p>
-                            </div>
-                            <div class="row">
+                            <h2 class="section-title text-center mb-4">Quick Access</h2>
+                            <p class="section-subtitle text-center mb-5">Access our key services and resources</p>
+                            <div class="row justify-content-center">
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
-                                        <i class="fas fa-laptop-code" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
-                                        <h4>Web Development</h4>
-                                        <p>Modern websites</p>
+                                    <div class="quick-card p-4 text-center" style="border: 2px solid #667eea; border-radius: 10px; transition: transform 0.3s;">
+                                        <h6>Service Title</h6>
+                                        <p>Service description goes here</p>
+                                        <a href="#" class="btn btn-outline-primary">Learn More</a>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
-                                        <i class="fas fa-mobile-alt" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
-                                        <h4>Mobile Apps</h4>
-                                        <p>iOS & Android</p>
+                                    <div class="quick-card p-4 text-center" style="border: 2px solid #667eea; border-radius: 10px; transition: transform 0.3s;">
+                                        <h6>Service Title</h6>
+                                        <p>Service description goes here</p>
+                                        <a href="#" class="btn btn-outline-primary">Learn More</a>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
-                                        <i class="fas fa-chart-line" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
-                                        <h4>Digital Marketing</h4>
-                                        <p>Grow your business</p>
+                                    <div class="quick-card p-4 text-center" style="border: 2px solid #667eea; border-radius: 10px; transition: transform 0.3s;">
+                                        <h6>Service Title</h6>
+                                        <p>Service description goes here</p>
+                                        <a href="#" class="btn btn-outline-primary">Learn More</a>
                                     </div>
                                 </div>
                             </div>
@@ -977,40 +1013,188 @@
                     </section>
                 `,
                 about: `
-                    <section style="padding: 80px 0;">
+                    <!-- Mission Section -->
+                    <section class="mission-section" style="padding: 80px 0; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white;">
+                        <div class="container text-center">
+                            <h2 class="section-title mb-4">Our Mission</h2>
+                            <p class="mission-text" style="font-size: 18px; max-width: 800px; margin: 0 auto; line-height: 1.8;">
+                                To deliver exceptional services with transparency, professionalism, and dedication, ensuring the highest standards of excellence in everything we do.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Mission & Vision Cards -->
+                    <section class="mv-section" style="padding: 80px 0; background: #f8f9fa;">
                         <div class="container">
-                            <div class="row align-items-center mb-5">
-                                <div class="col-lg-6">
-                                    <h2>About Us</h2>
-                                    <p style="font-size: 16px; line-height: 1.8;">We are a team of passionate professionals dedicated to delivering exceptional results.</p>
+                            <h2 class="mv-title text-center mb-4">Our Mission & Vision</h2>
+                            <p class="mv-subtitle text-center mb-5">Learn about our mission, vision, and values</p>
+                            <div class="row justify-content-center align-items-stretch">
+                                <div class="col-md-4 mb-4">
+                                    <div class="mv-card h-100 p-4 text-center" style="background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-bullseye" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Our Mission</h5>
+                                        <p>To provide exceptional services that exceed expectations and create lasting value for our community.</p>
+                                    </div>
                                 </div>
-                                <div class="col-lg-6">
-                                    <img src="/assets/img/placeholder.jpg" alt="About" style="width: 100%; border-radius: 10px;">
+                                <div class="col-md-4 mb-4">
+                                    <div class="mv-card h-100 p-4 text-center" style="background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-book-open" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Our Vision</h5>
+                                        <p>To be the leading organization recognized for innovation, integrity, and commitment to excellence.</p>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="mv-card h-100 p-4 text-center" style="background: white; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1);">
+                                        <i class="fas fa-heart" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h5>Our Values</h5>
+                                        <ul class="mv-values-list text-start" style="list-style: none; padding: 0;">
+                                            <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #667eea; margin-right: 10px;"></i> Integrity</li>
+                                            <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #667eea; margin-right: 10px;"></i> Excellence</li>
+                                            <li style="margin-bottom: 10px;"><i class="fas fa-check-circle" style="color: #667eea; margin-right: 10px;"></i> Innovation</li>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="text-center mb-4">
-                                <h3>Our Team</h3>
+                        </div>
+                    </section>
+
+                    <!-- Team Section -->
+                    <section class="team-container" style="padding: 80px 0;">
+                        <div class="container">
+                            <h2 class="text-center mb-4">Our Team</h2>
+                            <p class="subtitle text-center mb-5">Meet the dedicated professionals behind our success</p>
+                            <div class="row">
+                                <div class="col-md-4 mb-4">
+                                    <div class="profile-card-unique text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
+                                        <div class="icon-wrapper mb-3">
+                                            <div class="icon-circle mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-user" style="font-size: 40px; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <h3 style="font-size: 20px;">Team Member Name</h3>
+                                        <p class="title" style="color: #667eea; font-weight: bold;">Position Title</p>
+                                        <hr>
+                                        <div class="contact-info">
+                                            <div style="margin-bottom: 10px;"><i class="fas fa-envelope" style="color: #667eea;"></i> email@example.com</div>
+                                            <div><i class="fas fa-phone" style="color: #667eea;"></i> +1 (000) 000-0000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="profile-card-unique text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
+                                        <div class="icon-wrapper mb-3">
+                                            <div class="icon-circle mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-user" style="font-size: 40px; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <h3 style="font-size: 20px;">Team Member Name</h3>
+                                        <p class="title" style="color: #667eea; font-weight: bold;">Position Title</p>
+                                        <hr>
+                                        <div class="contact-info">
+                                            <div style="margin-bottom: 10px;"><i class="fas fa-envelope" style="color: #667eea;"></i> email@example.com</div>
+                                            <div><i class="fas fa-phone" style="color: #667eea;"></i> +1 (000) 000-0000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="profile-card-unique text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px;">
+                                        <div class="icon-wrapper mb-3">
+                                            <div class="icon-circle mx-auto" style="width: 100px; height: 100px; border-radius: 50%; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); display: flex; align-items: center; justify-content: center;">
+                                                <i class="fas fa-user" style="font-size: 40px; color: white;"></i>
+                                            </div>
+                                        </div>
+                                        <h3 style="font-size: 20px;">Team Member Name</h3>
+                                        <p class="title" style="color: #667eea; font-weight: bold;">Position Title</p>
+                                        <hr>
+                                        <div class="contact-info">
+                                            <div style="margin-bottom: 10px;"><i class="fas fa-envelope" style="color: #667eea;"></i> email@example.com</div>
+                                            <div><i class="fas fa-phone" style="color: #667eea;"></i> +1 (000) 000-0000</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Mandate Section -->
+                    <section class="mandate-section" style="padding: 80px 0; background: #f8f9fa;">
+                        <div class="container">
+                            <h3 class="mandate-title text-center mb-4">Our Mandate</h3>
+                            <div class="mandate-box p-4" style="background: white; border-radius: 10px; max-width: 900px; margin: 0 auto; box-shadow: 0 2px 10px rgba(0,0,0,0.1);">
+                                <p class="mb-4">Our organization is mandated to deliver exceptional services with the highest standards of excellence. Our key responsibilities include:</p>
+                                <ul class="mandate-list" style="list-style: none; padding: 0;">
+                                    <li style="margin-bottom: 15px; display: flex; align-items: start;"><span class="mandate-number" style="background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">1</span> <span style="padding-top: 5px;">Ensuring transparent and accountable operations</span></li>
+                                    <li style="margin-bottom: 15px; display: flex; align-items: start;"><span class="mandate-number" style="background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">2</span> <span style="padding-top: 5px;">Delivering high-quality services to our stakeholders</span></li>
+                                    <li style="margin-bottom: 15px; display: flex; align-items: start;"><span class="mandate-number" style="background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">3</span> <span style="padding-top: 5px;">Maintaining the highest standards of professionalism</span></li>
+                                    <li style="margin-bottom: 15px; display: flex; align-items: start;"><span class="mandate-number" style="background: #667eea; color: white; width: 35px; height: 35px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; margin-right: 15px; flex-shrink: 0;">4</span> <span style="padding-top: 5px;">Fostering innovation and continuous improvement</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </section>
+                `,
+                services: `
+                    <!-- Services Hero -->
+                    <section class="hero-wrapper" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 100px 0; color: white; text-align: center;">
+                        <div class="container">
+                            <h1 style="font-size: 48px; margin-bottom: 20px;">Our Services</h1>
+                            <p style="font-size: 18px; margin-bottom: 30px;">Comprehensive solutions tailored to your needs</p>
+                        </div>
+                    </section>
+
+                    <!-- Services Grid -->
+                    <section style="padding: 80px 0;">
+                        <div class="container">
+                            <div class="text-center mb-5">
+                                <h2>What We Offer</h2>
+                                <p style="color: #666;">Explore our comprehensive range of professional services</p>
                             </div>
                             <div class="row">
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center">
-                                        <div style="width: 150px; height: 150px; border-radius: 50%; background: #e0e0e0; margin: 0 auto 15px;"></div>
-                                        <h5>John Doe</h5>
-                                        <p>CEO</p>
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-laptop-code" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Web Development</h4>
+                                        <p style="color: #666;">Modern, responsive websites built with the latest technologies</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center">
-                                        <div style="width: 150px; height: 150px; border-radius: 50%; background: #e0e0e0; margin: 0 auto 15px;"></div>
-                                        <h5>Jane Smith</h5>
-                                        <p>CTO</p>
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-mobile-alt" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Mobile Applications</h4>
+                                        <p style="color: #666;">Native and cross-platform mobile apps for iOS and Android</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
                                     </div>
                                 </div>
                                 <div class="col-md-4 mb-4">
-                                    <div class="text-center">
-                                        <div style="width: 150px; height: 150px; border-radius: 50%; background: #e0e0e0; margin: 0 auto 15px;"></div>
-                                        <h5>Mike Johnson</h5>
-                                        <p>Designer</p>
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-chart-line" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Digital Marketing</h4>
+                                        <p style="color: #666;">Strategic marketing campaigns to grow your business online</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-shield-alt" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Security Services</h4>
+                                        <p style="color: #666;">Comprehensive security solutions to protect your digital assets</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-cloud" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Cloud Solutions</h4>
+                                        <p style="color: #666;">Scalable cloud infrastructure and migration services</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 mb-4">
+                                    <div class="service-card text-center p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; height: 100%; transition: transform 0.3s, box-shadow 0.3s;">
+                                        <i class="fas fa-headset" style="font-size: 48px; color: #667eea; margin-bottom: 20px;"></i>
+                                        <h4>Support & Maintenance</h4>
+                                        <p style="color: #666;">24/7 technical support and ongoing maintenance services</p>
+                                        <a href="#" class="btn btn-outline-primary mt-3">Learn More</a>
                                     </div>
                                 </div>
                             </div>
@@ -1018,33 +1202,63 @@
                     </section>
                 `,
                 contact: `
-                    <section style="padding: 80px 0;">
+                    <!-- Contact Hero -->
+                    <section class="hero-wrapper" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); padding: 80px 0; color: white; text-align: center;">
                         <div class="container">
-                            <div class="row">
-                                <div class="col-lg-8 mx-auto">
-                                    <div class="text-center mb-5">
-                                        <h2>Contact Us</h2>
-                                        <p>Get in touch with us</p>
+                            <h1 style="font-size: 48px; margin-bottom: 20px;">Contact Us</h1>
+                            <p style="font-size: 18px;">We'd love to hear from you</p>
+                        </div>
+                    </section>
+
+                    <!-- Contact Info Cards -->
+                    <section class="div-section" style="padding: 80px 0;">
+                        <div class="container">
+                            <h2 class="div-title text-center mb-4">Get in Touch</h2>
+                            <p class="div-subtitle text-center mb-5">Reach out to us through any of the following channels</p>
+                            <div class="row g-4">
+                                <div class="col-lg-6">
+                                    <div class="contactpg-card mb-4 p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; background: white;">
+                                        <h5 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-map-marker-alt"></i> Location</h5>
+                                        <p style="margin: 5px 0;">123 Main Street</p>
+                                        <p style="margin: 5px 0;">Suite 100</p>
+                                        <p style="margin: 5px 0;">City, State 12345</p>
                                     </div>
-                                    <form>
-                                        <div class="row">
-                                            <div class="col-md-6 mb-3">
-                                                <input type="text" class="form-control" placeholder="Your Name">
+                                    <div class="contactpg-card mb-4 p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; background: white;">
+                                        <h5 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-phone-alt"></i> Phone</h5>
+                                        <p style="margin: 5px 0;">Main Office: <span style="color: #667eea; font-weight: bold;">+1 (555) 123-4567</span></p>
+                                        <p style="margin: 5px 0;">Fax: <span style="color: #667eea; font-weight: bold;">+1 (555) 123-4568</span></p>
+                                    </div>
+                                    <div class="contactpg-card mb-4 p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; background: white;">
+                                        <h5 style="color: #667eea; margin-bottom: 15px;"><i class="fas fa-envelope"></i> Email</h5>
+                                        <p style="margin: 5px 0;"><a href="mailto:info@example.com" style="color: #667eea; text-decoration: none;">info@example.com</a></p>
+                                        <p style="margin: 5px 0;"><a href="mailto:support@example.com" style="color: #667eea; text-decoration: none;">support@example.com</a></p>
+                                    </div>
+                                    <div class="contactpg-card p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; background: white;">
+                                        <h5 style="color: #667eea; margin-bottom: 15px;"><i class="far fa-clock"></i> Office Hours</h5>
+                                        <p style="margin: 5px 0;">Monday - Friday: 8:00 AM - 5:00 PM</p>
+                                        <p style="margin: 5px 0;">Saturday: 9:00 AM - 1:00 PM</p>
+                                        <p style="margin: 5px 0;">Sunday: Closed</p>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="contactpg-card p-4" style="border: 1px solid #e0e0e0; border-radius: 10px; background: white; height: 100%;">
+                                        <h5 style="color: #667eea; margin-bottom: 20px;"><i class="fas fa-paper-plane"></i> Send us a Message</h5>
+                                        <form>
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control" placeholder="Your Name" required style="padding: 12px; border-radius: 8px;">
                                             </div>
-                                            <div class="col-md-6 mb-3">
-                                                <input type="email" class="form-control" placeholder="Your Email">
+                                            <div class="mb-3">
+                                                <input type="email" class="form-control" placeholder="Your Email" required style="padding: 12px; border-radius: 8px;">
                                             </div>
-                                            <div class="col-12 mb-3">
-                                                <input type="text" class="form-control" placeholder="Subject">
+                                            <div class="mb-3">
+                                                <input type="text" class="form-control" placeholder="Subject" required style="padding: 12px; border-radius: 8px;">
                                             </div>
-                                            <div class="col-12 mb-3">
-                                                <textarea class="form-control" rows="5" placeholder="Message"></textarea>
+                                            <div class="mb-3">
+                                                <textarea class="form-control" rows="6" placeholder="Your Message" required style="padding: 12px; border-radius: 8px;"></textarea>
                                             </div>
-                                            <div class="col-12 text-center">
-                                                <button type="submit" class="btn btn-primary">Send Message</button>
-                                            </div>
-                                        </div>
-                                    </form>
+                                            <button type="submit" class="btn btn-primary w-100" style="padding: 12px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 8px;">Send Message</button>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
