@@ -108,6 +108,9 @@ class Form extends Model
             $calculationScript = $this->generateCalculationScript();
         }
 
+        // Get CSRF token from meta tag (will be available on frontend)
+        $csrfToken = csrf_token();
+
         return <<<HTML
         <section class="form-section" style="padding: 80px 0; background: {$this->background_color};">
             <div class="container">
@@ -118,7 +121,7 @@ class Form extends Model
                             <p style="font-size: 18px; color: #666;">{$this->description}</p>
                         </div>
                         <form id="{$formId}" class="dynamic-form" data-form-type="{$this->form_type}" data-form-id="{$this->id}" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
-                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
+                            <input type="hidden" name="_token" class="csrf-token-field" value="">
                             <input type="hidden" name="form_id" value="{$this->id}">
                             {$fieldsHtml}
                             <button type="submit" class="btn btn-{$this->submit_button_style} btn-lg w-100" style="padding: 12px;">{$this->submit_button_text}</button>
@@ -131,6 +134,14 @@ class Form extends Model
             <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const form = document.getElementById('{$formId}');
+
+                // Set CSRF token from meta tag
+                const csrfToken = document.querySelector('meta[name="csrf-token"]')?.content;
+                const tokenField = form.querySelector('.csrf-token-field');
+                if (csrfToken && tokenField) {
+                    tokenField.value = csrfToken;
+                }
+
                 if (form && form.dataset.formType === 'submission') {
                     form.addEventListener('submit', async function(e) {
                         e.preventDefault();
@@ -139,6 +150,11 @@ class Form extends Model
                         const submitBtn = form.querySelector('button[type="submit"]');
                         const originalBtnText = submitBtn.textContent;
 
+                        // Ensure CSRF token is set
+                        if (!formData.get('_token')) {
+                            formData.set('_token', csrfToken);
+                        }
+
                         submitBtn.disabled = true;
                         submitBtn.textContent = 'Submitting...';
 
@@ -146,7 +162,7 @@ class Form extends Model
                             const response = await fetch('/api/forms/submit', {
                                 method: 'POST',
                                 headers: {
-                                    'X-CSRF-TOKEN': formData.get('_token'),
+                                    'X-CSRF-TOKEN': csrfToken,
                                     'Accept': 'application/json'
                                 },
                                 body: formData
@@ -160,6 +176,9 @@ class Form extends Model
                                 resultDiv.textContent = data.message || '{$this->success_message}';
                                 form.reset();
 
+                                // Reset token after form reset
+                                if (tokenField) tokenField.value = csrfToken;
+
                                 if (data.redirect) {
                                     setTimeout(() => window.location.href = data.redirect, 2000);
                                 }
@@ -168,6 +187,7 @@ class Form extends Model
                                 resultDiv.textContent = data.message || '{$this->error_message}';
                             }
                         } catch (error) {
+                            console.error('Form submission error:', error);
                             resultDiv.style.display = 'block';
                             resultDiv.className = 'alert alert-danger mt-3';
                             resultDiv.textContent = '{$this->error_message}';

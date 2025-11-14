@@ -83,8 +83,54 @@
 
                     <div class="mb-3">
                         <label for="button_url" class="form-label">Button URL</label>
-                        <input type="text" class="form-control @error('button_url') is-invalid @enderror" id="button_url" name="button_url" value="{{ old('button_url') }}">
+                        <input type="text" class="form-control @error('button_url') is-invalid @enderror" id="button_url" name="button_url" value="{{ old('button_url') }}" placeholder="/about">
                         @error('button_url')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="button_action" class="form-label">Button Action</label>
+                            <select class="form-select @error('button_action') is-invalid @enderror" id="button_action" name="button_action">
+                                <option value="link" {{ old('button_action') == 'link' ? 'selected' : '' }}>Link</option>
+                                <option value="redirect" {{ old('button_action') == 'redirect' ? 'selected' : '' }}>Redirect</option>
+                                <option value="scroll" {{ old('button_action') == 'scroll' ? 'selected' : '' }}>Scroll to Section</option>
+                                <option value="modal" {{ old('button_action') == 'modal' ? 'selected' : '' }}>Open Modal</option>
+                                <option value="download" {{ old('button_action') == 'download' ? 'selected' : '' }}>Download</option>
+                            </select>
+                            @error('button_action')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+
+                        <div class="col-md-6 mb-3">
+                            <label for="button_target" class="form-label">Button Target</label>
+                            <select class="form-select @error('button_target') is-invalid @enderror" id="button_target" name="button_target">
+                                <option value="_self" {{ old('button_target') == '_self' ? 'selected' : '' }}>Same Window</option>
+                                <option value="_blank" {{ old('button_target') == '_blank' ? 'selected' : '' }}>New Window</option>
+                            </select>
+                            @error('button_target')
+                                <div class="invalid-feedback">{{ $message }}</div>
+                            @enderror
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="button_style" class="form-label">Button Style</label>
+                        <select class="form-select @error('button_style') is-invalid @enderror" id="button_style" name="button_style">
+                            <option value="primary" {{ old('button_style') == 'primary' ? 'selected' : '' }}>Primary (Blue)</option>
+                            <option value="secondary" {{ old('button_style') == 'secondary' ? 'selected' : '' }}>Secondary (Gray)</option>
+                            <option value="success" {{ old('button_style') == 'success' ? 'selected' : '' }}>Success (Green)</option>
+                            <option value="danger" {{ old('button_style') == 'danger' ? 'selected' : '' }}>Danger (Red)</option>
+                            <option value="warning" {{ old('button_style') == 'warning' ? 'selected' : '' }}>Warning (Yellow)</option>
+                            <option value="info" {{ old('button_style') == 'info' ? 'selected' : '' }}>Info (Cyan)</option>
+                            <option value="light" {{ old('button_style') == 'light' ? 'selected' : '' }}>Light</option>
+                            <option value="dark" {{ old('button_style') == 'dark' ? 'selected' : '' }}>Dark</option>
+                            <option value="outline-light" {{ old('button_style') == 'outline-light' ? 'selected' : '' }}>Outline Light</option>
+                            <option value="outline-dark" {{ old('button_style') == 'outline-dark' ? 'selected' : '' }}>Outline Dark</option>
+                        </select>
+                        @error('button_style')
                             <div class="invalid-feedback">{{ $message }}</div>
                         @enderror
                     </div>
