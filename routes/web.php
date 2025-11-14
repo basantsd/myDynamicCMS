@@ -78,12 +78,17 @@ Route::prefix('admin')->group(function () {
         Route::middleware(['permission:blocks.view'])->group(function () {
             Route::get('/custom-blocks', [CustomBlockController::class, 'index'])->name('admin.blocks.index');
             Route::get('/custom-blocks/list', [CustomBlockController::class, 'list'])->name('admin.blocks.list');
+            Route::get('/custom-blocks/search', [CustomBlockController::class, 'search'])->name('admin.blocks.search');
+            Route::get('/custom-blocks/category/{category}', [CustomBlockController::class, 'byCategory'])->name('admin.blocks.by-category');
+            Route::get('/custom-blocks/stats/overview', [CustomBlockController::class, 'statistics'])->name('admin.blocks.statistics');
             Route::get('/custom-blocks/{id}', [CustomBlockController::class, 'show'])->name('admin.blocks.show');
         });
         Route::middleware(['permission:blocks.create'])->group(function () {
             Route::get('/custom-blocks/create', [CustomBlockController::class, 'create'])->name('admin.blocks.create');
             Route::post('/custom-blocks', [CustomBlockController::class, 'store'])->name('admin.blocks.store');
             Route::post('/custom-blocks/{id}/duplicate', [CustomBlockController::class, 'duplicate'])->name('admin.blocks.duplicate');
+            Route::post('/custom-blocks/track-usage', [CustomBlockController::class, 'trackUsage'])->name('admin.blocks.track-usage');
+            Route::post('/custom-blocks/upload-preview', [CustomBlockController::class, 'uploadPreview'])->name('admin.blocks.upload-preview');
         });
         Route::middleware(['permission:blocks.edit'])->group(function () {
             Route::get('/custom-blocks/{id}/edit', [CustomBlockController::class, 'edit'])->name('admin.blocks.edit');
