@@ -14,7 +14,7 @@
 
     // Hero Carousel Block
     blockManager.add('hero-carousel', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-images" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Hero Carousel</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-images" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Hero Carousel</div></div>',
         category: 'Elements',
         content: `
             <div id="heroCarousel" class="carousel slide" data-bs-ride="carousel">
@@ -67,7 +67,7 @@
 
     // Core Values Section Block
     blockManager.add('core-values', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-shield-alt" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Core Values</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-shield-alt" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Core Values</div></div>',
         category: 'Elements',
         content: `
             <section class="core-values-section">
@@ -107,7 +107,7 @@
 
     // Quick Access Section Block
     blockManager.add('quick-access', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-th-large" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Quick Access</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-th-large" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Quick Access</div></div>',
         category: 'Elements',
         content: `
             <section class="quick-access-section">
@@ -144,7 +144,7 @@
 
     // Mission Section Block
     blockManager.add('mission-section', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-bullseye" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mission</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-bullseye" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mission</div></div>',
         category: 'Elements',
         content: `
             <section class="mission-section">
@@ -163,7 +163,7 @@
 
     // Mission & Vision Cards Block
     blockManager.add('mission-vision-cards', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-book-open" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mission & Vision</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-book-open" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mission & Vision</div></div>',
         category: 'Elements',
         content: `
             <section class="mv-section">
@@ -207,7 +207,7 @@
 
     // Mandate Section Block
     blockManager.add('mandate-section', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-list-ol" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mandate</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-list-ol" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Mandate</div></div>',
         category: 'Elements',
         content: `
             <section class="mandate-section">
@@ -232,7 +232,7 @@
 
     // Team Profile Cards Block
     blockManager.add('team-profile-cards', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-users" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Team Profiles</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-users" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Team Profiles</div></div>',
         category: 'Elements',
         content: `
             <section class="team-container">
@@ -299,7 +299,7 @@
 
     // Contact Info Cards Block
     blockManager.add('contact-info-cards', {
-        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-address-card" style="font-size: 32px; color: #667eea; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Contact Info</div></div>',
+        label: '<div style="text-align: center; padding: 10px;"><i class="fas fa-address-card" style="font-size: 32px; color: #9d141f; margin-bottom: 8px;"></i><div style="font-size: 12px; font-weight: 500;">Contact Info</div></div>',
         category: 'Elements',
         content: `
             <section class="div-section cash-wrapp">
