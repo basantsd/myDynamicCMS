@@ -961,56 +961,57 @@
             BannerFormLoader.init(editor);
         }
 
-        // Load Custom Blocks - DISABLED (Custom blocks removed)
-        // async function loadCustomBlocks() {
-        //     try {
-        //         const response = await fetch('{{ route("admin.blocks.list") }}', {
-        //             headers: {
-        //                 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-        //             }
-        //         });
-        //         const data = await response.json();
+        {{-- Load Custom Blocks - DISABLED (Custom blocks removed)
+        async function loadCustomBlocks() {
+            try {
+                const response = await fetch('/admin/custom-blocks/list', {
+                    headers: {
+                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
+                    }
+                });
+                const data = await response.json();
 
-        //         if (data.success) {
-        //             customBlocks = data.blocks;
-        //             renderCustomBlocks();
-        //         }
-        //     } catch (error) {
-        //         console.error('Error loading custom blocks:', error);
-        //     }
-        // }
+                if (data.success) {
+                    customBlocks = data.blocks;
+                    renderCustomBlocks();
+                }
+            } catch (error) {
+                console.error('Error loading custom blocks:', error);
+            }
+        }
 
         // Render Custom Blocks in the panel - DISABLED
-        // function renderCustomBlocks() {
-        //     const container = document.getElementById('customBlocksList');
-        //     container.innerHTML = '';
+        function renderCustomBlocks() {
+            const container = document.getElementById('customBlocksList');
+            container.innerHTML = '';
 
-        //     customBlocks.forEach(block => {
-        //         const blockEl = document.createElement('div');
-        //         blockEl.className = 'custom-block-item';
-        //         blockEl.setAttribute('draggable', 'true');
-        //         blockEl.setAttribute('data-block-id', block.id);
+            customBlocks.forEach(block => {
+                const blockEl = document.createElement('div');
+                blockEl.className = 'custom-block-item';
+                blockEl.setAttribute('draggable', 'true');
+                blockEl.setAttribute('data-block-id', block.id);
 
-        //         blockEl.innerHTML = `
-        //             <div class="custom-block-header">
-        //                 <div class="custom-block-icon" style="color: ${block.color}">
-        //                     <i class="fas ${block.icon}"></i>
-        //                 </div>
-        //                 <div class="custom-block-info">
-        //                     <div class="custom-block-name">${block.name}</div>
-        //                     <span class="custom-block-category" style="background-color: ${block.color}20; color: ${block.color}">
-        //                         ${block.category}
-        //                     </span>
-        //                 </div>
-        //             </div>
-        //             ${block.description ? `<div class="custom-block-description">${block.description}</div>` : ''}
-        //         `;
+                blockEl.innerHTML = `
+                    <div class="custom-block-header">
+                        <div class="custom-block-icon" style="color: ${block.color}">
+                            <i class="fas ${block.icon}"></i>
+                        </div>
+                        <div class="custom-block-info">
+                            <div class="custom-block-name">${block.name}</div>
+                            <span class="custom-block-category" style="background-color: ${block.color}20; color: ${block.color}">
+                                ${block.category}
+                            </span>
+                        </div>
+                    </div>
+                    ${block.description ? `<div class="custom-block-description">${block.description}</div>` : ''}
+                `;
 
-        //         blockEl.addEventListener('click', () => openCustomBlockModal(block));
+                blockEl.addEventListener('click', () => openCustomBlockModal(block));
 
-        //         container.appendChild(blockEl);
-        //     });
-        // }
+                container.appendChild(blockEl);
+            });
+        }
+        --}}
 
         // Open Custom Block Modal
         function openCustomBlockModal(block) {
@@ -2797,7 +2798,7 @@
         }
 
         // Initialize
-        // loadCustomBlocks(); // DISABLED - Custom blocks removed
+        {{-- loadCustomBlocks(); // DISABLED - Custom blocks removed --}}
         renderTemplatesList();
 
         // Show welcome notification
