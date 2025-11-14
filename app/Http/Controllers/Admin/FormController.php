@@ -156,14 +156,18 @@ class FormController extends Controller
 
         $validated = $request->validate($rules);
 
-        // Store submission if enabled
-        if ($form->store_submissions) {
+        // Only store submission if enabled AND form type is 'submission' (not calculation)
+        if ($form->store_submissions && $form->form_type === 'submission') {
             FormSubmission::create([
                 'form_id' => $form->id,
-                'data' => $validated,
+                'form_name' => $form->name,  // For backward compatibility
+                'form_type' => $form->form_type,
+                'form_data' => $validated,
+                'data' => $validated,  // Keep for backward compatibility
                 'ip_address' => $request->ip(),
                 'user_agent' => $request->userAgent(),
                 'user_id' => auth()->id(),
+                'submitted_at' => now(),
             ]);
         }
 
