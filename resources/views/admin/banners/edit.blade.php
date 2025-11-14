@@ -100,6 +100,46 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Slider Slides Section (Only for Slider Type) -->
+            <div class="card mb-4" id="slider-slides-section" style="display: {{ $banner->banner_type === 'slider' ? 'block' : 'none' }};">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0">Slider Slides</h5>
+                    <button type="button" class="btn btn-sm btn-success" onclick="addSlide()">
+                        <i class="fas fa-plus me-1"></i> Add Slide
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div id="slides-container">
+                        @if($banner->slides && is_array($banner->slides))
+                            @foreach($banner->slides as $index => $slide)
+                                <div class="slide-item card mb-3" data-slide-index="{{ $index }}">
+                                    <div class="card-header d-flex justify-content-between align-items-center">
+                                        <h6 class="mb-0">Slide {{ $index + 1 }}</h6>
+                                        <button type="button" class="btn btn-sm btn-danger" onclick="removeSlide(this)">
+                                            <i class="fas fa-trash"></i> Remove
+                                        </button>
+                                    </div>
+                                    <div class="card-body">
+                                        <div class="mb-3">
+                                            <label class="form-label">Slide Image URL</label>
+                                            <input type="text" class="form-control" name="slides[{{ $index }}][image]" value="{{ $slide['image'] ?? '' }}" placeholder="/assets/img/slider/slide-1.jpg" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Slide Title</label>
+                                            <input type="text" class="form-control" name="slides[{{ $index }}][title]" value="{{ $slide['title'] ?? '' }}" placeholder="Enter slide title" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label class="form-label">Slide Description</label>
+                                            <textarea class="form-control" name="slides[{{ $index }}][description]" rows="2" placeholder="Enter slide description">{{ $slide['description'] ?? '' }}</textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            @endforeach
+                        @endif
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="col-md-4">
@@ -152,4 +192,64 @@
         </div>
     </div>
 </form>
+
+@push('scripts')
+<script>
+    let slideIndex = {{ $banner->slides ? count($banner->slides) : 0 }};
+
+    // Show/hide sections based on banner type
+    document.getElementById('banner_type').addEventListener('change', function() {
+        const sliderSection = document.getElementById('slider-slides-section');
+        if (this.value === 'slider') {
+            sliderSection.style.display = 'block';
+            if (document.getElementById('slides-container').children.length === 0) {
+                addSlide(); // Add first slide automatically
+            }
+        } else {
+            sliderSection.style.display = 'none';
+        }
+    });
+
+    function addSlide() {
+        const container = document.getElementById('slides-container');
+        const slideHtml = `
+            <div class="slide-item card mb-3" data-slide-index="${slideIndex}">
+                <div class="card-header d-flex justify-content-between align-items-center">
+                    <h6 class="mb-0">Slide ${slideIndex + 1}</h6>
+                    <button type="button" class="btn btn-sm btn-danger" onclick="removeSlide(this)">
+                        <i class="fas fa-trash"></i> Remove
+                    </button>
+                </div>
+                <div class="card-body">
+                    <div class="mb-3">
+                        <label class="form-label">Slide Image URL</label>
+                        <input type="text" class="form-control" name="slides[${slideIndex}][image]" placeholder="/assets/img/slider/slide-1.jpg" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Slide Title</label>
+                        <input type="text" class="form-control" name="slides[${slideIndex}][title]" placeholder="Enter slide title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Slide Description</label>
+                        <textarea class="form-control" name="slides[${slideIndex}][description]" rows="2" placeholder="Enter slide description"></textarea>
+                    </div>
+                </div>
+            </div>
+        `;
+        container.insertAdjacentHTML('beforeend', slideHtml);
+        slideIndex++;
+    }
+
+    function removeSlide(button) {
+        const slideItem = button.closest('.slide-item');
+        slideItem.remove();
+
+        // Renumber remaining slides
+        const slides = document.querySelectorAll('.slide-item');
+        slides.forEach((slide, index) => {
+            slide.querySelector('h6').textContent = `Slide ${index + 1}`;
+        });
+    }
+</script>
+@endpush
 @endsection

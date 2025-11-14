@@ -117,16 +117,68 @@ class Form extends Model
                             <h2 style="font-size: 36px; font-weight: bold;">{$this->title}</h2>
                             <p style="font-size: 18px; color: #666;">{$this->description}</p>
                         </div>
-                        <form id="{$formId}" action="{$action}" method="POST" data-form-type="{$this->form_type}" data-form-id="{$this->id}" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <form id="{$formId}" class="dynamic-form" data-form-type="{$this->form_type}" data-form-id="{$this->id}" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                            <input type="hidden" name="_token" value="{{ csrf_token() }}">
                             <input type="hidden" name="form_id" value="{$this->id}">
                             {$fieldsHtml}
                             <button type="submit" class="btn btn-{$this->submit_button_style} btn-lg w-100" style="padding: 12px;">{$this->submit_button_text}</button>
                         </form>
-                        <div id="{$formId}-result" class="mt-3" style="display: none;"></div>
+                        <div id="{$formId}-result" class="alert mt-3" style="display: none;"></div>
                     </div>
                 </div>
             </div>
             {$calculationScript}
+            <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                const form = document.getElementById('{$formId}');
+                if (form && form.dataset.formType === 'submission') {
+                    form.addEventListener('submit', async function(e) {
+                        e.preventDefault();
+                        const formData = new FormData(form);
+                        const resultDiv = document.getElementById('{$formId}-result');
+                        const submitBtn = form.querySelector('button[type="submit"]');
+                        const originalBtnText = submitBtn.textContent;
+
+                        submitBtn.disabled = true;
+                        submitBtn.textContent = 'Submitting...';
+
+                        try {
+                            const response = await fetch('/api/forms/submit', {
+                                method: 'POST',
+                                headers: {
+                                    'X-CSRF-TOKEN': formData.get('_token'),
+                                    'Accept': 'application/json'
+                                },
+                                body: formData
+                            });
+
+                            const data = await response.json();
+
+                            resultDiv.style.display = 'block';
+                            if (data.success) {
+                                resultDiv.className = 'alert alert-success mt-3';
+                                resultDiv.textContent = data.message || '{$this->success_message}';
+                                form.reset();
+
+                                if (data.redirect) {
+                                    setTimeout(() => window.location.href = data.redirect, 2000);
+                                }
+                            } else {
+                                resultDiv.className = 'alert alert-danger mt-3';
+                                resultDiv.textContent = data.message || '{$this->error_message}';
+                            }
+                        } catch (error) {
+                            resultDiv.style.display = 'block';
+                            resultDiv.className = 'alert alert-danger mt-3';
+                            resultDiv.textContent = '{$this->error_message}';
+                        } finally {
+                            submitBtn.disabled = false;
+                            submitBtn.textContent = originalBtnText;
+                        }
+                    });
+                }
+            });
+            </script>
         </section>
         HTML;
     }
