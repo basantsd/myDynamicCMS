@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Profile Card</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Segoe UI", sans-serif;
+    }
+
+    body {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background-color: #f7f7f7;
+    }
+
+    .profile-card-unique {
+      width: 320px;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    /* Top Gradient Line */
+    .profile-card-unique::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 6px;
+      width: 100%;
+      background: linear-gradient(to right, #b71c1c, #e57373);
+    }
+
+    /* Hover Effect on Card */
+    .profile-card-unique:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+    }
+
+    .profile-card-unique .icon-wrapper {
+      margin-top: 30px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .profile-card-unique .icon-circle {
+      width: 100px;
+      height: 100px;
+      border-radius: 50%;
+      background: radial-gradient(circle at center, #fff 55%, #f8dcdc);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border: 4px solid #f1b4b4;
+    }
+
+    .profile-card-unique .icon-circle i {
+      font-size: 50px;
+      color: #b71c1c;
+    }
+
+    .profile-card-unique h3 {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: 600;
+      color: #4b0000;
+    }
+
+    .profile-card-unique p.title {
+      color: #b71c1c;
+      font-size: 15px;
+      margin-top: 4px;
+    }
+
+    .profile-card-unique hr {
+      width: 80%;
+      margin: 15px auto;
+      border: none;
+      border-top: 1px solid #ddd;
+    }
+
+    .profile-card-unique .contact-info {
+      text-align: left;
+      padding: 0 30px 25px;
+      color: #333;
+      font-size: 14px;
+    }
+
+    .profile-card-unique .contact-info div {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+    }
+
+    /* Icon background (like your image — soft rounded box, not circle) */
+    .profile-card-unique .contact-info i {
+      color: #b71c1c;
+      background-color: #fde8e8;
+      padding: 7px 8px;
+      border-radius: 6px;
+      font-size: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      width: 30px;
+      height: 30px;
+    }
+
+  </style>
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+</head>
+<body>
+
+  <div class="profile-card-unique">
+    <div class="icon-wrapper">
+      <div class="icon-circle">
+        <i class="fas fa-user"></i>
+      </div>
+    </div>
+    <h3>Mr. Levi Bradshaw</h3>
+    <p class="title">Accountant General</p>
+    <hr>
+    <div class="contact-info">
+      <div><i class="fas fa-envelope"></i> accountant.general@gov.kn</div>
+      <div><i class="fas fa-phone"></i> +1 (869) 465-2521</div>
+    </div>
+  </div>
+
+</body>
+</html>
