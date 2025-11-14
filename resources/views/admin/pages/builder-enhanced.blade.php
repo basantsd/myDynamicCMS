@@ -826,6 +826,9 @@
     <!-- Enhanced Editable Blocks Script -->
     <script src="{{ asset('js/grapes-enhanced-blocks.js') }}"></script>
 
+    <!-- Banner and Form Blocks Script -->
+    <script src="{{ asset('js/grapes-banner-form-blocks.js') }}"></script>
+
     <!-- Dynamic Database-Driven Blocks Loader -->
     <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
 
@@ -952,6 +955,9 @@
 
         // Add Enhanced Editable Blocks (function defined in grapes-enhanced-blocks.js)
         addEnhancedBlocks(editor);
+
+        // Add Banner and Form Blocks (function defined in grapes-banner-form-blocks.js)
+        addBannerFormBlocks(editor);
 
         // Load Custom Blocks
         async function loadCustomBlocks() {
