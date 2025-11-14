@@ -826,11 +826,11 @@
     <!-- Enhanced Editable Blocks Script -->
     <script src="{{ asset('js/grapes-enhanced-blocks.js') }}"></script>
 
-    <!-- Banner and Form Blocks Script -->
-    <script src="{{ asset('js/grapes-banner-form-blocks.js') }}"></script>
-
     <!-- Dynamic Database-Driven Blocks Loader -->
     <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
+
+    <!-- Banner and Form Loader -->
+    <script src="{{ asset('js/banner-form-loader.js') }}"></script>
 
     <script>
         // Initialize GrapesJS with FREE Professional Plugins
@@ -956,8 +956,10 @@
         // Add Enhanced Editable Blocks (function defined in grapes-enhanced-blocks.js)
         addEnhancedBlocks(editor);
 
-        // Add Banner and Form Blocks (function defined in grapes-banner-form-blocks.js)
-        addBannerFormBlocks(editor);
+        // Load Banners and Forms from database (banner-form-loader.js)
+        if (typeof BannerFormLoader !== 'undefined') {
+            BannerFormLoader.init(editor);
+        }
 
         // Load Custom Blocks
         async function loadCustomBlocks() {
