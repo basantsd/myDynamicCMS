@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\BannerController;
+use App\Http\Controllers\Admin\FormController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\CustomBlockController;
 use App\Http\Controllers\DashboardController;
@@ -99,6 +101,41 @@ Route::prefix('admin')->group(function () {
             Route::delete('/custom-blocks/{id}', [CustomBlockController::class, 'destroy'])->name('admin.blocks.destroy');
         });
 
+        // Banners Management - Permission Protected
+        Route::middleware(['permission:pages.view'])->group(function () {
+            Route::get('/banners', [BannerController::class, 'index'])->name('admin.banners.index');
+            Route::get('/banners/list', [BannerController::class, 'list'])->name('admin.banners.list');
+        });
+        Route::middleware(['permission:pages.create'])->group(function () {
+            Route::get('/banners/create', [BannerController::class, 'create'])->name('admin.banners.create');
+            Route::post('/banners', [BannerController::class, 'store'])->name('admin.banners.store');
+        });
+        Route::middleware(['permission:pages.edit'])->group(function () {
+            Route::get('/banners/{banner}/edit', [BannerController::class, 'edit'])->name('admin.banners.edit');
+            Route::put('/banners/{banner}', [BannerController::class, 'update'])->name('admin.banners.update');
+        });
+        Route::middleware(['permission:pages.delete'])->group(function () {
+            Route::delete('/banners/{banner}', [BannerController::class, 'destroy'])->name('admin.banners.destroy');
+        });
+
+        // Forms Management - Permission Protected
+        Route::middleware(['permission:forms.view'])->group(function () {
+            Route::get('/forms', [FormController::class, 'index'])->name('admin.forms.index');
+            Route::get('/forms/list', [FormController::class, 'list'])->name('admin.forms.list');
+            Route::get('/forms/{form}/submissions', [FormController::class, 'submissions'])->name('admin.forms.submissions');
+        });
+        Route::middleware(['permission:forms.create'])->group(function () {
+            Route::get('/forms/create', [FormController::class, 'create'])->name('admin.forms.create');
+            Route::post('/forms', [FormController::class, 'store'])->name('admin.forms.store');
+        });
+        Route::middleware(['permission:forms.edit'])->group(function () {
+            Route::get('/forms/{form}/edit', [FormController::class, 'edit'])->name('admin.forms.edit');
+            Route::put('/forms/{form}', [FormController::class, 'update'])->name('admin.forms.update');
+        });
+        Route::middleware(['permission:forms.delete'])->group(function () {
+            Route::delete('/forms/{form}', [FormController::class, 'destroy'])->name('admin.forms.destroy');
+        });
+
         // Menus Management - Permission Protected
         Route::middleware(['permission:menus.view'])->group(function () {
             Route::get('/menus', [MenuController::class, 'index'])->name('admin.menus.index');
@@ -159,8 +196,9 @@ Route::prefix('admin')->group(function () {
 |--------------------------------------------------------------------------
 */
 
-// Public Form Submission
+// Public Form Submission (both old and new forms)
 Route::post('/api/form-submit', [FormSubmissionController::class, 'submit'])->name('form.submit');
+Route::post('/api/forms/submit', [FormController::class, 'submit'])->name('forms.submit');
 
 Route::get('/', [FrontendController::class, 'home'])->name('home');
 Route::get('/{slug}', [FrontendController::class, 'showPage'])->name('page.show');

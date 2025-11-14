@@ -663,6 +663,9 @@
     <!-- Dynamic Database-Driven Blocks Loader -->
     <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
 
+    <!-- Banner and Form Loader -->
+    <script src="{{ asset('js/banner-form-loader.js') }}"></script>
+
     <script>
         // Initialize GrapesJS and expose globally for treasury-blocks.js
         window.editor = grapesjs.init({
@@ -753,6 +756,11 @@
 
         // Keep local reference to editor for rest of script
         const editor = window.editor;
+
+        // Load Banners and Forms from database (banner-form-loader.js)
+        if (typeof BannerFormLoader !== 'undefined') {
+            BannerFormLoader.init(editor);
+        }
 
         // Tab Switching Functionality
         document.querySelectorAll('.properties-tab').forEach(tab => {

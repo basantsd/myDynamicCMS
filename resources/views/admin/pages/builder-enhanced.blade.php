@@ -829,6 +829,9 @@
     <!-- Dynamic Database-Driven Blocks Loader -->
     <script src="{{ asset('js/dynamic-blocks-loader.js') }}"></script>
 
+    <!-- Banner and Form Loader -->
+    <script src="{{ asset('js/banner-form-loader.js') }}"></script>
+
     <script>
         // Initialize GrapesJS with FREE Professional Plugins
         window.editor = grapesjs.init({
@@ -952,6 +955,11 @@
 
         // Add Enhanced Editable Blocks (function defined in grapes-enhanced-blocks.js)
         addEnhancedBlocks(editor);
+
+        // Load Banners and Forms from database (banner-form-loader.js)
+        if (typeof BannerFormLoader !== 'undefined') {
+            BannerFormLoader.init(editor);
+        }
 
         // Load Custom Blocks
         async function loadCustomBlocks() {
