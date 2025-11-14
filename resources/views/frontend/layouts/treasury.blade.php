@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta http-equiv="x-ua-compatible" content="ie=edge" />
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>@yield('title', ($settings['site_name'] ?? 'Accountant General\'s Department') . ' - Government Of St. Kitts Nevis')</title>
     <meta name="author" content="{{ $settings['site_author'] ?? 'vecuro' }}" />
     <meta name="description" content="@yield('meta_description', $settings['site_description'] ?? 'Accountant General\'s Department')" />

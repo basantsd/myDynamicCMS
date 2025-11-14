@@ -96,16 +96,6 @@ return new class extends Migration
             $table->softDeletes();
         });
 
-        // Create form_submissions table to store submitted data
-        Schema::create('form_submissions', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('form_id')->constrained('forms')->onDelete('cascade');
-            $table->json('data')->comment('Submitted form data');
-            $table->string('ip_address')->nullable();
-            $table->string('user_agent')->nullable();
-            $table->foreignId('user_id')->nullable()->constrained('users')->onDelete('set null');
-            $table->timestamps();
-        });
     }
 
     /**
@@ -113,7 +103,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('form_submissions');
         Schema::dropIfExists('forms');
     }
 };
