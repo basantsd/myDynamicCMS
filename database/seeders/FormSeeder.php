@@ -19,6 +19,7 @@ class FormSeeder extends Seeder
                 'title' => 'Contact Us',
                 'description' => 'Get in touch with us. We\'d love to hear from you!',
                 'form_type' => 'submission',
+                'type' => 'dynamic',
                 'submission_endpoint' => '/api/forms/submit',
                 'success_message' => 'Thank you for contacting us! We\'ll get back to you soon.',
                 'error_message' => 'Sorry, something went wrong. Please try again.',
@@ -76,6 +77,7 @@ class FormSeeder extends Seeder
                 'title' => 'Subscribe to Our Newsletter',
                 'description' => 'Stay updated with our latest news and offers',
                 'form_type' => 'submission',
+                'type' => 'dynamic',
                 'submission_endpoint' => '/api/forms/submit',
                 'success_message' => 'Successfully subscribed! Check your email for confirmation.',
                 'error_message' => 'Subscription failed. Please try again.',
@@ -110,6 +112,7 @@ class FormSeeder extends Seeder
                 'title' => 'Join Our Team',
                 'description' => 'Apply for open positions at our company',
                 'form_type' => 'submission',
+                'type' => 'dynamic',
                 'submission_endpoint' => '/api/forms/submit',
                 'success_message' => 'Application submitted! We\'ll review and get back to you.',
                 'error_message' => 'Application failed. Please check all fields.',
@@ -183,6 +186,7 @@ class FormSeeder extends Seeder
                 'title' => 'Loan Payment Calculator',
                 'description' => 'Calculate your monthly loan payments',
                 'form_type' => 'calculation',
+                'type' => 'static',
                 'fields' => [
                     [
                         'name' => 'loan_amount',
@@ -246,6 +250,7 @@ class FormSeeder extends Seeder
                 'title' => 'BMI Calculator',
                 'description' => 'Calculate your Body Mass Index',
                 'form_type' => 'calculation',
+                'type' => 'static',
                 'fields' => [
                     [
                         'name' => 'weight',
@@ -298,6 +303,7 @@ class FormSeeder extends Seeder
                 'title' => 'Price Calculator',
                 'description' => 'Calculate total price with tax and discount',
                 'form_type' => 'calculation',
+                'type' => 'static',
                 'fields' => [
                     [
                         'name' => 'base_price',
@@ -370,6 +376,7 @@ class FormSeeder extends Seeder
                 'title' => 'Share Your Feedback',
                 'description' => 'We value your opinion and would love to hear from you',
                 'form_type' => 'submission',
+                'type' => 'dynamic',
                 'submission_endpoint' => '/api/forms/submit',
                 'success_message' => 'Thank you for your feedback!',
                 'error_message' => 'Failed to submit feedback. Please try again.',

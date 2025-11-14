@@ -49,6 +49,18 @@
                     </div>
 
                     <div class="mb-3">
+                        <label for="type" class="form-label">Form Behavior <span class="text-danger">*</span></label>
+                        <select class="form-select @error('type') is-invalid @enderror" id="type" name="type" required>
+                            <option value="dynamic" {{ old('type', $form->type ?? 'dynamic') == 'dynamic' ? 'selected' : '' }}>Dynamic (Saves data to database)</option>
+                            <option value="static" {{ old('type', $form->type ?? 'dynamic') == 'static' ? 'selected' : '' }}>Static (Client-side only, calculators)</option>
+                        </select>
+                        <small class="text-muted">Static forms work entirely client-side without saving data</small>
+                        @error('type')
+                            <div class="invalid-feedback">{{ $message }}</div>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
                         <label for="title" class="form-label">Form Title <span class="text-danger">*</span></label>
                         <input type="text" class="form-control @error('title') is-invalid @enderror" id="title" name="title" value="{{ old('title', $form->title) }}" required>
                         <small class="text-muted">Displayed to users</small>

@@ -16,6 +16,7 @@ class Form extends Model
         'title',
         'description',
         'form_type',
+        'type',  // static (calculators) or dynamic (submissions)
         'submission_endpoint',
         'success_message',
         'error_message',
@@ -81,6 +82,22 @@ class Form extends Model
     }
 
     /**
+     * Get static forms (calculators, result-based)
+     */
+    public function scopeStatic($query)
+    {
+        return $query->where('type', 'static');
+    }
+
+    /**
+     * Get dynamic forms (submission-based)
+     */
+    public function scopeDynamic($query)
+    {
+        return $query->where('type', 'dynamic');
+    }
+
+    /**
      * Generate HTML for the form
      */
     public function generateHtml(): string
@@ -120,7 +137,7 @@ class Form extends Model
                             <h2 style="font-size: 36px; font-weight: bold;">{$this->title}</h2>
                             <p style="font-size: 18px; color: #666;">{$this->description}</p>
                         </div>
-                        <form id="{$formId}" class="dynamic-form" data-form-type="{$this->form_type}" data-form-id="{$this->id}" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                        <form id="{$formId}" class="dynamic-form" data-form-type="{$this->form_type}" data-type="{$this->type}" data-form-id="{$this->id}" style="background: white; padding: 40px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
                             <input type="hidden" name="_token" class="csrf-token-field" value="">
                             <input type="hidden" name="form_id" value="{$this->id}">
                             {$fieldsHtml}
@@ -142,7 +159,9 @@ class Form extends Model
                     tokenField.value = csrfToken;
                 }
 
-                if (form && form.dataset.formType === 'submission') {
+                // Only attach submit handler for dynamic forms (submission-based)
+                // Static forms (calculators) work client-side only
+                if (form && form.dataset.type === 'dynamic') {
                     form.addEventListener('submit', async function(e) {
                         e.preventDefault();
                         const formData = new FormData(form);

@@ -27,6 +27,7 @@ class FormController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'form_type' => 'required|in:submission,calculation,action',
+            'type' => 'required|in:static,dynamic',
             'submission_endpoint' => 'nullable|string',
             'success_message' => 'nullable|string',
             'error_message' => 'nullable|string',
@@ -73,6 +74,7 @@ class FormController extends Controller
             'title' => 'required|string|max:255',
             'description' => 'nullable|string',
             'form_type' => 'required|in:submission,calculation,action',
+            'type' => 'required|in:static,dynamic',
             'submission_endpoint' => 'nullable|string',
             'success_message' => 'nullable|string',
             'error_message' => 'nullable|string',
@@ -156,8 +158,8 @@ class FormController extends Controller
 
         $validated = $request->validate($rules);
 
-        // Only store submission if enabled AND form type is 'submission' (not calculation)
-        if ($form->store_submissions && $form->form_type === 'submission') {
+        // Only store submission if enabled AND form type is 'dynamic' (not static/calculators)
+        if ($form->store_submissions && $form->type === 'dynamic') {
             FormSubmission::create([
                 'form_id' => $form->id,
                 'form_name' => $form->name,  // For backward compatibility
