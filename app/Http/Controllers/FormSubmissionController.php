@@ -15,14 +15,19 @@ class FormSubmissionController extends Controller
      */
     public function index(Request $request)
     {
-        $query = FormSubmission::with(['page', 'pageSection']);
+        $query = FormSubmission::with(['form', 'page', 'pageSection', 'user']);
 
         // Filter by form type
         if ($request->has('form_type') && $request->form_type) {
             $query->where('form_type', $request->form_type);
         }
 
-        // Filter by form name
+        // Filter by form ID
+        if ($request->has('form_id') && $request->form_id) {
+            $query->where('form_id', $request->form_id);
+        }
+
+        // Filter by form name (backward compatibility)
         if ($request->has('form_name') && $request->form_name) {
             $query->byFormName($request->form_name);
         }
@@ -37,23 +42,27 @@ class FormSubmissionController extends Controller
             $query->dateRange($request->start_date, $request->end_date);
         }
 
+        // Global scope already orders by created_at desc, but we can override with submitted_at
         $submissions = $query->orderBy('submitted_at', 'desc')->paginate(20);
 
         // Get statistics
         $stats = [
             'total' => FormSubmission::count(),
-            'submission_type' => FormSubmission::where('form_type', 'submission')->count(),
-            'calculation_type' => FormSubmission::where('form_type', 'calculation')->count(),
-            'action_type' => FormSubmission::where('form_type', 'action')->count(),
+            'submission_type' => FormSubmission::submissionType()->count(),
+            'calculation_type' => FormSubmission::calculationType()->count(),
+            'action_type' => FormSubmission::actionType()->count(),
         ];
 
-        // Get unique form names for filter
-        $formNames = FormSubmission::distinct()->pluck('form_name');
+        // Get all forms for filter
+        $forms = \App\Models\Form::orderBy('name')->get();
+
+        // Get unique form names for filter (backward compatibility)
+        $formNames = FormSubmission::distinct()->pluck('form_name')->filter();
 
         // Get all pages for filter
         $pages = Page::orderBy('title')->get();
 
-        return view('admin.form-submissions.index', compact('submissions', 'stats', 'formNames', 'pages'));
+        return view('admin.form-submissions.index', compact('submissions', 'stats', 'forms', 'formNames', 'pages'));
     }
 
     /**
@@ -61,11 +70,12 @@ class FormSubmissionController extends Controller
      */
     public function show($id)
     {
-        $submission = FormSubmission::with(['page', 'pageSection'])->findOrFail($id);
+        $submission = FormSubmission::with(['form', 'page', 'pageSection', 'user'])->findOrFail($id);
 
         return response()->json([
             'success' => true,
             'submission' => $submission,
+            'formatted_data' => $submission->formatted_data,
         ]);
     }
 
@@ -126,7 +136,8 @@ class FormSubmissionController extends Controller
      */
     public function getByForm(Request $request, $formName)
     {
-        $submissions = FormSubmission::byFormName($formName)
+        $submissions = FormSubmission::with(['form', 'user'])
+            ->byFormName($formName)
             ->orderBy('submitted_at', 'desc')
             ->paginate(50);
 
@@ -155,8 +166,9 @@ class FormSubmissionController extends Controller
 
         // Extract headers from first submission
         $firstSubmission = $submissions->first();
-        $headers = array_keys($firstSubmission->form_data);
-        array_unshift($headers, 'ID', 'Submitted At');
+        $formData = $firstSubmission->formatted_data;
+        $headers = array_keys($formData);
+        array_unshift($headers, 'ID', 'Submitted At', 'IP Address');
 
         // Build CSV content
         $csvContent = implode(',', array_map(function($header) {
@@ -167,10 +179,15 @@ class FormSubmissionController extends Controller
             $row = [
                 $submission->id,
                 $submission->submitted_at->format('Y-m-d H:i:s'),
+                $submission->ip_address,
             ];
 
-            foreach ($submission->form_data as $value) {
-                $row[] = '"' . str_replace('"', '""', $value) . '"';
+            foreach ($submission->formatted_data as $value) {
+                // Handle arrays/objects
+                if (is_array($value)) {
+                    $value = json_encode($value);
+                }
+                $row[] = '"' . str_replace('"', '""', (string)$value) . '"';
             }
 
             $csvContent .= implode(',', $row) . "\n";

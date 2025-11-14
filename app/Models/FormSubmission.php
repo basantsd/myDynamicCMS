@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Builder;
 
 class FormSubmission extends Model
 {
@@ -33,6 +34,16 @@ class FormSubmission extends Model
     ];
 
     /**
+     * Default ordering
+     */
+    protected static function booted()
+    {
+        static::addGlobalScope('order', function (Builder $builder) {
+            $builder->orderBy('created_at', 'desc');
+        });
+    }
+
+    /**
      * Get the form that owns the submission
      */
     public function form(): BelongsTo
@@ -41,10 +52,93 @@ class FormSubmission extends Model
     }
 
     /**
+     * Get the page that owns the submission
+     */
+    public function page(): BelongsTo
+    {
+        return $this->belongsTo(Page::class);
+    }
+
+    /**
+     * Get the page section that owns the submission
+     */
+    public function pageSection(): BelongsTo
+    {
+        return $this->belongsTo(PageSection::class);
+    }
+
+    /**
      * Get the user who submitted the form
      */
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * Scope to filter by form name
+     */
+    public function scopeByFormName(Builder $query, string $formName): Builder
+    {
+        return $query->where('form_name', $formName);
+    }
+
+    /**
+     * Scope to filter by form type
+     */
+    public function scopeSubmissionType(Builder $query): Builder
+    {
+        return $query->where('form_type', 'submission');
+    }
+
+    /**
+     * Scope to filter calculation type
+     */
+    public function scopeCalculationType(Builder $query): Builder
+    {
+        return $query->where('form_type', 'calculation');
+    }
+
+    /**
+     * Scope to filter action type
+     */
+    public function scopeActionType(Builder $query): Builder
+    {
+        return $query->where('form_type', 'action');
+    }
+
+    /**
+     * Scope to filter by date range
+     */
+    public function scopeDateRange(Builder $query, string $startDate, string $endDate): Builder
+    {
+        return $query->whereBetween('submitted_at', [$startDate, $endDate]);
+    }
+
+    /**
+     * Get formatted submission data
+     */
+    public function getFormattedDataAttribute(): array
+    {
+        // Prefer form_data over data for new submissions
+        $data = $this->form_data ?? $this->data ?? [];
+
+        if (empty($data)) {
+            return [];
+        }
+
+        return $data;
+    }
+
+    /**
+     * Get display name for the form
+     */
+    public function getFormDisplayNameAttribute(): string
+    {
+        if ($this->form) {
+            return $this->form->name;
+        }
+
+        return $this->form_name ?? 'Unknown Form';
     }
 }
